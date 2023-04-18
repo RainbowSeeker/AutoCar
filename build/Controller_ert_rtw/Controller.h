@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'Controller'.
  *
- * Model version                  : 4.8
+ * Model version                  : 4.15
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Tue Apr 18 20:13:26 2023
+ * C/C++ source code generated on : Tue Apr 18 21:27:54 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -35,20 +35,24 @@
 /* Block signals (default storage) */
 typedef struct {
   real32_T Merge;                      /* '<S11>/Merge' */
-  real32_T DataTypeConversion[2];      /* '<S121>/Data Type Conversion' */
+  real32_T y[50];                      /* '<S120>/Verify Velocities ' */
+  real32_T MATLABSystem_o1[150];       /* '<S120>/MATLAB System' */
+  real32_T MATLABSystem_o2[50];        /* '<S120>/MATLAB System' */
+  real32_T MATLABSystem_o4[50];        /* '<S120>/MATLAB System' */
+  real32_T VectorConcatenate[150];     /* '<S119>/Vector Concatenate' */
 } B_Controller_T;
 
 /* Block states (default storage) for system '<Root>' */
 typedef struct {
   HelperPathAnalyzer_Controller_T obj; /* '<S1>/MATLAB System' */
-  PathSmootherSpline_Controller_T obj_l;/* '<S119>/MATLAB System' */
-  VelocityProfiler_Controller_T obj_n; /* '<S119>/MATLAB System1' */
+  PathSmootherSpline_Controller_T obj_m;/* '<S120>/MATLAB System' */
+  VelocityProfiler_Controller_T obj_mc;/* '<S120>/MATLAB System1' */
   real_T goalIndex;                    /* '<S2>/Behavior Planner' */
   SpeedConfig_Bus speedConfig;         /* '<S2>/Behavior Planner' */
   real32_T Integrator_DSTATE;          /* '<S100>/Integrator' */
   real32_T Integrator_DSTATE_i;        /* '<S49>/Integrator' */
-  uint32_T DelayInput1_DSTATE;         /* '<S120>/Delay Input1' */
-  uint32_T DiscreteTimeIntegrator_DSTATE;/* '<S133>/Discrete-Time Integrator' */
+  uint32_T DelayInput1_DSTATE;         /* '<S118>/Delay Input1' */
+  uint32_T DiscreteTimeIntegrator_DSTATE;/* '<S134>/Discrete-Time Integrator' */
   real32_T endSpeed;                   /* '<S2>/Behavior Planner' */
   real32_T nextGoalPose[6];            /* '<S2>/Behavior Planner' */
   int8_T Integrator_PrevResetState;    /* '<S100>/Integrator' */
@@ -126,7 +130,6 @@ extern RT_MODEL_Controller_T *const Controller_M;
  * Block '<S121>/Constant' : Unused code path elimination
  * Block '<S122>/Gain' : Unused code path elimination
  * Block '<S122>/Sum1' : Unused code path elimination
- * Block '<S11>/Data Type Conversion' : Eliminate redundant data type conversion
  */
 
 /*-
@@ -261,9 +264,9 @@ extern RT_MODEL_Controller_T *const Controller_M;
  * '<S115>' : 'Controller/Stanley Controller/Longitudinal Controller Stanley/PI Controller/Reverse/PI Reverse/postSat Signal/Forward_Path'
  * '<S116>' : 'Controller/Stanley Controller/Longitudinal Controller Stanley/PI Controller/Reverse/PI Reverse/preSat Signal/Forward_Path'
  * '<S117>' : 'Controller/Track Pose/Behavior Planner'
- * '<S118>' : 'Controller/Track Pose/Path Planner'
- * '<S119>' : 'Controller/Track Pose/Trajectory Generation'
- * '<S120>' : 'Controller/Track Pose/Path Planner/Detect Change'
+ * '<S118>' : 'Controller/Track Pose/Detect Change'
+ * '<S119>' : 'Controller/Track Pose/Path Planner'
+ * '<S120>' : 'Controller/Track Pose/Subsystem'
  * '<S121>' : 'Controller/Track Pose/Path Planner/Enabled Subsystem'
  * '<S122>' : 'Controller/Track Pose/Path Planner/Enabled Subsystem/LLA2FLAT'
  * '<S123>' : 'Controller/Track Pose/Path Planner/Enabled Subsystem/LLA2FLAT/LAT2FLAT Curve'
@@ -275,8 +278,9 @@ extern RT_MODEL_Controller_T *const Controller_M;
  * '<S129>' : 'Controller/Track Pose/Path Planner/Enabled Subsystem/LLA2FLAT/LatLon Wrap/Wrap Latitude/Compare To Constant1'
  * '<S130>' : 'Controller/Track Pose/Path Planner/Enabled Subsystem/LLA2FLAT/LatLon Wrap/Wrap Latitude/Weap Angle 180'
  * '<S131>' : 'Controller/Track Pose/Path Planner/Enabled Subsystem/LLA2FLAT/LatLon Wrap/Wrap Latitude/Weap Angle 180/Compare To Constant1'
- * '<S132>' : 'Controller/Track Pose/Trajectory Generation/MATLAB Function'
- * '<S133>' : 'Controller/actuator_output/Subsystem1'
+ * '<S132>' : 'Controller/Track Pose/Subsystem/MATLAB Function'
+ * '<S133>' : 'Controller/Track Pose/Subsystem/Verify Velocities '
+ * '<S134>' : 'Controller/actuator_output/Subsystem1'
  */
 #endif                                 /* RTW_HEADER_Controller_h_ */
 
