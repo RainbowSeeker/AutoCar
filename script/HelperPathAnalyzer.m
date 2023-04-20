@@ -666,10 +666,13 @@ classdef HelperPathAnalyzer < matlab.System
             %based on driving direction
             directions = obj.DirectionsInternal;
             % Find the switching points
-            switchIndex = find(directions(1:end-1)+directions(2:end)==0);
+%             switchIndex = find(directions(1:end-1)+directions(2:end)==0);
             % Divide the path into segments
-            obj.SegmentStartIndex = single([1; switchIndex+1]);
-            obj.SegmentEndIndex   = single([switchIndex; length(directions)]);
+%             obj.SegmentStartIndex = single([1; switchIndex+1]);
+%             obj.SegmentEndIndex   = single([switchIndex; length(directions)]);
+%             obj.NumPathSegments   = single(numel(obj.SegmentStartIndex));
+            obj.SegmentStartIndex = single(1);
+            obj.SegmentEndIndex   = single(length(directions));
             obj.NumPathSegments   = single(numel(obj.SegmentStartIndex));
         end
     end

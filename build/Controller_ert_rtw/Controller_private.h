@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'Controller'.
  *
- * Model version                  : 4.15
+ * Model version                  : 4.11
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Tue Apr 18 21:27:54 2023
+ * C/C++ source code generated on : Thu Apr 20 23:18:22 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -65,6 +65,7 @@ Verification pane for ERT based targets, which will disable the \
 preprocessor word size checks.
 #endif
 
+extern real_T rt_modd_snf(real_T u0, real_T u1);
 extern real32_T rt_remf_snf(real32_T u0, real32_T u1);
 extern real32_T rt_atan2f_snf(real32_T u0, real32_T u1);
 extern real32_T rt_powf_snf(real32_T u0, real32_T u1);

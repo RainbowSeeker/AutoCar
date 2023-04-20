@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'Controller'.
  *
- * Model version                  : 4.15
+ * Model version                  : 4.11
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Tue Apr 18 21:27:54 2023
+ * C/C++ source code generated on : Thu Apr 20 23:18:22 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -72,14 +72,46 @@ typedef struct {
 
 #endif
 
-#ifndef DEFINED_TYPEDEF_FOR_struct_V8yFhBVIWEAg7ttd1ermIG_
-#define DEFINED_TYPEDEF_FOR_struct_V8yFhBVIWEAg7ttd1ermIG_
+#ifndef DEFINED_TYPEDEF_FOR_struct_s3Kybo3q7i7BAN1v6EZjhH_
+#define DEFINED_TYPEDEF_FOR_struct_s3Kybo3q7i7BAN1v6EZjhH_
 
 typedef struct {
+  real32_T VEL_XY_P;
+  real32_T VEL_XY_I;
+  real32_T VEL_XY_D;
+  real32_T VEL_Z_P;
+  real32_T VEL_Z_I;
+  real32_T VEL_Z_D;
+  real32_T VEL_XY_I_MIN;
+  real32_T VEL_XY_I_MAX;
+  real32_T VEL_XY_D_MIN;
+  real32_T VEL_XY_D_MAX;
+  real32_T VEL_Z_I_MIN;
+  real32_T VEL_Z_I_MAX;
+  real32_T VEL_Z_D_MIN;
+  real32_T VEL_Z_D_MAX;
+  real32_T ROLL_P;
+  real32_T PITCH_P;
+  real32_T ROLL_PITCH_CMD_LIM;
+  real32_T ROLL_RATE_P;
+  real32_T PITCH_RATE_P;
+  real32_T YAW_RATE_P;
+  real32_T ROLL_RATE_I;
+  real32_T PITCH_RATE_I;
+  real32_T YAW_RATE_I;
+  real32_T ROLL_RATE_D;
+  real32_T PITCH_RATE_D;
+  real32_T YAW_RATE_D;
+  real32_T RATE_I_MIN;
+  real32_T RATE_I_MAX;
+  real32_T RATE_D_MIN;
+  real32_T RATE_D_MAX;
+  real32_T P_Q_CMD_LIM;
+  real32_T R_CMD_LIM;
   real32_T KP;
   real32_T KI;
   real32_T dt;
-} struct_V8yFhBVIWEAg7ttd1ermIG;
+} struct_s3Kybo3q7i7BAN1v6EZjhH;
 
 #endif
 
@@ -99,6 +131,39 @@ struct tag_BlgwLpgj2bjudmbmVKWwDE
 typedef struct tag_BlgwLpgj2bjudmbmVKWwDE cell_wrap_Controller_T;
 
 #endif                                 /* typedef_cell_wrap_Controller_T */
+
+#ifndef struct_tag_NHricsWXFJawkPMuGTMmGE
+#define struct_tag_NHricsWXFJawkPMuGTMmGE
+
+struct tag_NHricsWXFJawkPMuGTMmGE
+{
+  boolean_T tunablePropertyChanged[4];
+  int32_T isInitialized;
+  boolean_T TunablePropsChanged;
+  cell_wrap_Controller_T inputVarSize[6];
+  real32_T ClosestPointIndex;
+  real32_T NumPathSegments;
+  real32_T CurrentSegmentIndex;
+  real32_T SegmentStartIndex;
+  real32_T SegmentEndIndex;
+  real32_T RefPosesInternal[150];
+  real32_T DirectionsInternal[50];
+  real32_T CurvaturesInternal[50];
+  real32_T VelocityProfileInternal[50];
+  real32_T LastRefPoseOutput[3];
+  real32_T LastRefVelocityOutput;
+  real32_T LastCurvatureOutput;
+  real32_T LastDirectionOutput;
+};
+
+#endif                                 /* struct_tag_NHricsWXFJawkPMuGTMmGE */
+
+#ifndef typedef_HelperPathAnalyzer_Controller_T
+#define typedef_HelperPathAnalyzer_Controller_T
+
+typedef struct tag_NHricsWXFJawkPMuGTMmGE HelperPathAnalyzer_Controller_T;
+
+#endif                             /* typedef_HelperPathAnalyzer_Controller_T */
 
 #ifndef struct_tag_Xv1NUE09ukoPqH7YltEs2E
 #define struct_tag_Xv1NUE09ukoPqH7YltEs2E
@@ -148,60 +213,6 @@ struct tag_JGGYYzag0Yb9VlDyTMJKDC
 typedef struct tag_JGGYYzag0Yb9VlDyTMJKDC VelocityProfiler_Controller_T;
 
 #endif                               /* typedef_VelocityProfiler_Controller_T */
-
-#ifndef struct_emxArray_real32_T
-#define struct_emxArray_real32_T
-
-struct emxArray_real32_T
-{
-  real32_T *data;
-  int32_T *size;
-  int32_T allocatedSize;
-  int32_T numDimensions;
-  boolean_T canFreeData;
-};
-
-#endif                                 /* struct_emxArray_real32_T */
-
-#ifndef typedef_emxArray_real32_T_Controller_T
-#define typedef_emxArray_real32_T_Controller_T
-
-typedef struct emxArray_real32_T emxArray_real32_T_Controller_T;
-
-#endif                              /* typedef_emxArray_real32_T_Controller_T */
-
-#ifndef struct_tag_SJyFAxOXeaDORiQtERJymC
-#define struct_tag_SJyFAxOXeaDORiQtERJymC
-
-struct tag_SJyFAxOXeaDORiQtERJymC
-{
-  boolean_T tunablePropertyChanged[4];
-  int32_T isInitialized;
-  boolean_T TunablePropsChanged;
-  cell_wrap_Controller_T inputVarSize[6];
-  real32_T ClosestPointIndex;
-  real32_T NumPathSegments;
-  real32_T CurrentSegmentIndex;
-  emxArray_real32_T_Controller_T *SegmentStartIndex;
-  emxArray_real32_T_Controller_T *SegmentEndIndex;
-  real32_T RefPosesInternal[150];
-  real32_T DirectionsInternal[50];
-  real32_T CurvaturesInternal[50];
-  real32_T VelocityProfileInternal[50];
-  real32_T LastRefPoseOutput[3];
-  real32_T LastRefVelocityOutput;
-  real32_T LastCurvatureOutput;
-  real32_T LastDirectionOutput;
-};
-
-#endif                                 /* struct_tag_SJyFAxOXeaDORiQtERJymC */
-
-#ifndef typedef_HelperPathAnalyzer_Controller_T
-#define typedef_HelperPathAnalyzer_Controller_T
-
-typedef struct tag_SJyFAxOXeaDORiQtERJymC HelperPathAnalyzer_Controller_T;
-
-#endif                             /* typedef_HelperPathAnalyzer_Controller_T */
 
 /* Forward declaration for rtModel */
 typedef struct tag_RTM_Controller_T RT_MODEL_Controller_T;

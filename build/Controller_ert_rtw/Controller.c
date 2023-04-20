@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'Controller'.
  *
- * Model version                  : 4.15
+ * Model version                  : 4.11
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Tue Apr 18 21:27:54 2023
+ * C/C++ source code generated on : Thu Apr 20 23:18:22 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -17,17 +17,47 @@
 #include "rtwtypes.h"
 #include "Controller_types.h"
 #include <math.h>
-#include "rt_nonfinite.h"
 #include "Controller_private.h"
+#include "rt_nonfinite.h"
 #include <string.h>
 #include "rt_assert.h"
 #include <float.h>
 #include "rt_defines.h"
-#include <stdlib.h>
-#include <stddef.h>
 
 /* Exported block parameters */
-struct_V8yFhBVIWEAg7ttd1ermIG CONTROL_PARAM = {
+struct_s3Kybo3q7i7BAN1v6EZjhH CONTROL_PARAM = {
+  1.4F,
+  0.2F,
+  0.2F,
+  0.6F,
+  0.1F,
+  0.0F,
+  -1.0F,
+  1.0F,
+  -1.0F,
+  1.0F,
+  -0.15F,
+  0.15F,
+  -0.1F,
+  0.1F,
+  5.0F,
+  5.0F,
+  0.52359879F,
+  0.1F,
+  0.1F,
+  0.15F,
+  0.1F,
+  0.1F,
+  0.2F,
+  0.003F,
+  0.003F,
+  0.001F,
+  -0.1F,
+  0.1F,
+  -0.1F,
+  0.1F,
+  1.57079637F,
+  3.14159274F,
   2.0F,
   0.5F,
   0.02F
@@ -74,33 +104,24 @@ static void Controller_plus(real32_T in1_data[], int32_T *in1_size, const
 static void Co_computeCumulativeChordLength(const real32_T poses_data[], const
   int32_T poses_size[2], real32_T cumChordLength_data[], int32_T
   *cumChordLength_size);
-static void Controller_emxInit_real32_T(emxArray_real32_T_Controller_T
-  **pEmxArray, int32_T numDimensions);
 static void Controller_spline(const real32_T x_data[], const int32_T *x_size,
   const real32_T y_data[], const int32_T *y_size, real32_T output_breaks_data[],
   int32_T output_breaks_size[2], real32_T output_coefs_data[], int32_T
   output_coefs_size[2]);
 static void Controller_bsxfun(const real32_T a_data[], const int32_T a_size[2],
   real32_T c_data[], int32_T c_size[2]);
-static void Cont_emxEnsureCapacity_real32_T(emxArray_real32_T_Controller_T
-  *emxArray, int32_T oldNumel);
-static void Controller_linspace(real32_T d2, real32_T n,
-  emxArray_real32_T_Controller_T *y);
+static void Controller_linspace(real32_T d2, real32_T n, real32_T y_data[],
+  int32_T y_size[2]);
 static int32_T Controller_bsearch(const real32_T x_data[], const int32_T x_size
   [2], real32_T xi);
 static void Controller_ppval(const real32_T pp_breaks_data[], const int32_T
   pp_breaks_size[2], const real32_T pp_coefs_data[], const int32_T
   pp_coefs_size[2], const real32_T x_data[], const int32_T x_size[2], real32_T
   v_data[], int32_T v_size[2]);
-static void Controller_expand_atan2(const real32_T a_data[], const int32_T
-  a_size[2], const real32_T b_data[], const int32_T b_size[2], real32_T c_data[],
-  int32_T c_size[2]);
-static void Controller_emxFree_real32_T(emxArray_real32_T_Controller_T
-  **pEmxArray);
-static void Controller_plus_l(emxArray_real32_T_Controller_T *in1, const
-  emxArray_real32_T_Controller_T *in2);
-static void Controller_cumtrapz(const emxArray_real32_T_Controller_T *x,
-  emxArray_real32_T_Controller_T *z);
+static void Controller_plus_l(real32_T in1_data[], int32_T in1_size[2], const
+  real32_T in2_data[], const int32_T in2_size[2]);
+static void Controller_cumtrapz(const real32_T x_data[], const int32_T x_size[2],
+  real32_T z_data[], int32_T z_size[2]);
 static void Con_computeCumulativePathLength(const real32_T splineDx_breaks_data[],
   const int32_T splineDx_breaks_size[2], const real32_T splineDx_coefs_data[],
   const real32_T splineDy_breaks_data[], const int32_T splineDy_breaks_size[2],
@@ -108,13 +129,10 @@ static void Con_computeCumulativePathLength(const real32_T splineDx_breaks_data[
   int32_T tQuery_size[2], real32_T cumLengths_data[], int32_T cumLengths_size[2]);
 static void Controller_bsxfun_l(const real32_T a_data[], const int32_T a_size[2],
   real32_T c_data[], int32_T c_size[2]);
-static void Contro_binary_expand_op_l5xxx52(real32_T in1_data[], int32_T
-  in1_size[2], const emxArray_real32_T_Controller_T *in3, const
-  emxArray_real32_T_Controller_T *in4);
 static void Control_binary_expand_op_l5xxx5(real32_T in1_data[], int32_T
-  in1_size[2], const emxArray_real32_T_Controller_T *in2, const
-  emxArray_real32_T_Controller_T *in3, const real32_T in4_data[], const int32_T
-  in4_size[2], const real32_T in5_data[], const int32_T in5_size[2]);
+  in1_size[2], const real32_T in2_data[], const int32_T in2_size[2], const
+  real32_T in3_data[], const int32_T in3_size[2], const real32_T in4_data[],
+  const int32_T in4_size[2], const real32_T in5_data[], const int32_T in5_size[2]);
 static void Controlle_computePathCurvatures(const real32_T splineDx_breaks_data[],
   const int32_T splineDx_breaks_size[2], const real32_T splineDx_coefs_data[],
   const int32_T splineDx_coefs_size[3], const real32_T splineDy_breaks_data[],
@@ -172,13 +190,45 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
   const real32_T currPose[3], real32_T currVel, const real32_T varargin_1[150],
   const real32_T varargin_2[50], const real32_T varargin_3[50], const real32_T
   varargin_4[50], real32_T refPose[3], real32_T *refVel, real32_T *direction,
-  real32_T *curvature, real32_T *varargout_1);
+  real32_T *curvature);
 static void Contro_angleUtilities_wrapTo2Pi(real32_T *theta);
-static void emxFreeStruct_HelperPathAnalyze(HelperPathAnalyzer_Controller_T
-  *pStruct);
-static void emxInitStruct_HelperPathAnalyze(HelperPathAnalyzer_Controller_T
-  *pStruct);
 static void Controller_SystemCore_setup(HelperPathAnalyzer_Controller_T *obj);
+real_T rt_modd_snf(real_T u0, real_T u1)
+{
+  real_T y;
+  y = u0;
+  if (u1 == 0.0) {
+    if (u0 == 0.0) {
+      y = u1;
+    }
+  } else if (rtIsNaN(u0) || rtIsNaN(u1) || rtIsInf(u0)) {
+    y = (rtNaN);
+  } else if (u0 == 0.0) {
+    y = 0.0 / u1;
+  } else if (rtIsInf(u1)) {
+    if ((u1 < 0.0) != (u0 < 0.0)) {
+      y = u1;
+    }
+  } else {
+    boolean_T yEq;
+    y = fmod(u0, u1);
+    yEq = (y == 0.0);
+    if ((!yEq) && (u1 > floor(u1))) {
+      real_T q;
+      q = fabs(u0 / u1);
+      yEq = !(fabs(q - floor(q + 0.5)) > DBL_EPSILON * q);
+    }
+
+    if (yEq) {
+      y = u1 * 0.0;
+    } else if ((u0 < 0.0) != (u1 < 0.0)) {
+      y += u1;
+    }
+  }
+
+  return y;
+}
+
 real32_T rt_remf_snf(real32_T u0, real32_T u1)
 {
   real32_T y;
@@ -529,24 +579,6 @@ static void Co_computeCumulativeChordLength(const real32_T poses_data[], const
   }
 }
 
-static void Controller_emxInit_real32_T(emxArray_real32_T_Controller_T
-  **pEmxArray, int32_T numDimensions)
-{
-  emxArray_real32_T_Controller_T *emxArray;
-  int32_T i;
-  *pEmxArray = (emxArray_real32_T_Controller_T *)malloc(sizeof
-    (emxArray_real32_T_Controller_T));
-  emxArray = *pEmxArray;
-  emxArray->data = (real32_T *)NULL;
-  emxArray->numDimensions = numDimensions;
-  emxArray->size = (int32_T *)malloc(sizeof(int32_T) * (uint32_T)numDimensions);
-  emxArray->allocatedSize = 0;
-  emxArray->canFreeData = true;
-  for (i = 0; i < numDimensions; i++) {
-    emxArray->size[i] = 0;
-  }
-}
-
 static void Controller_spline(const real32_T x_data[], const int32_T *x_size,
   const real32_T y_data[], const int32_T *y_size, real32_T output_breaks_data[],
   int32_T output_breaks_size[2], real32_T output_coefs_data[], int32_T
@@ -740,93 +772,46 @@ static void Controller_bsxfun(const real32_T a_data[], const int32_T a_size[2],
   }
 }
 
-static void Cont_emxEnsureCapacity_real32_T(emxArray_real32_T_Controller_T
-  *emxArray, int32_T oldNumel)
-{
-  int32_T i;
-  int32_T newNumel;
-  void *newData;
-  if (oldNumel < 0) {
-    oldNumel = 0;
-  }
-
-  newNumel = 1;
-  for (i = 0; i < emxArray->numDimensions; i++) {
-    newNumel *= emxArray->size[i];
-  }
-
-  if (newNumel > emxArray->allocatedSize) {
-    i = emxArray->allocatedSize;
-    if (i < 16) {
-      i = 16;
-    }
-
-    while (i < newNumel) {
-      if (i > 1073741823) {
-        i = MAX_int32_T;
-      } else {
-        i <<= 1;
-      }
-    }
-
-    newData = calloc((uint32_T)i, sizeof(real32_T));
-    if (emxArray->data != NULL) {
-      memcpy(newData, emxArray->data, sizeof(real32_T) * (uint32_T)oldNumel);
-      if (emxArray->canFreeData) {
-        free(emxArray->data);
-      }
-    }
-
-    emxArray->data = (real32_T *)newData;
-    emxArray->allocatedSize = i;
-    emxArray->canFreeData = true;
-  }
-}
-
-static void Controller_linspace(real32_T d2, real32_T n,
-  emxArray_real32_T_Controller_T *y)
+static void Controller_linspace(real32_T d2, real32_T n, real32_T y_data[],
+  int32_T y_size[2])
 {
   int32_T d_k;
   if (!(n >= 0.0F)) {
-    y->size[0] = 1;
-    y->size[1] = 0;
+    y_size[0] = 1;
+    y_size[1] = 0;
   } else {
+    int32_T y_size_tmp;
     real32_T delta1;
     delta1 = floorf(n);
-    d_k = y->size[0] * y->size[1];
-    y->size[0] = 1;
-    y->size[1] = (int32_T)delta1;
-    Cont_emxEnsureCapacity_real32_T(y, d_k);
+    y_size[0] = 1;
+    y_size_tmp = (int32_T)floorf(n);
+    y_size[1] = (int32_T)delta1;
     if ((int32_T)delta1 >= 1) {
-      y->data[(int32_T)delta1 - 1] = d2;
-      if (y->size[1] >= 2) {
-        y->data[0] = 0.0F;
-        if (y->size[1] >= 3) {
+      y_data[(int32_T)delta1 - 1] = d2;
+      if (y_size_tmp >= 2) {
+        y_data[0] = 0.0F;
+        if (y_size_tmp >= 3) {
           if (-d2 == 0.0F) {
-            int32_T g;
-            delta1 = d2 / (real32_T)(y->size[1] - 1);
-            g = y->size[1];
-            for (d_k = 2; d_k < g; d_k++) {
-              y->data[d_k - 1] = (real32_T)(((d_k << 1) - y->size[1]) - 1) *
+            delta1 = d2 / (real32_T)(y_size_tmp - 1);
+            for (d_k = 2; d_k < y_size_tmp; d_k++) {
+              y_data[d_k - 1] = (real32_T)(((d_k << 1) - y_size_tmp) - 1) *
                 delta1;
             }
 
-            if ((y->size[1] & 1) == 1) {
-              y->data[y->size[1] >> 1] = 0.0F;
+            if ((y_size_tmp & 1) == 1) {
+              y_data[y_size_tmp >> 1] = 0.0F;
             }
           } else if ((d2 < 0.0F) && (fabsf(d2) > 1.70141173E+38F)) {
-            int32_T g;
-            delta1 = d2 / (real32_T)((real_T)y->size[1] - 1.0);
-            g = y->size[1] - 3;
-            for (d_k = 0; d_k <= g; d_k++) {
-              y->data[d_k + 1] = (real32_T)((real_T)d_k + 1.0) * delta1;
+            delta1 = d2 / (real32_T)((real_T)y_size_tmp - 1.0);
+            y_size_tmp -= 3;
+            for (d_k = 0; d_k <= y_size_tmp; d_k++) {
+              y_data[d_k + 1] = (real32_T)((real_T)d_k + 1.0) * delta1;
             }
           } else {
-            int32_T g;
-            delta1 = d2 / (real32_T)((real_T)y->size[1] - 1.0);
-            g = y->size[1] - 3;
-            for (d_k = 0; d_k <= g; d_k++) {
-              y->data[d_k + 1] = (real32_T)((real_T)d_k + 1.0) * delta1;
+            delta1 = d2 / (real32_T)((real_T)y_size_tmp - 1.0);
+            y_size_tmp -= 3;
+            for (d_k = 0; d_k <= y_size_tmp; d_k++) {
+              y_data[d_k + 1] = (real32_T)((real_T)d_k + 1.0) * delta1;
             }
           }
         }
@@ -929,103 +914,51 @@ real32_T rt_atan2f_snf(real32_T u0, real32_T u1)
   return y;
 }
 
-static void Controller_expand_atan2(const real32_T a_data[], const int32_T
-  a_size[2], const real32_T b_data[], const int32_T b_size[2], real32_T c_data[],
-  int32_T c_size[2])
+static void Controller_plus_l(real32_T in1_data[], int32_T in1_size[2], const
+  real32_T in2_data[], const int32_T in2_size[2])
 {
-  int32_T csz_idx_1;
-  int32_T k;
-  if (b_size[1] == 1) {
-    csz_idx_1 = a_size[1];
-  } else if (a_size[1] == 1) {
-    csz_idx_1 = b_size[1];
-  } else if (a_size[1] <= b_size[1]) {
-    csz_idx_1 = a_size[1];
-  } else {
-    csz_idx_1 = b_size[1];
-  }
-
-  c_size[0] = 1;
-  c_size[1] = csz_idx_1;
-  if (csz_idx_1 != 0) {
-    boolean_T d;
-    boolean_T e;
-    d = (a_size[1] != 1);
-    e = (b_size[1] != 1);
-    for (k = 0; k < csz_idx_1; k++) {
-      c_data[k] = rt_atan2f_snf(a_data[d * k], b_data[e * k]);
-    }
-  }
-}
-
-static void Controller_emxFree_real32_T(emxArray_real32_T_Controller_T
-  **pEmxArray)
-{
-  if (*pEmxArray != (emxArray_real32_T_Controller_T *)NULL) {
-    if (((*pEmxArray)->data != (real32_T *)NULL) && (*pEmxArray)->canFreeData) {
-      free((*pEmxArray)->data);
-    }
-
-    free((*pEmxArray)->size);
-    free(*pEmxArray);
-    *pEmxArray = (emxArray_real32_T_Controller_T *)NULL;
-  }
-}
-
-static void Controller_plus_l(emxArray_real32_T_Controller_T *in1, const
-  emxArray_real32_T_Controller_T *in2)
-{
-  emxArray_real32_T_Controller_T *in1_0;
   int32_T i;
+  int32_T in1_size_idx_1;
   int32_T loop_ub;
   int32_T stride_0_1;
   int32_T stride_1_1;
-  Controller_emxInit_real32_T(&in1_0, 2);
-  i = in1_0->size[0] * in1_0->size[1];
-  in1_0->size[0] = 1;
-  in1_0->size[1] = in2->size[1] == 1 ? in1->size[1] : in2->size[1];
-  Cont_emxEnsureCapacity_real32_T(in1_0, i);
-  stride_0_1 = (in1->size[1] != 1);
-  stride_1_1 = (in2->size[1] != 1);
-  loop_ub = in2->size[1] == 1 ? in1->size[1] : in2->size[1];
+  in1_size_idx_1 = in2_size[1] == 1 ? in1_size[1] : in2_size[1];
+  stride_0_1 = (in1_size[1] != 1);
+  stride_1_1 = (in2_size[1] != 1);
+  loop_ub = in2_size[1] == 1 ? in1_size[1] : in2_size[1];
   for (i = 0; i < loop_ub; i++) {
-    in1_0->data[i] = in1->data[i * stride_0_1] + in2->data[i * stride_1_1];
+    Controller_B.in1_data[i] = in1_data[i * stride_0_1] + in2_data[i *
+      stride_1_1];
   }
 
-  i = in1->size[0] * in1->size[1];
-  in1->size[0] = 1;
-  in1->size[1] = in1_0->size[1];
-  Cont_emxEnsureCapacity_real32_T(in1, i);
-  loop_ub = in1_0->size[1];
-  if (loop_ub - 1 >= 0) {
-    memcpy(&in1->data[0], &in1_0->data[0], (uint32_T)loop_ub * sizeof(real32_T));
+  in1_size[0] = 1;
+  in1_size[1] = in1_size_idx_1;
+  if (in1_size_idx_1 - 1 >= 0) {
+    memcpy(&in1_data[0], &Controller_B.in1_data[0], (uint32_T)in1_size_idx_1 *
+           sizeof(real32_T));
   }
-
-  Controller_emxFree_real32_T(&in1_0);
 }
 
-static void Controller_cumtrapz(const emxArray_real32_T_Controller_T *x,
-  emxArray_real32_T_Controller_T *z)
+static void Controller_cumtrapz(const real32_T x_data[], const int32_T x_size[2],
+  real32_T z_data[], int32_T z_size[2])
 {
   int32_T ylast_tmp;
-  ylast_tmp = z->size[0] * z->size[1];
-  z->size[0] = 1;
-  z->size[1] = x->size[1];
-  Cont_emxEnsureCapacity_real32_T(z, ylast_tmp);
-  if (x->size[1] != 0) {
+  z_size[0] = 1;
+  z_size[1] = x_size[1];
+  if (x_size[1] != 0) {
     int32_T c;
     real32_T s;
     real32_T ylast;
     s = 0.0F;
-    ylast = x->data[0];
-    z->data[0] = 0.0F;
-    c = x->size[1] - 1;
+    ylast = x_data[0];
+    z_data[0] = 0.0F;
+    c = x_size[1] - 1;
     for (ylast_tmp = 0; ylast_tmp < c; ylast_tmp++) {
       real32_T s_tmp;
-      s_tmp = x->data[ylast_tmp + 1];
+      s_tmp = x_data[ylast_tmp + 1];
       s += (s_tmp + ylast) / 2.0F;
       ylast = s_tmp;
-      z->data[ylast_tmp + 1] = s;
+      z_data[ylast_tmp + 1] = s;
     }
   }
 }
@@ -1036,13 +969,13 @@ static void Con_computeCumulativePathLength(const real32_T splineDx_breaks_data[
   const real32_T splineDy_coefs_data[], const real32_T tQuery_data[], const
   int32_T tQuery_size[2], real32_T cumLengths_data[], int32_T cumLengths_size[2])
 {
-  emxArray_real32_T_Controller_T *intervalcumPathLength;
-  emxArray_real32_T_Controller_T *tInteg;
-  emxArray_real32_T_Controller_T *v;
   int32_T tmp_data[50];
+  int32_T intervalcumPathLength_size[2];
+  int32_T tInteg_size[2];
   int32_T b_ix;
   int32_T ip;
-  int32_T nx;
+  int32_T nx_tmp;
+  int32_T v_size_idx_1;
   real32_T stepSize;
   real32_T tSpacing;
   real32_T xloc;
@@ -1050,129 +983,107 @@ static void Con_computeCumulativePathLength(const real32_T splineDx_breaks_data[
   tSpacing = tQuery_data[1] - tQuery_data[0];
   stepSize = tSpacing / fmaxf(ceilf(tSpacing / 0.01F), 10.0F);
   tSpacing = roundf(tSpacing / stepSize);
-  Controller_emxInit_real32_T(&tInteg, 2);
   Controller_linspace(tQuery_data[tQuery_size[1] - 1], ((real32_T)tQuery_size[1]
-    - 1.0F) * tSpacing + 1.0F, tInteg);
-  Controller_emxInit_real32_T(&intervalcumPathLength, 2);
-  b_ix = intervalcumPathLength->size[0] * intervalcumPathLength->size[1];
-  intervalcumPathLength->size[0] = 1;
-  intervalcumPathLength->size[1] = tInteg->size[1];
-  Cont_emxEnsureCapacity_real32_T(intervalcumPathLength, b_ix);
-  nx = tInteg->size[1] - 1;
-  for (b_ix = 0; b_ix <= nx; b_ix++) {
-    xloc = tInteg->data[b_ix];
+    - 1.0F) * tSpacing + 1.0F, Controller_B.tInteg_data, tInteg_size);
+  intervalcumPathLength_size[1] = tInteg_size[1];
+  nx_tmp = tInteg_size[1] - 1;
+  for (b_ix = 0; b_ix <= nx_tmp; b_ix++) {
+    xloc = Controller_B.tInteg_data[b_ix];
     if (rtIsNaNF(xloc)) {
-      intervalcumPathLength->data[b_ix] = xloc;
+      Controller_B.intervalcumPathLength_data[b_ix] = xloc;
     } else {
       ip = Controller_bsearch(splineDx_breaks_data, splineDx_breaks_size, xloc)
         - 1;
       xloc -= splineDx_breaks_data[ip];
-      intervalcumPathLength->data[b_ix] = (splineDx_coefs_data[(ip +
+      Controller_B.intervalcumPathLength_data[b_ix] = (splineDx_coefs_data[(ip +
         splineDx_breaks_size[1]) - 1] + splineDx_coefs_data[ip] * xloc) * xloc +
         splineDx_coefs_data[((splineDx_breaks_size[1] - 1) << 1) + ip];
     }
   }
 
-  Controller_emxInit_real32_T(&v, 2);
-  b_ix = v->size[0] * v->size[1];
-  v->size[0] = 1;
-  v->size[1] = tInteg->size[1];
-  Cont_emxEnsureCapacity_real32_T(v, b_ix);
-  nx = tInteg->size[1] - 1;
-  for (b_ix = 0; b_ix <= nx; b_ix++) {
-    xloc = tInteg->data[b_ix];
+  v_size_idx_1 = tInteg_size[1];
+  for (b_ix = 0; b_ix <= nx_tmp; b_ix++) {
+    xloc = Controller_B.tInteg_data[b_ix];
     if (rtIsNaNF(xloc)) {
-      v->data[b_ix] = xloc;
+      Controller_B.v_data_c[b_ix] = xloc;
     } else {
       ip = Controller_bsearch(splineDy_breaks_data, splineDy_breaks_size, xloc)
         - 1;
       xloc -= splineDy_breaks_data[ip];
-      v->data[b_ix] = (splineDy_coefs_data[(ip + splineDy_breaks_size[1]) - 1] +
-                       splineDy_coefs_data[ip] * xloc) * xloc +
+      Controller_B.v_data_c[b_ix] = (splineDy_coefs_data[(ip +
+        splineDy_breaks_size[1]) - 1] + splineDy_coefs_data[ip] * xloc) * xloc +
         splineDy_coefs_data[((splineDy_breaks_size[1] - 1) << 1) + ip];
     }
   }
 
-  b_ix = intervalcumPathLength->size[0] * intervalcumPathLength->size[1];
-  intervalcumPathLength->size[0] = 1;
-  Cont_emxEnsureCapacity_real32_T(intervalcumPathLength, b_ix);
-  nx = intervalcumPathLength->size[1] - 1;
-  for (b_ix = 0; b_ix <= nx; b_ix++) {
-    xloc = intervalcumPathLength->data[b_ix];
-    intervalcumPathLength->data[b_ix] = xloc * xloc;
+  intervalcumPathLength_size[0] = 1;
+  nx_tmp = tInteg_size[1] - 1;
+  for (b_ix = 0; b_ix <= nx_tmp; b_ix++) {
+    xloc = Controller_B.intervalcumPathLength_data[b_ix];
+    Controller_B.intervalcumPathLength_data[b_ix] = xloc * xloc;
   }
 
-  b_ix = tInteg->size[0] * tInteg->size[1];
-  tInteg->size[0] = 1;
-  tInteg->size[1] = v->size[1];
-  Cont_emxEnsureCapacity_real32_T(tInteg, b_ix);
-  nx = v->size[1];
-  for (b_ix = 0; b_ix < nx; b_ix++) {
-    xloc = v->data[b_ix];
-    tInteg->data[b_ix] = xloc * xloc;
+  tInteg_size[0] = 1;
+  for (b_ix = 0; b_ix < v_size_idx_1; b_ix++) {
+    xloc = Controller_B.v_data_c[b_ix];
+    Controller_B.tInteg_data[b_ix] = xloc * xloc;
   }
 
-  Controller_emxFree_real32_T(&v);
-  if (intervalcumPathLength->size[1] == tInteg->size[1]) {
-    nx = intervalcumPathLength->size[1] - 1;
-    b_ix = intervalcumPathLength->size[0] * intervalcumPathLength->size[1];
-    intervalcumPathLength->size[0] = 1;
-    Cont_emxEnsureCapacity_real32_T(intervalcumPathLength, b_ix);
-    for (b_ix = 0; b_ix <= nx; b_ix++) {
-      intervalcumPathLength->data[b_ix] += tInteg->data[b_ix];
+  if (intervalcumPathLength_size[1] == v_size_idx_1) {
+    for (b_ix = 0; b_ix <= nx_tmp; b_ix++) {
+      Controller_B.intervalcumPathLength_data[b_ix] +=
+        Controller_B.tInteg_data[b_ix];
     }
   } else {
-    Controller_plus_l(intervalcumPathLength, tInteg);
+    Controller_plus_l(Controller_B.intervalcumPathLength_data,
+                      intervalcumPathLength_size, Controller_B.tInteg_data,
+                      tInteg_size);
   }
 
-  b_ix = tInteg->size[0] * tInteg->size[1];
-  tInteg->size[0] = 1;
-  tInteg->size[1] = intervalcumPathLength->size[1];
-  Cont_emxEnsureCapacity_real32_T(tInteg, b_ix);
-  nx = intervalcumPathLength->size[1];
-  if (nx - 1 >= 0) {
-    memcpy(&tInteg->data[0], &intervalcumPathLength->data[0], (uint32_T)nx *
-           sizeof(real32_T));
+  tInteg_size[0] = 1;
+  tInteg_size[1] = intervalcumPathLength_size[1];
+  ip = intervalcumPathLength_size[1];
+  if (ip - 1 >= 0) {
+    memcpy(&Controller_B.tInteg_data[0],
+           &Controller_B.intervalcumPathLength_data[0], (uint32_T)ip * sizeof
+           (real32_T));
   }
 
-  nx = intervalcumPathLength->size[1] - 1;
-  for (b_ix = 0; b_ix <= nx; b_ix++) {
-    tInteg->data[b_ix] = sqrtf(tInteg->data[b_ix]);
+  ip = intervalcumPathLength_size[1] - 1;
+  for (b_ix = 0; b_ix <= ip; b_ix++) {
+    Controller_B.tInteg_data[b_ix] = sqrtf(Controller_B.tInteg_data[b_ix]);
   }
 
-  Controller_cumtrapz(tInteg, intervalcumPathLength);
-  Controller_emxFree_real32_T(&tInteg);
-  b_ix = intervalcumPathLength->size[0] * intervalcumPathLength->size[1];
-  intervalcumPathLength->size[0] = 1;
-  Cont_emxEnsureCapacity_real32_T(intervalcumPathLength, b_ix);
-  nx = intervalcumPathLength->size[1] - 1;
-  for (b_ix = 0; b_ix <= nx; b_ix++) {
-    intervalcumPathLength->data[b_ix] *= stepSize;
+  Controller_cumtrapz(Controller_B.tInteg_data, tInteg_size,
+                      Controller_B.intervalcumPathLength_data,
+                      intervalcumPathLength_size);
+  ip = intervalcumPathLength_size[1] - 1;
+  for (b_ix = 0; b_ix <= ip; b_ix++) {
+    Controller_B.intervalcumPathLength_data[b_ix] *= stepSize;
   }
 
   if (tQuery_size[1] - 1 < 1) {
-    ip = 0;
+    nx_tmp = 0;
   } else {
-    ip = tQuery_size[1] - 1;
-    nx = tQuery_size[1] - 2;
-    for (b_ix = 0; b_ix <= nx; b_ix++) {
+    nx_tmp = tQuery_size[1] - 1;
+    ip = tQuery_size[1] - 2;
+    for (b_ix = 0; b_ix <= ip; b_ix++) {
       y_data[b_ix] = (int8_T)(b_ix + 1);
     }
   }
 
   cumLengths_size[0] = 1;
-  cumLengths_size[1] = ip + 1;
-  nx = ip + 1;
+  cumLengths_size[1] = nx_tmp + 1;
+  ip = nx_tmp + 1;
   tmp_data[0] = 0;
-  for (b_ix = 0; b_ix < ip; b_ix++) {
+  for (b_ix = 0; b_ix < nx_tmp; b_ix++) {
     tmp_data[b_ix + 1] = (int32_T)(tSpacing * (real32_T)y_data[b_ix] + 1.0F) - 1;
   }
 
-  for (b_ix = 0; b_ix < nx; b_ix++) {
-    cumLengths_data[b_ix] = intervalcumPathLength->data[tmp_data[b_ix]];
+  for (b_ix = 0; b_ix < ip; b_ix++) {
+    cumLengths_data[b_ix] =
+      Controller_B.intervalcumPathLength_data[tmp_data[b_ix]];
   }
-
-  Controller_emxFree_real32_T(&intervalcumPathLength);
 }
 
 static void Controller_bsxfun_l(const real32_T a_data[], const int32_T a_size[2],
@@ -1240,35 +1151,10 @@ real32_T rt_powf_snf(real32_T u0, real32_T u1)
   return y;
 }
 
-static void Contro_binary_expand_op_l5xxx52(real32_T in1_data[], int32_T
-  in1_size[2], const emxArray_real32_T_Controller_T *in3, const
-  emxArray_real32_T_Controller_T *in4)
-{
-  int32_T i;
-  int32_T in3_size_idx_1;
-  int32_T loop_ub;
-  int32_T stride_0_1;
-  int32_T stride_1_1;
-  real32_T in3_data[50];
-  in3_size_idx_1 = in4->size[1] == 1 ? in3->size[1] : in4->size[1];
-  stride_0_1 = (in3->size[1] != 1);
-  stride_1_1 = (in4->size[1] != 1);
-  loop_ub = in4->size[1] == 1 ? in3->size[1] : in4->size[1];
-  for (i = 0; i < loop_ub; i++) {
-    in3_data[i] = in3->data[i * stride_0_1] + in4->data[i * stride_1_1];
-  }
-
-  in1_size[0] = 1;
-  in1_size[1] = in3_size_idx_1;
-  for (i = 0; i < in3_size_idx_1; i++) {
-    in1_data[i] = rt_powf_snf(in3_data[i], 1.5F);
-  }
-}
-
 static void Control_binary_expand_op_l5xxx5(real32_T in1_data[], int32_T
-  in1_size[2], const emxArray_real32_T_Controller_T *in2, const
-  emxArray_real32_T_Controller_T *in3, const real32_T in4_data[], const int32_T
-  in4_size[2], const real32_T in5_data[], const int32_T in5_size[2])
+  in1_size[2], const real32_T in2_data[], const int32_T in2_size[2], const
+  real32_T in3_data[], const int32_T in3_size[2], const real32_T in4_data[],
+  const int32_T in4_size[2], const real32_T in5_data[], const int32_T in5_size[2])
 {
   int32_T i;
   int32_T in2_size_idx_1;
@@ -1278,28 +1164,28 @@ static void Control_binary_expand_op_l5xxx5(real32_T in1_data[], int32_T
   int32_T stride_2_1;
   int32_T stride_3_1;
   int32_T stride_4_1;
-  real32_T in2_data[50];
-  in2_size_idx_1 = in5_size[1] == 1 ? (in4_size[1] == 1 ? in3->size[1] :
-    in4_size[1]) == 1 ? in1_size[1] == 1 ? in2->size[1] : in1_size[1] :
-    in4_size[1] == 1 ? in3->size[1] : in4_size[1] : in5_size[1];
-  stride_0_1 = (in2->size[1] != 1);
+  real32_T in2_data_0[50];
+  in2_size_idx_1 = in5_size[1] == 1 ? (in4_size[1] == 1 ? in3_size[1] :
+    in4_size[1]) == 1 ? in1_size[1] == 1 ? in2_size[1] : in1_size[1] : in4_size
+    [1] == 1 ? in3_size[1] : in4_size[1] : in5_size[1];
+  stride_0_1 = (in2_size[1] != 1);
   stride_1_1 = (in1_size[1] != 1);
-  stride_2_1 = (in3->size[1] != 1);
+  stride_2_1 = (in3_size[1] != 1);
   stride_3_1 = (in4_size[1] != 1);
   stride_4_1 = (in5_size[1] != 1);
-  loop_ub = in5_size[1] == 1 ? (in4_size[1] == 1 ? in3->size[1] : in4_size[1]) ==
-    1 ? in1_size[1] == 1 ? in2->size[1] : in1_size[1] : in4_size[1] == 1 ?
-    in3->size[1] : in4_size[1] : in5_size[1];
+  loop_ub = in5_size[1] == 1 ? (in4_size[1] == 1 ? in3_size[1] : in4_size[1]) ==
+    1 ? in1_size[1] == 1 ? in2_size[1] : in1_size[1] : in4_size[1] == 1 ?
+    in3_size[1] : in4_size[1] : in5_size[1];
   for (i = 0; i < loop_ub; i++) {
-    in2_data[i] = (in2->data[i * stride_0_1] * in1_data[i * stride_1_1] -
-                   in3->data[i * stride_2_1] * in4_data[i * stride_3_1]) /
+    in2_data_0[i] = (in2_data[i * stride_0_1] * in1_data[i * stride_1_1] -
+                     in3_data[i * stride_2_1] * in4_data[i * stride_3_1]) /
       in5_data[i * stride_4_1];
   }
 
   in1_size[0] = 1;
   in1_size[1] = in2_size_idx_1;
   if (in2_size_idx_1 - 1 >= 0) {
-    memcpy(&in1_data[0], &in2_data[0], (uint32_T)in2_size_idx_1 * sizeof
+    memcpy(&in1_data[0], &in2_data_0[0], (uint32_T)in2_size_idx_1 * sizeof
            (real32_T));
   }
 }
@@ -1311,16 +1197,13 @@ static void Controlle_computePathCurvatures(const real32_T splineDx_breaks_data[
   const int32_T splineDy_coefs_size[3], const real32_T tQuery_data[], const
   int32_T tQuery_size[2], real32_T curvatures_data[], int32_T curvatures_size[2])
 {
-  emxArray_real32_T_Controller_T *tmp;
-  emxArray_real32_T_Controller_T *v;
-  emxArray_real32_T_Controller_T *v_0;
-  emxArray_real32_T_Controller_T *v_1;
-  emxArray_real32_T_Controller_T *v_2;
   int32_T e_size[2];
   int32_T splineDx_breaks_size_0[2];
   int32_T splineDx_coefs_size_0[2];
   int32_T tmp_size[2];
   int32_T tmp_size_0[2];
+  int32_T v_size[2];
+  int32_T v_size_0[2];
   int32_T emptyDimValue;
   int32_T emptyDimValue_tmp;
   int32_T ip;
@@ -1367,22 +1250,19 @@ static void Controlle_computePathCurvatures(const real32_T splineDx_breaks_data[
            sizeof(real32_T));
   }
 
-  Controller_emxInit_real32_T(&v, 2);
-  emptyDimValue = v->size[0] * v->size[1];
-  v->size[0] = 1;
-  v->size[1] = tQuery_size[1];
-  Cont_emxEnsureCapacity_real32_T(v, emptyDimValue);
+  v_size[0] = 1;
+  v_size[1] = tQuery_size[1];
   nx = tQuery_size[1] - 1;
   for (emptyDimValue = 0; emptyDimValue <= nx; emptyDimValue++) {
     xloc = tQuery_data[emptyDimValue];
     if (rtIsNaNF(xloc)) {
-      v->data[emptyDimValue] = xloc;
+      Controller_B.v_data_k[emptyDimValue] = xloc;
     } else {
       ip = Controller_bsearch(splineDx_breaks_data, splineDx_breaks_size, xloc)
         - 1;
       xloc -= splineDx_breaks_data[ip];
-      v->data[emptyDimValue] = (splineDx_coefs_data[(ip + splineDx_breaks_size[1])
-        - 1] + splineDx_coefs_data[ip] * xloc) * xloc +
+      Controller_B.v_data_k[emptyDimValue] = (splineDx_coefs_data[(ip +
+        splineDx_breaks_size[1]) - 1] + splineDx_coefs_data[ip] * xloc) * xloc +
         splineDx_coefs_data[emptyDimValue_tmp + ip];
     }
   }
@@ -1410,20 +1290,17 @@ static void Controlle_computePathCurvatures(const real32_T splineDx_breaks_data[
     }
   }
 
-  Controller_emxInit_real32_T(&v_0, 2);
-  emptyDimValue = v_0->size[0] * v_0->size[1];
-  v_0->size[0] = 1;
-  v_0->size[1] = tQuery_size[1];
-  Cont_emxEnsureCapacity_real32_T(v_0, emptyDimValue);
+  v_size_0[0] = 1;
+  v_size_0[1] = tQuery_size[1];
   for (emptyDimValue = 0; emptyDimValue <= nx; emptyDimValue++) {
     xloc = tQuery_data[emptyDimValue];
     if (rtIsNaNF(xloc)) {
-      v_0->data[emptyDimValue] = xloc;
+      Controller_B.v_data_cx[emptyDimValue] = xloc;
     } else {
       ip = Controller_bsearch(splineDy_breaks_data, splineDy_breaks_size, xloc)
         - 1;
       xloc -= splineDy_breaks_data[ip];
-      v_0->data[emptyDimValue] = (splineDy_coefs_data[(ip +
+      Controller_B.v_data_cx[emptyDimValue] = (splineDy_coefs_data[(ip +
         splineDy_breaks_size[1]) - 1] + splineDy_coefs_data[ip] * xloc) * xloc +
         splineDy_coefs_data[((splineDy_breaks_size[1] - 1) << 1) + ip];
     }
@@ -1452,106 +1329,73 @@ static void Controlle_computePathCurvatures(const real32_T splineDx_breaks_data[
     }
   }
 
-  Controller_emxInit_real32_T(&v_1, 2);
-  emptyDimValue = v_1->size[0] * v_1->size[1];
-  v_1->size[0] = 1;
-  v_1->size[1] = tQuery_size[1];
-  Cont_emxEnsureCapacity_real32_T(v_1, emptyDimValue);
   for (emptyDimValue = 0; emptyDimValue <= nx; emptyDimValue++) {
     xloc = tQuery_data[emptyDimValue];
     if (rtIsNaNF(xloc)) {
-      v_1->data[emptyDimValue] = xloc;
+      Controller_B.v_data_b[emptyDimValue] = xloc;
     } else {
       ip = Controller_bsearch(splineDx_breaks_data, splineDx_breaks_size, xloc)
         - 1;
       xloc -= splineDx_breaks_data[ip];
-      v_1->data[emptyDimValue] = (splineDx_coefs_data[(ip +
+      Controller_B.v_data_b[emptyDimValue] = (splineDx_coefs_data[(ip +
         splineDx_breaks_size[1]) - 1] + splineDx_coefs_data[ip] * xloc) * xloc +
         splineDx_coefs_data[emptyDimValue_tmp + ip];
     }
   }
 
-  Controller_emxInit_real32_T(&v_2, 2);
-  emptyDimValue = v_2->size[0] * v_2->size[1];
-  v_2->size[0] = 1;
-  v_2->size[1] = tQuery_size[1];
-  Cont_emxEnsureCapacity_real32_T(v_2, emptyDimValue);
+  emptyDimValue_tmp = tQuery_size[1];
   for (emptyDimValue = 0; emptyDimValue <= nx; emptyDimValue++) {
     xloc = tQuery_data[emptyDimValue];
     if (rtIsNaNF(xloc)) {
-      v_2->data[emptyDimValue] = xloc;
+      Controller_B.v_data_p[emptyDimValue] = xloc;
     } else {
       ip = Controller_bsearch(splineDy_breaks_data, splineDy_breaks_size, xloc)
         - 1;
       xloc -= splineDy_breaks_data[ip];
-      v_2->data[emptyDimValue] = (splineDy_coefs_data[(ip +
+      Controller_B.v_data_p[emptyDimValue] = (splineDy_coefs_data[(ip +
         splineDy_breaks_size[1]) - 1] + splineDy_coefs_data[ip] * xloc) * xloc +
         splineDy_coefs_data[((splineDy_breaks_size[1] - 1) << 1) + ip];
     }
   }
 
-  Controller_emxInit_real32_T(&tmp, 2);
-  emptyDimValue = tmp->size[0] * tmp->size[1];
-  tmp->size[0] = 1;
-  tmp->size[1] = v_1->size[1];
-  Cont_emxEnsureCapacity_real32_T(tmp, emptyDimValue);
-  emptyDimValue = v_1->size[1];
+  emptyDimValue = tQuery_size[1];
   for (ip = 0; ip < emptyDimValue; ip++) {
-    xloc = v_1->data[ip];
-    tmp->data[ip] = xloc * xloc;
+    xloc = Controller_B.v_data_b[ip];
+    Controller_B.tmp_data[ip] = xloc * xloc;
   }
 
-  emptyDimValue = v_1->size[0] * v_1->size[1];
-  v_1->size[0] = 1;
-  v_1->size[1] = v_2->size[1];
-  Cont_emxEnsureCapacity_real32_T(v_1, emptyDimValue);
-  emptyDimValue = v_2->size[1];
+  for (ip = 0; ip < emptyDimValue_tmp; ip++) {
+    xloc = Controller_B.v_data_p[ip];
+    Controller_B.v_data_b[ip] = xloc * xloc;
+  }
+
+  tmp_size_0[0] = 1;
+  tmp_size_0[1] = tQuery_size[1];
+  emptyDimValue = tQuery_size[1];
   for (ip = 0; ip < emptyDimValue; ip++) {
-    xloc = v_2->data[ip];
-    v_1->data[ip] = xloc * xloc;
+    tmp_data_0[ip] = rt_powf_snf(Controller_B.tmp_data[ip] +
+      Controller_B.v_data_b[ip], 1.5F);
   }
 
-  Controller_emxFree_real32_T(&v_2);
-  if (tmp->size[1] == v_1->size[1]) {
-    tmp_size_0[0] = 1;
-    tmp_size_0[1] = tmp->size[1];
-    emptyDimValue = tmp->size[1];
-    for (ip = 0; ip < emptyDimValue; ip++) {
-      tmp_data_0[ip] = rt_powf_snf(tmp->data[ip] + v_1->data[ip], 1.5F);
-    }
-  } else {
-    Contro_binary_expand_op_l5xxx52(tmp_data_0, tmp_size_0, tmp, v_1);
-  }
-
-  Controller_emxFree_real32_T(&tmp);
-  Controller_emxFree_real32_T(&v_1);
-  if ((v->size[1] == tQuery_size[1]) && (v_0->size[1] == tQuery_size[1]) &&
-      ((v->size[1] == 1 ? tQuery_size[1] : v->size[1]) == (v_0->size[1] == 1 ?
-        tQuery_size[1] : v_0->size[1])) && (((v->size[1] == 1 ? tQuery_size[1] :
-         v->size[1]) == 1 ? v_0->size[1] == 1 ? tQuery_size[1] : v_0->size[1] :
-        v->size[1] == 1 ? tQuery_size[1] : v->size[1]) == tmp_size_0[1])) {
-    emptyDimValue = v->size[1] - 1;
+  if (tQuery_size[1] == tmp_size_0[1]) {
+    emptyDimValue = tQuery_size[1] - 1;
     curvatures_size[0] = 1;
-    curvatures_size[1] = v->size[1];
+    curvatures_size[1] = tQuery_size[1];
     for (ip = 0; ip <= emptyDimValue; ip++) {
-      curvatures_data[ip] = (v->data[ip] * curvatures_data[ip] - v_0->data[ip] *
-        e_data[ip]) / tmp_data_0[ip];
+      curvatures_data[ip] = (Controller_B.v_data_k[ip] * curvatures_data[ip] -
+        Controller_B.v_data_cx[ip] * e_data[ip]) / tmp_data_0[ip];
     }
   } else {
-    Control_binary_expand_op_l5xxx5(curvatures_data, curvatures_size, v, v_0,
-      e_data, e_size, tmp_data_0, tmp_size_0);
+    Control_binary_expand_op_l5xxx5(curvatures_data, curvatures_size,
+      Controller_B.v_data_k, v_size, Controller_B.v_data_cx, v_size_0, e_data,
+      e_size, tmp_data_0, tmp_size_0);
   }
-
-  Controller_emxFree_real32_T(&v_0);
-  Controller_emxFree_real32_T(&v);
 }
 
 static void Controller_smoothPathSpline(const real32_T refPoses[6], const
   real32_T refDirections[2], real32_T poses[150], real32_T directions[50],
   real32_T varargout_1[50], real32_T varargout_2[50])
 {
-  emxArray_real32_T_Controller_T *v;
-  emxArray_real32_T_Controller_T *v_0;
   real_T segEndIdx_data[3];
   real_T segStartIdx_data[3];
   real_T k;
@@ -1570,9 +1414,9 @@ static void Controller_smoothPathSpline(const real32_T refPoses[6], const
   int32_T theta_size[2];
   int32_T theta_size_0[2];
   int32_T tmp_size[2];
+  int32_T b_j;
   int32_T c_refPoses_data_tmp;
   int32_T c_refPoses_size_idx_0;
-  int32_T c_refPoses_tmp;
   int32_T h;
   int32_T i;
   int32_T ip;
@@ -1630,11 +1474,10 @@ static void Controller_smoothPathSpline(const real32_T refPoses[6], const
 
   memset(&varargout_1[0], 0, 50U * sizeof(real32_T));
   memset(&varargout_2[0], 0, 50U * sizeof(real32_T));
-  c_refPoses_tmp = segStartIdx_size - 1;
-  for (c_refPoses_data_tmp = 0; c_refPoses_data_tmp <= c_refPoses_tmp;
-       c_refPoses_data_tmp++) {
-    segEndIdx = segEndIdx_data[c_refPoses_data_tmp];
-    segStartIdx = segStartIdx_data[c_refPoses_data_tmp];
+  c_refPoses_data_tmp = segStartIdx_size - 1;
+  for (b_j = 0; b_j <= c_refPoses_data_tmp; b_j++) {
+    segEndIdx = segEndIdx_data[b_j];
+    segStartIdx = segStartIdx_data[b_j];
     if (segStartIdx > segEndIdx) {
       h = 0;
       i = 0;
@@ -1643,8 +1486,8 @@ static void Controller_smoothPathSpline(const real32_T refPoses[6], const
       i = (int32_T)segEndIdx;
     }
 
-    segStartIdx = (((real_T)c_refPoses_data_tmp + 1.0) + segStartIdx) - 1.0;
-    k = (((real_T)c_refPoses_data_tmp + 1.0) + segEndIdx) - 1.0;
+    segStartIdx = (((real_T)b_j + 1.0) + segStartIdx) - 1.0;
+    k = (((real_T)b_j + 1.0) + segEndIdx) - 1.0;
     if (segStartIdx > k) {
       m = 0;
       ip = 0;
@@ -1670,8 +1513,8 @@ static void Controller_smoothPathSpline(const real32_T refPoses[6], const
       cumChordLength_data[m + vlen] = z_data[vlen];
     }
 
-    chordLengthOfSegments_data[c_refPoses_data_tmp] = cumChordLength_data
-      [(int32_T)((((real_T)c_refPoses_data_tmp + 1.0) + segEndIdx) - 1.0) - 1];
+    chordLengthOfSegments_data[b_j] = cumChordLength_data[(int32_T)((((real_T)
+      b_j + 1.0) + segEndIdx) - 1.0) - 1];
   }
 
   if (segStartIdx_size == 0) {
@@ -1708,16 +1551,12 @@ static void Controller_smoothPathSpline(const real32_T refPoses[6], const
   }
 
   z_data[segStartIdx_size - 1] = 50.0F - y;
-  Controller_emxInit_real32_T(&v, 2);
-  Controller_emxInit_real32_T(&v_0, 2);
-  for (c_refPoses_data_tmp = 0; c_refPoses_data_tmp <= c_refPoses_tmp;
-       c_refPoses_data_tmp++) {
+  for (b_j = 0; b_j <= c_refPoses_data_tmp; b_j++) {
     real32_T startIdx;
     real32_T xloc;
-    segStartIdx = segStartIdx_data[c_refPoses_data_tmp];
-    segEndIdx = (((real_T)c_refPoses_data_tmp + 1.0) + segStartIdx) - 1.0;
-    k = (((real_T)c_refPoses_data_tmp + 1.0) +
-         segEndIdx_data[c_refPoses_data_tmp]) - 1.0;
+    segStartIdx = segStartIdx_data[b_j];
+    segEndIdx = (((real_T)b_j + 1.0) + segStartIdx) - 1.0;
+    k = (((real_T)b_j + 1.0) + segEndIdx_data[b_j]) - 1.0;
     if (segEndIdx > k) {
       m = 0;
       h = 0;
@@ -1731,17 +1570,17 @@ static void Controller_smoothPathSpline(const real32_T refPoses[6], const
       tInterp_data[vlen] = cumChordLength_data[m + vlen];
     }
 
-    if (segStartIdx > segEndIdx_data[c_refPoses_data_tmp]) {
+    if (segStartIdx > segEndIdx_data[b_j]) {
       x = 1;
       segStartIdx_size = 0;
     } else {
       x = (int32_T)segStartIdx;
-      segStartIdx_size = (int32_T)segEndIdx_data[c_refPoses_data_tmp];
+      segStartIdx_size = (int32_T)segEndIdx_data[b_j];
     }
 
     ip = segStartIdx_size - x;
     tmp_size_0 = ip + 3;
-    y = b_refDirections_data[(int32_T)segEndIdx_data[c_refPoses_data_tmp] - 1];
+    y = b_refDirections_data[(int32_T)segEndIdx_data[b_j] - 1];
     xloc = c_refPoses_data[((c_refPoses_size_idx_0 << 1) + x) - 1];
     tmp_data_0[0] = cosf(xloc) * y;
     for (vlen = 0; vlen <= ip; vlen++) {
@@ -1817,13 +1656,14 @@ static void Controller_smoothPathSpline(const real32_T refPoses[6], const
              (real32_T));
     }
 
-    Controller_linspace(chordLengthOfSegments_data[c_refPoses_data_tmp],
-                        z_data[c_refPoses_data_tmp], v);
+    Controller_linspace(chordLengthOfSegments_data[b_j], z_data[b_j],
+                        Controller_B.v_data, tmp_size);
     tQuery_size[0] = 1;
-    tQuery_size[1] = v->size[1];
-    x = v->size[1];
+    tQuery_size[1] = tmp_size[1];
+    x = tmp_size[1];
     if (x - 1 >= 0) {
-      memcpy(&tQuery_data[0], &v->data[0], (uint32_T)x * sizeof(real32_T));
+      memcpy(&tQuery_data[0], &Controller_B.v_data[0], (uint32_T)x * sizeof
+             (real32_T));
     }
 
     Controller_ppval(splineX_breaks_data, splineX_breaks_size,
@@ -1832,51 +1672,39 @@ static void Controller_smoothPathSpline(const real32_T refPoses[6], const
     Controller_ppval(splineY_breaks_data, b_refPoses_size, splineY_coefs_data,
                      splineY_coefs_size, tQuery_data, tQuery_size, y_data,
                      splineX_breaks_size);
-    x = v->size[0] * v->size[1];
-    v->size[0] = 1;
-    v->size[1] = tQuery_size[1];
-    Cont_emxEnsureCapacity_real32_T(v, x);
     vlen = tQuery_size[1] - 1;
     for (x = 0; x <= vlen; x++) {
       xloc = tQuery_data[x];
       if (rtIsNaNF(xloc)) {
-        v->data[x] = xloc;
+        Controller_B.v_data[x] = xloc;
       } else {
         ip = Controller_bsearch(tInterp_data, splineDx_breaks_size, xloc) - 1;
         xloc -= cumChordLength_data[m + ip];
-        v->data[x] = (splineDx_coefs_data[((ip + h) - m) - 1] +
-                      splineDx_coefs_data[ip] * xloc) * xloc +
-          splineDx_coefs_data[((i - 1) << 1) + ip];
+        Controller_B.v_data[x] = (splineDx_coefs_data[((ip + h) - m) - 1] +
+          splineDx_coefs_data[ip] * xloc) * xloc + splineDx_coefs_data[((i - 1) <<
+          1) + ip];
       }
     }
 
-    x = v_0->size[0] * v_0->size[1];
-    v_0->size[0] = 1;
-    v_0->size[1] = tQuery_size[1];
-    Cont_emxEnsureCapacity_real32_T(v_0, x);
     for (x = 0; x <= vlen; x++) {
       xloc = tQuery_data[x];
       if (rtIsNaNF(xloc)) {
-        v_0->data[x] = xloc;
+        Controller_B.v_data_m[x] = xloc;
       } else {
         ip = Controller_bsearch(tmp_data_0, splineDy_breaks_size, xloc) - 1;
         xloc -= cumChordLength_data[m + ip];
-        v_0->data[x] = (splineX_coefs_data_0[((ip + h) - m) - 1] +
-                        splineX_coefs_data_0[ip] * xloc) * xloc +
-          splineX_coefs_data_0[(((h - m) - 1) << 1) + ip];
+        Controller_B.v_data_m[x] = (splineX_coefs_data_0[((ip + h) - m) - 1] +
+          splineX_coefs_data_0[ip] * xloc) * xloc + splineX_coefs_data_0[(((h -
+          m) - 1) << 1) + ip];
       }
     }
 
     segEndIdx = (real_T)(y == -1.0F) * 3.1415926535897931;
-    if (v_0->size[1] == v->size[1]) {
-      theta_size[1] = v_0->size[1];
-      i = v_0->size[1];
-      for (vlen = 0; vlen < i; vlen++) {
-        theta_data[vlen] = rt_atan2f_snf(v_0->data[vlen], v->data[vlen]);
-      }
-    } else {
-      Controller_expand_atan2(v_0->data, v_0->size, v->data, v->size, theta_data,
-        theta_size);
+    theta_size[1] = tQuery_size[1];
+    i = tQuery_size[1];
+    for (vlen = 0; vlen < i; vlen++) {
+      theta_data[vlen] = rt_atan2f_snf(Controller_B.v_data_m[vlen],
+        Controller_B.v_data[vlen]);
     }
 
     theta_size_0[1] = theta_size[1];
@@ -1937,11 +1765,11 @@ static void Controller_smoothPathSpline(const real32_T refPoses[6], const
     }
 
     xloc = z_data[0];
-    for (i = 2; i <= c_refPoses_data_tmp + 1; i++) {
+    for (i = 2; i <= b_j + 1; i++) {
       xloc += z_data[i - 1];
     }
 
-    startIdx = (xloc - z_data[c_refPoses_data_tmp]) + 1.0F;
+    startIdx = (xloc - z_data[b_j]) + 1.0F;
     if (startIdx > xloc) {
       x = 0;
     } else {
@@ -1994,8 +1822,6 @@ static void Controller_smoothPathSpline(const real32_T refPoses[6], const
     }
   }
 
-  Controller_emxFree_real32_T(&v_0);
-  Controller_emxFree_real32_T(&v);
   for (vlen = 0; vlen < 50; vlen++) {
     poses[vlen + 100] *= 57.2957802F;
   }
@@ -4949,15 +4775,13 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
   const real32_T currPose[3], real32_T currVel, const real32_T varargin_1[150],
   const real32_T varargin_2[50], const real32_T varargin_3[50], const real32_T
   varargin_4[50], real32_T refPose[3], real32_T *refVel, real32_T *direction,
-  real32_T *curvature, real32_T *varargout_1)
+  real32_T *curvature)
 {
-  int32_T ii_data[49];
-  int32_T switchIndex_data[49];
   int32_T refPoses_size[2];
   int32_T segRefPoses_size[2];
+  int32_T b_idx;
   int32_T i;
-  int32_T idx;
-  int32_T ii_data_0;
+  int32_T ii_data;
   int32_T jj_data;
   int32_T refPoses_size_idx_0;
   real32_T refPoses_data[150];
@@ -4966,7 +4790,6 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
   real32_T refPoses_data_0[50];
   int8_T n;
   boolean_T dis2PointsSquare_data_0[50];
-  boolean_T x[49];
   boolean_T exitg1;
   boolean_T p;
   boolean_T p_0;
@@ -5010,55 +4833,14 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
   /* findSegmentBoundaryPointIndex Divide the path to segments  */
   /* based on driving direction */
   /*  Find the switching points */
-  for (i = 0; i < 49; i++) {
-    x[i] = (obj->DirectionsInternal[(i + 2) - 1] + obj->DirectionsInternal[i] ==
-            0.0F);
-  }
-
-  idx = 0;
-  i = 1;
-  exitg1 = false;
-  while ((!exitg1) && (i - 1 < 49)) {
-    if (x[i - 1]) {
-      idx++;
-      ii_data[idx - 1] = i;
-      if (idx >= 49) {
-        exitg1 = true;
-      } else {
-        i++;
-      }
-    } else {
-      i++;
-    }
-  }
-
-  if (idx < 1) {
-    idx = 0;
-  }
-
-  if (idx - 1 >= 0) {
-    memcpy(&switchIndex_data[0], &ii_data[0], (uint32_T)idx * sizeof(int32_T));
-  }
-
+  /*              switchIndex = find(directions(1:end-1)+directions(2:end)==0); */
   /*  Divide the path into segments */
-  refPoses_size_idx_0 = obj->SegmentStartIndex->size[0];
-  obj->SegmentStartIndex->size[0] = idx + 1;
-  Cont_emxEnsureCapacity_real32_T(obj->SegmentStartIndex, refPoses_size_idx_0);
-  obj->SegmentStartIndex->data[0] = 1.0F;
-  for (i = 0; i < idx; i++) {
-    obj->SegmentStartIndex->data[i + 1] = (real32_T)((real_T)switchIndex_data[i]
-      + 1.0);
-  }
-
-  refPoses_size_idx_0 = obj->SegmentEndIndex->size[0];
-  obj->SegmentEndIndex->size[0] = idx + 1;
-  Cont_emxEnsureCapacity_real32_T(obj->SegmentEndIndex, refPoses_size_idx_0);
-  for (i = 0; i < idx; i++) {
-    obj->SegmentEndIndex->data[i] = (real32_T)switchIndex_data[i];
-  }
-
-  obj->SegmentEndIndex->data[idx] = 50.0F;
-  obj->NumPathSegments = (real32_T)obj->SegmentStartIndex->size[0];
+  /*              obj.SegmentStartIndex = single([1; switchIndex+1]); */
+  /*              obj.SegmentEndIndex   = single([switchIndex; length(directions)]); */
+  /*              obj.NumPathSegments   = single(numel(obj.SegmentStartIndex)); */
+  obj->SegmentStartIndex = 1.0F;
+  obj->SegmentEndIndex = 50.0F;
+  obj->NumPathSegments = 1.0F;
 
   /*  Check if reaching the final goal. If yes, use the previous */
   /*  outputs */
@@ -5069,15 +4851,11 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
     *refVel = obj->LastRefVelocityOutput;
     *direction = obj->LastDirectionOutput;
     *curvature = obj->LastCurvatureOutput;
-
-    /* ------------------------------------------------------------------ */
-    /* isSimulinkBlock Check if the system object in used in Simulink */
-    /*  0 for MATLAB, 1 for Simulink */
-    *varargout_1 = 1.0F;
   } else {
     real_T segClosestPointIndex;
-    int32_T b_idx;
-    real32_T scale;
+    int32_T last;
+    real32_T distToGoal;
+    real32_T pose_idx_2;
     real32_T t;
     real32_T vec1_idx_0;
     real32_T vec1_idx_1;
@@ -5095,42 +4873,38 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
     /*    path. The desired velocity is the velocity corresponding to */
     /*    the closest point. */
     /*  Get the current segment indexes */
-    t = 0.0174532924F * currPose[2];
+    pose_idx_2 = 0.0174532924F * currPose[2];
 
     /*  Only search within the current segment of the path */
-    scale = obj->SegmentStartIndex->data[(int32_T)obj->CurrentSegmentIndex - 1];
-    vec1_idx_0 = obj->SegmentEndIndex->data[(int32_T)obj->CurrentSegmentIndex -
-      1];
-    if (scale > vec1_idx_0) {
-      b_idx = 1;
-      idx = 0;
+    if (obj->SegmentStartIndex > obj->SegmentEndIndex) {
+      last = 1;
+      b_idx = 0;
     } else {
-      b_idx = (int32_T)scale;
-      idx = (int32_T)vec1_idx_0;
+      last = (int32_T)obj->SegmentStartIndex;
+      b_idx = (int32_T)obj->SegmentEndIndex;
     }
 
-    idx -= b_idx;
-    segRefPoses_size[0] = idx + 1;
+    b_idx -= last;
+    segRefPoses_size[0] = b_idx + 1;
     for (i = 0; i < 3; i++) {
-      for (refPoses_size_idx_0 = 0; refPoses_size_idx_0 <= idx;
+      for (refPoses_size_idx_0 = 0; refPoses_size_idx_0 <= b_idx;
            refPoses_size_idx_0++) {
-        segRefPoses_data[refPoses_size_idx_0 + (idx + 1) * i] =
-          obj->RefPosesInternal[((b_idx + refPoses_size_idx_0) + 50 * i) - 1];
+        segRefPoses_data[refPoses_size_idx_0 + (b_idx + 1) * i] =
+          obj->RefPosesInternal[((last + refPoses_size_idx_0) + 50 * i) - 1];
       }
     }
 
-    for (i = 0; i <= idx; i++) {
-      segRefPoses_data[i + ((idx + 1) << 1)] = obj->RefPosesInternal[(b_idx + i)
+    for (i = 0; i <= b_idx; i++) {
+      segRefPoses_data[i + ((b_idx + 1) << 1)] = obj->RefPosesInternal[(last + i)
         + 99] * 0.0174532924F;
     }
 
     /*  Current driving direction */
-    *direction = obj->DirectionsInternal[(int32_T)obj->SegmentEndIndex->data
-      [(int32_T)obj->CurrentSegmentIndex - 1] - 1];
+    *direction = obj->DirectionsInternal[(int32_T)obj->SegmentEndIndex - 1];
 
     /*  Compute the index of the closest point on the path segment */
-    refPoses_size[0] = idx + 1;
-    i = (idx + 1) * 3;
+    refPoses_size[0] = b_idx + 1;
+    i = (b_idx + 1) * 3;
     if (i - 1 >= 0) {
       memcpy(&refPoses_data[0], &segRefPoses_data[0], (uint32_T)i * sizeof
              (real32_T));
@@ -5138,46 +4912,45 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
 
     /* ------------------------------------------------------------------ */
     /* findClosestPathPoint Find the index of the closest point */
-    if (obj->DirectionsInternal[(int32_T)obj->SegmentStartIndex->data[(int32_T)
-        obj->CurrentSegmentIndex - 1] - 1] == 1.0F) {
+    if (obj->DirectionsInternal[(int32_T)obj->SegmentStartIndex - 1] == 1.0F) {
       /*  forward driving uses front wheel as reference */
-      vec2_idx_0 = 2.8F * cosf(t) + currPose[0];
-      vec2_idx_1 = 2.8F * sinf(t) + currPose[1];
-      refPoses_size[0] = idx + 1;
+      vec2_idx_0 = 2.8F * cosf(pose_idx_2) + currPose[0];
+      vec2_idx_1 = 2.8F * sinf(pose_idx_2) + currPose[1];
+      refPoses_size[0] = b_idx + 1;
       if (i - 1 >= 0) {
         memcpy(&refPoses_data[0], &segRefPoses_data[0], (uint32_T)i * sizeof
                (real32_T));
       }
 
-      idx++;
-      for (i = 0; i < idx; i++) {
+      b_idx++;
+      for (i = 0; i < b_idx; i++) {
         dis2PointsSquare_data[i] = segRefPoses_data[(segRefPoses_size[0] << 1) +
           i];
       }
 
-      idx = segRefPoses_size[0] - 1;
-      for (i = 0; i <= idx; i++) {
+      b_idx = segRefPoses_size[0] - 1;
+      for (i = 0; i <= b_idx; i++) {
         dis2PointsSquare_data[i] = cosf(dis2PointsSquare_data[i]);
       }
 
-      idx = segRefPoses_size[0];
-      for (i = 0; i < idx; i++) {
+      b_idx = segRefPoses_size[0];
+      for (i = 0; i < b_idx; i++) {
         refPoses_data[i] = 2.8F * dis2PointsSquare_data[i] + segRefPoses_data[i];
       }
 
-      idx = refPoses_size[0];
-      for (i = 0; i < idx; i++) {
+      b_idx = refPoses_size[0];
+      for (i = 0; i < b_idx; i++) {
         dis2PointsSquare_data[i] = refPoses_data[(refPoses_size[0] << 1) + i];
       }
 
-      idx = refPoses_size[0] - 1;
-      for (i = 0; i <= idx; i++) {
+      b_idx = refPoses_size[0] - 1;
+      for (i = 0; i <= b_idx; i++) {
         dis2PointsSquare_data[i] = sinf(dis2PointsSquare_data[i]);
       }
 
       refPoses_size_idx_0 = refPoses_size[0];
-      idx = refPoses_size[0];
-      for (i = 0; i < idx; i++) {
+      b_idx = refPoses_size[0];
+      for (i = 0; i < b_idx; i++) {
         refPoses_data_0[i] = 2.8F * dis2PointsSquare_data[i] + refPoses_data[i +
           refPoses_size[0]];
       }
@@ -5187,25 +4960,25 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
       }
     }
 
-    idx = refPoses_size[0];
-    for (i = 0; i < idx; i++) {
+    b_idx = refPoses_size[0];
+    for (i = 0; i < b_idx; i++) {
       vec1_idx_0 = refPoses_data[i] - vec2_idx_0;
       dis2PointsSquare_data[i] = vec1_idx_0 * vec1_idx_0;
     }
 
-    idx = refPoses_size[0];
-    for (i = 0; i < idx; i++) {
+    b_idx = refPoses_size[0];
+    for (i = 0; i < b_idx; i++) {
       vec1_idx_0 = refPoses_data[i + refPoses_size[0]] - vec2_idx_1;
       refPoses_data_0[i] = vec1_idx_0 * vec1_idx_0;
     }
 
-    idx = refPoses_size[0];
-    for (i = 0; i < idx; i++) {
+    b_idx = refPoses_size[0];
+    for (i = 0; i < b_idx; i++) {
       dis2PointsSquare_data[i] += refPoses_data_0[i];
     }
 
     /*  Find the closest point on the reference path */
-    idx = refPoses_size[0];
+    last = refPoses_size[0];
     if ((uint8_T)(refPoses_size[0] - 1) + 1 <= 2) {
       if ((uint8_T)(refPoses_size[0] - 1) + 1 == 1) {
         vec1_idx_1 = dis2PointsSquare_data[0];
@@ -5224,7 +4997,7 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
         b_idx = 0;
         i = 2;
         exitg1 = false;
-        while ((!exitg1) && (i <= idx)) {
+        while ((!exitg1) && (i <= last)) {
           if (!rtIsNaNF(dis2PointsSquare_data[i - 1])) {
             b_idx = i;
             exitg1 = true;
@@ -5238,7 +5011,7 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
         vec1_idx_1 = dis2PointsSquare_data[0];
       } else {
         vec1_idx_1 = dis2PointsSquare_data[b_idx - 1];
-        for (i = b_idx + 1; i <= idx; i++) {
+        for (i = b_idx + 1; i <= last; i++) {
           vec1_idx_0 = dis2PointsSquare_data[i - 1];
           if (vec1_idx_1 > vec1_idx_0) {
             vec1_idx_1 = vec1_idx_0;
@@ -5248,15 +5021,15 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
     }
 
     refPoses_size_idx_0 = refPoses_size[0];
-    idx = refPoses_size[0];
-    for (i = 0; i < idx; i++) {
+    b_idx = refPoses_size[0];
+    for (i = 0; i < b_idx; i++) {
       dis2PointsSquare_data_0[i] = (dis2PointsSquare_data[i] == vec1_idx_1);
     }
 
-    Controller_eml_find(dis2PointsSquare_data_0, &refPoses_size_idx_0,
-                        &ii_data_0, &i, &jj_data, &idx);
+    Controller_eml_find(dis2PointsSquare_data_0, &refPoses_size_idx_0, &ii_data,
+                        &i, &jj_data, &b_idx);
     if (i - 1 >= 0) {
-      jj_data = ii_data_0;
+      jj_data = ii_data;
     }
 
     /*  Enforce to be a scalar in Simulink */
@@ -5277,14 +5050,14 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
       vec1_idx_1 = refPoses_data[((refPoses_size[0] << 1) + jj_data) - 1];
       vec1_idx_0 = cosf(vec1_idx_1);
       vec1_idx_1 = sinf(vec1_idx_1);
-      vec2_idx_0 = (2.8F * cosf(t) + vec2_idx_0) - (vec1_idx_0 * 2.8F +
+      vec2_idx_0 = (2.8F * cosf(pose_idx_2) + vec2_idx_0) - (vec1_idx_0 * 2.8F +
         refPoses_data[jj_data - 1]);
-      vec2_idx_1 = (2.8F * sinf(t) + vec2_idx_1) - (refPoses_data[(jj_data +
-        refPoses_size[0]) - 1] + vec1_idx_1 * 2.8F);
+      vec2_idx_1 = (2.8F * sinf(pose_idx_2) + vec2_idx_1) - (refPoses_data
+        [(jj_data + refPoses_size[0]) - 1] + vec1_idx_1 * 2.8F);
     } else {
-      t = refPoses_data[((refPoses_size[0] << 1) + jj_data) - 1];
-      vec1_idx_0 = cosf(t);
-      vec1_idx_1 = sinf(t);
+      pose_idx_2 = refPoses_data[((refPoses_size[0] << 1) + jj_data) - 1];
+      vec1_idx_0 = cosf(pose_idx_2);
+      vec1_idx_1 = sinf(pose_idx_2);
       vec2_idx_0 -= refPoses_data[jj_data - 1];
       vec2_idx_1 -= refPoses_data[(jj_data + refPoses_size[0]) - 1];
     }
@@ -5295,7 +5068,8 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
     }
 
     /*  Convert the segment index to the whole path index */
-    obj->ClosestPointIndex = (scale + (real32_T)segClosestPointIndex) - 1.0F;
+    obj->ClosestPointIndex = ((real32_T)segClosestPointIndex +
+      obj->SegmentStartIndex) - 1.0F;
 
     /*  Get the desired velocity. Set a lower threshold to avoid zero  */
     /*  reference velocity at the very beginning. */
@@ -5310,13 +5084,13 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
     /*  specified for the front wheel. */
     if (*direction == 1.0F) {
       /*  forward */
-      scale = segRefPoses_data[((segRefPoses_size[0] << 1) + (int32_T)
+      vec1_idx_0 = segRefPoses_data[((segRefPoses_size[0] << 1) + (int32_T)
         segClosestPointIndex) - 1];
-      refPose[2] = scale;
-      refPose[0] = cosf(scale) * 2.8F + segRefPoses_data[(int32_T)
+      refPose[2] = vec1_idx_0;
+      refPose[0] = cosf(vec1_idx_0) * 2.8F + segRefPoses_data[(int32_T)
         segClosestPointIndex - 1];
       refPose[1] = segRefPoses_data[((int32_T)segClosestPointIndex +
-        segRefPoses_size[0]) - 1] + sinf(scale) * 2.8F;
+        segRefPoses_size[0]) - 1] + sinf(vec1_idx_0) * 2.8F;
     } else {
       refPose[0] = segRefPoses_data[(int32_T)segClosestPointIndex - 1];
       refPose[1] = segRefPoses_data[((int32_T)segClosestPointIndex +
@@ -5334,76 +5108,73 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
     /*  increment the path segment index and reset reference velocity */
     /*  to zero as the vehicle needs to switch direction at the */
     /*  intermediate goal positions */
-    vec2_idx_1 = obj->VelocityProfileInternal[(int32_T)obj->
-      SegmentEndIndex->data[(int32_T)obj->CurrentSegmentIndex - 1] - 1];
-    *varargout_1 = 0.0F;
+    vec2_idx_1 = obj->VelocityProfileInternal[(int32_T)obj->SegmentEndIndex - 1];
 
     /*  The goal checker acts when the distance from the vehicle to the goal */
     /*  point is within a distance tolerance, disTol.  */
-    i = (int32_T)obj->SegmentEndIndex->data[(int32_T)obj->CurrentSegmentIndex -
-      1];
-    scale = 1.29246971E-26F;
-    vec2_idx_0 = fabsf(obj->RefPosesInternal[i - 1] - currPose[0]);
-    if (vec2_idx_0 > 1.29246971E-26F) {
-      vec1_idx_0 = 1.0F;
-      scale = vec2_idx_0;
+    vec1_idx_0 = 1.29246971E-26F;
+    vec2_idx_0 = obj->RefPosesInternal[(int32_T)obj->SegmentEndIndex - 1];
+    vec1_idx_1 = fabsf(vec2_idx_0 - currPose[0]);
+    if (vec1_idx_1 > 1.29246971E-26F) {
+      distToGoal = 1.0F;
+      vec1_idx_0 = vec1_idx_1;
     } else {
-      t = vec2_idx_0 / 1.29246971E-26F;
-      vec1_idx_0 = t * t;
+      t = vec1_idx_1 / 1.29246971E-26F;
+      distToGoal = t * t;
     }
 
-    vec2_idx_0 = fabsf(obj->RefPosesInternal[i + 49] - currPose[1]);
-    if (vec2_idx_0 > scale) {
-      t = scale / vec2_idx_0;
-      vec1_idx_0 = vec1_idx_0 * t * t + 1.0F;
-      scale = vec2_idx_0;
+    pose_idx_2 = obj->RefPosesInternal[(int32_T)obj->SegmentEndIndex + 49];
+    vec1_idx_1 = fabsf(pose_idx_2 - currPose[1]);
+    if (vec1_idx_1 > vec1_idx_0) {
+      t = vec1_idx_0 / vec1_idx_1;
+      distToGoal = distToGoal * t * t + 1.0F;
+      vec1_idx_0 = vec1_idx_1;
     } else {
-      t = vec2_idx_0 / scale;
-      vec1_idx_0 += t * t;
+      t = vec1_idx_1 / vec1_idx_0;
+      distToGoal += t * t;
     }
 
-    vec1_idx_0 = scale * sqrtf(vec1_idx_0);
-    if (vec1_idx_0 > 1.0F) {
+    distToGoal = vec1_idx_0 * sqrtf(distToGoal);
+    if (distToGoal > 1.0F) {
       p = false;
     } else {
       /*  Check if the vehicle has passed the goal position by checking the angle */
       /*  between two vectors */
-      scale = obj->RefPosesInternal[(int32_T)obj->SegmentEndIndex->data[(int32_T)
-        obj->CurrentSegmentIndex - 1] + 99];
-      if (rtIsInfF(scale) || rtIsNaNF(scale)) {
-        vec2_idx_0 = (rtNaNF);
+      vec1_idx_0 = obj->RefPosesInternal[(int32_T)obj->SegmentEndIndex + 99];
+      if (rtIsInfF(vec1_idx_0) || rtIsNaNF(vec1_idx_0)) {
+        vec1_idx_1 = (rtNaNF);
       } else {
-        vec2_idx_0 = rt_remf_snf(scale, 360.0F);
-        t = fabsf(vec2_idx_0);
+        vec1_idx_1 = rt_remf_snf(vec1_idx_0, 360.0F);
+        t = fabsf(vec1_idx_1);
         if (t > 180.0F) {
-          if (vec2_idx_0 > 0.0F) {
-            vec2_idx_0 -= 360.0F;
+          if (vec1_idx_1 > 0.0F) {
+            vec1_idx_1 -= 360.0F;
           } else {
-            vec2_idx_0 += 360.0F;
+            vec1_idx_1 += 360.0F;
           }
 
-          t = fabsf(vec2_idx_0);
+          t = fabsf(vec1_idx_1);
         }
 
         if (t <= 45.0F) {
-          vec2_idx_0 = cosf(0.0174532924F * vec2_idx_0);
+          vec1_idx_1 = cosf(0.0174532924F * vec1_idx_1);
         } else {
           boolean_T guard1 = false;
           guard1 = false;
           if (t <= 135.0F) {
-            if (vec2_idx_0 > 0.0F) {
-              vec2_idx_0 = -sinf((vec2_idx_0 - 90.0F) * 0.0174532924F);
+            if (vec1_idx_1 > 0.0F) {
+              vec1_idx_1 = -sinf((vec1_idx_1 - 90.0F) * 0.0174532924F);
             } else {
-              vec2_idx_0 = (vec2_idx_0 + 90.0F) * 0.0174532924F;
+              vec1_idx_1 = (vec1_idx_1 + 90.0F) * 0.0174532924F;
               n = -1;
               guard1 = true;
             }
           } else {
-            if (vec2_idx_0 > 0.0F) {
-              vec2_idx_0 = (vec2_idx_0 - 180.0F) * 0.0174532924F;
+            if (vec1_idx_1 > 0.0F) {
+              vec1_idx_1 = (vec1_idx_1 - 180.0F) * 0.0174532924F;
               n = 2;
             } else {
-              vec2_idx_0 = (vec2_idx_0 + 180.0F) * 0.0174532924F;
+              vec1_idx_1 = (vec1_idx_1 + 180.0F) * 0.0174532924F;
               n = -2;
             }
 
@@ -5412,9 +5183,9 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
 
           if (guard1) {
             if (n == -1) {
-              vec2_idx_0 = sinf(vec2_idx_0);
+              vec1_idx_1 = sinf(vec1_idx_1);
             } else {
-              vec2_idx_0 = -cosf(vec2_idx_0);
+              vec1_idx_1 = -cosf(vec1_idx_1);
             }
           }
         }
@@ -5429,12 +5200,8 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
       /*  vehicle is supposed to stop at the goal position, then allow the vehicle  */
       /*  to move until its velocity decreases below the threshold. */
       /*  meters/second */
-      if (((currPose[0] - obj->RefPosesInternal[(int32_T)obj->
-            SegmentEndIndex->data[(int32_T)obj->CurrentSegmentIndex - 1] - 1]) *
-           vec2_idx_0 + (currPose[1] - obj->RefPosesInternal[(int32_T)
-                         obj->SegmentEndIndex->data[(int32_T)
-                         obj->CurrentSegmentIndex - 1] + 49]) * Controller_sind
-           (scale)) * *direction > 0.0F) {
+      if (((currPose[0] - vec2_idx_0) * vec1_idx_1 + (currPose[1] - pose_idx_2) *
+           Controller_sind(vec1_idx_0)) * *direction > 0.0F) {
         p = ((fabsf(currVel) < 0.05) || (vec2_idx_1 != 0.0F));
       } else {
         p = (fabsf(currVel) < 0.05);
@@ -5444,12 +5211,8 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
     if (p) {
       obj->CurrentSegmentIndex++;
       *refVel = vec2_idx_1;
-      *varargout_1 = 1.0F;
     }
 
-    /* ------------------------------------------------------------------ */
-    /* isSimulinkBlock Check if the system object in used in Simulink */
-    /*  0 for MATLAB, 1 for Simulink */
     /*  Store the output */
     obj->LastRefPoseOutput[0] = refPose[0];
     obj->LastRefPoseOutput[1] = refPose[1];
@@ -5491,20 +5254,6 @@ static void Contro_angleUtilities_wrapTo2Pi(real32_T *theta)
   }
 
   *theta += (real32_T)((*theta == 0.0F) && positiveInput) * 6.28318548F;
-}
-
-static void emxFreeStruct_HelperPathAnalyze(HelperPathAnalyzer_Controller_T
-  *pStruct)
-{
-  Controller_emxFree_real32_T(&pStruct->SegmentStartIndex);
-  Controller_emxFree_real32_T(&pStruct->SegmentEndIndex);
-}
-
-static void emxInitStruct_HelperPathAnalyze(HelperPathAnalyzer_Controller_T
-  *pStruct)
-{
-  Controller_emxInit_real32_T(&pStruct->SegmentStartIndex, 1);
-  Controller_emxInit_real32_T(&pStruct->SegmentEndIndex, 1);
 }
 
 static void Controller_SystemCore_setup(HelperPathAnalyzer_Controller_T *obj)
@@ -5586,51 +5335,118 @@ void Controller_step(void)
   real_T rtb_Sum3;
   real_T rtb_Sum_idx_0;
   int32_T i;
+  real32_T rtb_VectorConcatenate[150];
+  real32_T b_varargout_2[50];
   real32_T b_varargout_3[50];
+  real32_T b_varargout_4[50];
+  real32_T rtb_MATLABSystem1_0[50];
   real32_T currPose[3];
   real32_T refPose[3];
   real32_T tmp[2];
+  real32_T absxk;
   real32_T b;
-  real32_T d_idx_1;
   real32_T distToGoal;
-  real32_T rtb_DataTypeConversion_idx_0;
-  real32_T rtb_DataTypeConversion_idx_1;
+  real32_T scale;
   real32_T t;
   int8_T n;
+  boolean_T exitg1;
+  boolean_T guard1 = false;
+  boolean_T p;
   boolean_T rtb_FixPtRelationalOperator;
-  boolean_T rtb_planNext;
+  boolean_T rtb_RelationalOperator_l;
 
-  /* RelationalOperator: '<S118>/FixPt Relational Operator' incorporates:
+  /* RelationalOperator: '<S120>/FixPt Relational Operator' incorporates:
    *  Inport: '<Root>/Controller_In'
-   *  UnitDelay: '<S118>/Delay Input1'
+   *  UnitDelay: '<S120>/Delay Input1'
    *
-   * Block description for '<S118>/Delay Input1':
+   * Block description for '<S120>/Delay Input1':
    *
    *  Store in Global RAM
    */
   rtb_FixPtRelationalOperator = (Controller_U.Controller_In.timestamp !=
     Controller_DW.DelayInput1_DSTATE);
 
-  /* Outputs for Enabled SubSystem: '<S2>/Path Planner' incorporates:
-   *  EnablePort: '<S119>/Enable'
+  /* Outputs for Enabled SubSystem: '<S118>/Enabled Subsystem' incorporates:
+   *  EnablePort: '<S121>/Enable'
    */
   if (rtb_FixPtRelationalOperator) {
     real_T rtb_Multiply1_tmp;
+    real_T rtb_Sum_c;
 
-    /* Outputs for Atomic SubSystem: '<S119>/Enabled Subsystem' */
     /* Gain: '<S121>/Gain2' incorporates:
      *  Inport: '<Root>/Controller_In'
      */
-    rtb_Sum3 = 1.0000000003410059E-9 * (real_T)Controller_U.Controller_In.lat_0;
+    rtb_Sum3 = 1.0000000000287557E-7 * (real_T)Controller_U.Controller_In.lat_0;
 
-    /* Gain: '<S122>/deg2rad1' incorporates:
+    /* Sum: '<S122>/Sum' incorporates:
      *  Gain: '<S121>/Gain'
      *  Inport: '<Root>/VehicheInfo'
-     *  Sum: '<S122>/Sum'
      */
-    rtb_Sum_idx_0 = (1.0000000003410059E-9 * (real_T)
-                     Controller_U.VehicheInfo.lat - rtb_Sum3) *
-      0.017453292519943295;
+    rtb_Sum_idx_0 = 1.0000000000287557E-7 * (real_T)Controller_U.VehicheInfo.lat
+      - rtb_Sum3;
+
+    /* Abs: '<S127>/Abs' incorporates:
+     *  Abs: '<S130>/Abs1'
+     *  Switch: '<S127>/Switch1'
+     */
+    rtb_Sum2_e = fabs(rtb_Sum_idx_0);
+
+    /* Switch: '<S127>/Switch1' incorporates:
+     *  Abs: '<S127>/Abs'
+     *  Bias: '<S127>/Bias2'
+     *  Bias: '<S127>/Bias3'
+     *  Constant: '<S124>/Constant'
+     *  Constant: '<S124>/Constant1'
+     *  Constant: '<S129>/Constant'
+     *  Gain: '<S127>/Gain1'
+     *  Product: '<S127>/Multiply'
+     *  RelationalOperator: '<S129>/Compare'
+     *  Signum: '<S127>/Sign'
+     *  Switch: '<S124>/Switch'
+     */
+    if (rtb_Sum2_e > 90.0) {
+      /* Switch: '<S130>/Switch1' incorporates:
+       *  Bias: '<S130>/Bias2'
+       *  Bias: '<S130>/Bias3'
+       *  Constant: '<S130>/Constant'
+       *  Constant: '<S131>/Constant'
+       *  Math: '<S130>/Math Function'
+       *  RelationalOperator: '<S131>/Compare'
+       */
+      if (rtb_Sum2_e > 180.0) {
+        rtb_Sum_idx_0 = rt_modd_snf(rtb_Sum_idx_0 + 180.0, 360.0) - 180.0;
+      }
+
+      /* End of Switch: '<S130>/Switch1' */
+
+      /* Signum: '<S127>/Sign' */
+      if (rtb_Sum_idx_0 < 0.0) {
+        rtb_Sum_idx_0 = -1.0;
+      } else {
+        rtb_Sum_idx_0 = (rtb_Sum_idx_0 > 0.0);
+      }
+
+      rtb_Sum2_e = (-(rtb_Sum2_e - 90.0) + 90.0) * rtb_Sum_idx_0;
+      i = 180;
+    } else {
+      rtb_Sum2_e = rtb_Sum_idx_0;
+      i = 0;
+    }
+
+    /* Sum: '<S124>/Sum' incorporates:
+     *  Gain: '<S121>/Gain1'
+     *  Gain: '<S121>/Gain3'
+     *  Inport: '<Root>/Controller_In'
+     *  Inport: '<Root>/VehicheInfo'
+     *  Sum: '<S122>/Sum'
+     *  Switch: '<S124>/Switch'
+     */
+    rtb_Sum_c = (1.0000000000287557E-7 * (real_T)Controller_U.VehicheInfo.lon -
+                 1.0000000000287557E-7 * (real_T)
+                 Controller_U.Controller_In.lon_0) + (real_T)i;
+
+    /* Gain: '<S122>/deg2rad1' */
+    rtb_Sum_idx_0 = 0.017453292519943295 * rtb_Sum2_e;
 
     /* Gain: '<S122>/deg2rad' */
     rtb_Sum3 *= 0.017453292519943295;
@@ -5654,23 +5470,33 @@ void Controller_step(void)
 
     /* Product: '<S122>/Multiply' incorporates:
      *  Constant: '<S123>/Constant1'
-     *  Gain: '<S121>/Gain1'
-     *  Gain: '<S121>/Gain3'
-     *  Gain: '<S122>/deg2rad1'
-     *  Inport: '<Root>/Controller_In'
-     *  Inport: '<Root>/VehicheInfo'
      *  Product: '<S123>/Multiply1'
-     *  Product: '<S123>/Multiply2'
      *  Product: '<S123>/Product3'
-     *  Sum: '<S122>/Sum'
      *  Sum: '<S123>/Sum2'
-     *  Trigonometry: '<S123>/Cos'
      */
     rtb_Sum_idx_0 *= 1.0 / (1.0 - rtb_Multiply1_tmp) * Controller_ConstB.Sum4 *
       rtb_Sum2_e;
-    rtb_Sum3 = (1.0000000003410059E-9 * (real_T)Controller_U.VehicheInfo.lon -
-                1.0000000003410059E-9 * (real_T)Controller_U.Controller_In.lon_0)
-      * 0.017453292519943295 * (rtb_Sum2_e * cos(rtb_Sum3));
+
+    /* Switch: '<S126>/Switch1' incorporates:
+     *  Abs: '<S126>/Abs1'
+     *  Bias: '<S126>/Bias2'
+     *  Bias: '<S126>/Bias3'
+     *  Constant: '<S126>/Constant'
+     *  Constant: '<S128>/Constant'
+     *  Math: '<S126>/Math Function'
+     *  RelationalOperator: '<S128>/Compare'
+     */
+    if (fabs(rtb_Sum_c) > 180.0) {
+      rtb_Sum_c = rt_modd_snf(rtb_Sum_c + 180.0, 360.0) - 180.0;
+    }
+
+    /* Product: '<S122>/Multiply' incorporates:
+     *  Gain: '<S122>/deg2rad1'
+     *  Product: '<S123>/Multiply2'
+     *  Switch: '<S126>/Switch1'
+     *  Trigonometry: '<S123>/Cos'
+     */
+    rtb_Sum3 = 0.017453292519943295 * rtb_Sum_c * (rtb_Sum2_e * cos(rtb_Sum3));
 
     /* DataTypeConversion: '<S121>/Data Type Conversion' incorporates:
      *  Product: '<S125>/Multiply1'
@@ -5680,44 +5506,42 @@ void Controller_step(void)
      *  Sum: '<S125>/Sum2'
      *  Sum: '<S125>/Sum3'
      */
-    rtb_DataTypeConversion_idx_0 = (real32_T)(rtb_Sum_idx_0 *
+    Controller_B.DataTypeConversion[0] = (real32_T)(rtb_Sum_idx_0 *
       Controller_ConstB.SinCos_o2 + rtb_Sum3 * Controller_ConstB.SinCos_o1);
-    rtb_DataTypeConversion_idx_1 = (real32_T)(rtb_Sum3 *
+    Controller_B.DataTypeConversion[1] = (real32_T)(rtb_Sum3 *
       Controller_ConstB.SinCos_o2 - rtb_Sum_idx_0 * Controller_ConstB.SinCos_o1);
-
-    /* End of Outputs for SubSystem: '<S119>/Enabled Subsystem' */
-    for (i = 0; i < 50; i++) {
-      /* Sum: '<S119>/Sum' incorporates:
-       *  Concatenate: '<S119>/Vector Concatenate'
-       *  Inport: '<Root>/Controller_In'
-       *  Selector: '<S119>/Selector Col1'
-       */
-      Controller_B.VectorConcatenate[i] = rtb_DataTypeConversion_idx_0 +
-        Controller_U.Controller_In.savePose[i];
-
-      /* Sum: '<S119>/Sum1' incorporates:
-       *  Concatenate: '<S119>/Vector Concatenate'
-       *  Inport: '<Root>/Controller_In'
-       *  Selector: '<S119>/Selector Col2'
-       */
-      Controller_B.VectorConcatenate[i + 50] =
-        Controller_U.Controller_In.savePose[i + 50] +
-        rtb_DataTypeConversion_idx_1;
-
-      /* Selector: '<S119>/Selector Col3' incorporates:
-       *  Concatenate: '<S119>/Vector Concatenate'
-       *  Inport: '<Root>/Controller_In'
-       */
-      Controller_B.VectorConcatenate[i + 100] =
-        Controller_U.Controller_In.savePose[i + 100];
-    }
   }
 
-  /* End of Outputs for SubSystem: '<S2>/Path Planner' */
+  /* End of Outputs for SubSystem: '<S118>/Enabled Subsystem' */
+
+  /* Sum: '<S118>/Sum' */
+  t = Controller_B.DataTypeConversion[0];
+
+  /* Sum: '<S118>/Sum1' */
+  distToGoal = Controller_B.DataTypeConversion[1];
+  for (i = 0; i < 50; i++) {
+    /* Sum: '<S118>/Sum' incorporates:
+     *  Inport: '<Root>/Controller_In'
+     *  Selector: '<S118>/Selector Col1'
+     */
+    rtb_VectorConcatenate[i] = t + Controller_U.Controller_In.savePose[i];
+
+    /* Sum: '<S118>/Sum1' incorporates:
+     *  Inport: '<Root>/Controller_In'
+     *  Selector: '<S118>/Selector Col2'
+     */
+    rtb_VectorConcatenate[i + 50] = Controller_U.Controller_In.savePose[i + 50]
+      + distToGoal;
+
+    /* Selector: '<S118>/Selector Col3' incorporates:
+     *  Inport: '<Root>/Controller_In'
+     */
+    rtb_VectorConcatenate[i + 100] = Controller_U.Controller_In.savePose[i + 100];
+  }
 
   /* MATLAB Function: '<S2>/Behavior Planner' incorporates:
    *  BusCreator generated from: '<S2>/Behavior Planner'
-   *  Concatenate: '<S119>/Vector Concatenate'
+   *  Concatenate: '<S118>/Vector Concatenate'
    *  Inport: '<Root>/Controller_In'
    *  Inport: '<Root>/VehicheInfo'
    */
@@ -5726,189 +5550,179 @@ void Controller_step(void)
     Controller_DW.endSpeed = 1.0F;
     Controller_DW.goalIndex_not_empty = true;
     Controller_DW.nextGoalPose[0] = Controller_U.VehicheInfo.currPose[0];
-    Controller_DW.nextGoalPose[1] = Controller_B.VectorConcatenate[0];
+    Controller_DW.nextGoalPose[1] = rtb_VectorConcatenate[0];
     Controller_DW.nextGoalPose[2] = Controller_U.VehicheInfo.currPose[1];
-    Controller_DW.nextGoalPose[3] = Controller_B.VectorConcatenate[50];
+    Controller_DW.nextGoalPose[3] = rtb_VectorConcatenate[50];
     Controller_DW.nextGoalPose[4] = Controller_U.VehicheInfo.currPose[2];
-    Controller_DW.nextGoalPose[5] = Controller_B.VectorConcatenate[100];
+    Controller_DW.nextGoalPose[5] = rtb_VectorConcatenate[100];
     Controller_DW.speedConfig.StartSpeed = Controller_U.VehicheInfo.currVelocity;
     Controller_DW.speedConfig.EndSpeed = 1.0F;
     Controller_DW.goalIndex = 2.0;
   }
 
-  rtb_planNext = false;
+  rtb_FixPtRelationalOperator = false;
   if (!Controller_DW.finalReached) {
-    boolean_T reachGoal;
-    rtb_DataTypeConversion_idx_0 = 1.29246971E-26F;
-    rtb_DataTypeConversion_idx_1 = fabsf(Controller_DW.nextGoalPose[1] -
-      Controller_U.VehicheInfo.currPose[0]);
-    if (rtb_DataTypeConversion_idx_1 > 1.29246971E-26F) {
+    scale = 1.29246971E-26F;
+    absxk = fabsf(Controller_DW.nextGoalPose[1] -
+                  Controller_U.VehicheInfo.currPose[0]);
+    if (absxk > 1.29246971E-26F) {
       distToGoal = 1.0F;
-      rtb_DataTypeConversion_idx_0 = rtb_DataTypeConversion_idx_1;
+      scale = absxk;
     } else {
-      t = rtb_DataTypeConversion_idx_1 / 1.29246971E-26F;
+      t = absxk / 1.29246971E-26F;
       distToGoal = t * t;
     }
 
-    rtb_DataTypeConversion_idx_1 = fabsf(Controller_DW.nextGoalPose[3] -
-      Controller_U.VehicheInfo.currPose[1]);
-    if (rtb_DataTypeConversion_idx_1 > rtb_DataTypeConversion_idx_0) {
-      t = rtb_DataTypeConversion_idx_0 / rtb_DataTypeConversion_idx_1;
+    absxk = fabsf(Controller_DW.nextGoalPose[3] -
+                  Controller_U.VehicheInfo.currPose[1]);
+    if (absxk > scale) {
+      t = scale / absxk;
       distToGoal = distToGoal * t * t + 1.0F;
-      rtb_DataTypeConversion_idx_0 = rtb_DataTypeConversion_idx_1;
+      scale = absxk;
     } else {
-      t = rtb_DataTypeConversion_idx_1 / rtb_DataTypeConversion_idx_0;
+      t = absxk / scale;
       distToGoal += t * t;
     }
 
-    distToGoal = rtb_DataTypeConversion_idx_0 * sqrtf(distToGoal);
+    distToGoal = scale * sqrtf(distToGoal);
     if (distToGoal > 1.0F) {
-      reachGoal = false;
+      rtb_RelationalOperator_l = false;
     } else {
       if (rtIsInfF(Controller_DW.nextGoalPose[5]) || rtIsNaNF
           (Controller_DW.nextGoalPose[5])) {
-        rtb_DataTypeConversion_idx_0 = (rtNaNF);
-        rtb_DataTypeConversion_idx_1 = (rtNaNF);
+        scale = (rtNaNF);
+        absxk = (rtNaNF);
       } else {
-        rtb_DataTypeConversion_idx_0 = rt_remf_snf(Controller_DW.nextGoalPose[5],
-          360.0F);
-        rtb_DataTypeConversion_idx_1 = fabsf(rtb_DataTypeConversion_idx_0);
-        if (rtb_DataTypeConversion_idx_1 > 180.0F) {
-          if (rtb_DataTypeConversion_idx_0 > 0.0F) {
-            rtb_DataTypeConversion_idx_0 -= 360.0F;
+        scale = rt_remf_snf(Controller_DW.nextGoalPose[5], 360.0F);
+        absxk = fabsf(scale);
+        if (absxk > 180.0F) {
+          if (scale > 0.0F) {
+            scale -= 360.0F;
           } else {
-            rtb_DataTypeConversion_idx_0 += 360.0F;
+            scale += 360.0F;
           }
 
-          rtb_DataTypeConversion_idx_1 = fabsf(rtb_DataTypeConversion_idx_0);
+          absxk = fabsf(scale);
         }
 
-        if (rtb_DataTypeConversion_idx_1 <= 45.0F) {
-          rtb_DataTypeConversion_idx_0 *= 0.0174532924F;
+        if (absxk <= 45.0F) {
+          scale *= 0.0174532924F;
           n = 0;
-        } else if (rtb_DataTypeConversion_idx_1 <= 135.0F) {
-          if (rtb_DataTypeConversion_idx_0 > 0.0F) {
-            rtb_DataTypeConversion_idx_0 = (rtb_DataTypeConversion_idx_0 - 90.0F)
-              * 0.0174532924F;
+        } else if (absxk <= 135.0F) {
+          if (scale > 0.0F) {
+            scale = (scale - 90.0F) * 0.0174532924F;
             n = 1;
           } else {
-            rtb_DataTypeConversion_idx_0 = (rtb_DataTypeConversion_idx_0 + 90.0F)
-              * 0.0174532924F;
+            scale = (scale + 90.0F) * 0.0174532924F;
             n = -1;
           }
-        } else if (rtb_DataTypeConversion_idx_0 > 0.0F) {
-          rtb_DataTypeConversion_idx_0 = (rtb_DataTypeConversion_idx_0 - 180.0F)
-            * 0.0174532924F;
+        } else if (scale > 0.0F) {
+          scale = (scale - 180.0F) * 0.0174532924F;
           n = 2;
         } else {
-          rtb_DataTypeConversion_idx_0 = (rtb_DataTypeConversion_idx_0 + 180.0F)
-            * 0.0174532924F;
+          scale = (scale + 180.0F) * 0.0174532924F;
           n = -2;
         }
 
         switch (n) {
          case 0:
-          rtb_DataTypeConversion_idx_0 = cosf(rtb_DataTypeConversion_idx_0);
+          scale = cosf(scale);
           break;
 
          case 1:
-          rtb_DataTypeConversion_idx_0 = -sinf(rtb_DataTypeConversion_idx_0);
+          scale = -sinf(scale);
           break;
 
          case -1:
-          rtb_DataTypeConversion_idx_0 = sinf(rtb_DataTypeConversion_idx_0);
+          scale = sinf(scale);
           break;
 
          default:
-          rtb_DataTypeConversion_idx_0 = -cosf(rtb_DataTypeConversion_idx_0);
+          scale = -cosf(scale);
           break;
         }
 
-        rtb_DataTypeConversion_idx_1 = rt_remf_snf(Controller_DW.nextGoalPose[5],
-          360.0F);
-        t = fabsf(rtb_DataTypeConversion_idx_1);
+        absxk = rt_remf_snf(Controller_DW.nextGoalPose[5], 360.0F);
+        t = fabsf(absxk);
         if (t > 180.0F) {
-          if (rtb_DataTypeConversion_idx_1 > 0.0F) {
-            rtb_DataTypeConversion_idx_1 -= 360.0F;
+          if (absxk > 0.0F) {
+            absxk -= 360.0F;
           } else {
-            rtb_DataTypeConversion_idx_1 += 360.0F;
+            absxk += 360.0F;
           }
 
-          t = fabsf(rtb_DataTypeConversion_idx_1);
+          t = fabsf(absxk);
         }
 
         if (t <= 45.0F) {
-          rtb_DataTypeConversion_idx_1 *= 0.0174532924F;
+          absxk *= 0.0174532924F;
           n = 0;
         } else if (t <= 135.0F) {
-          if (rtb_DataTypeConversion_idx_1 > 0.0F) {
-            rtb_DataTypeConversion_idx_1 = (rtb_DataTypeConversion_idx_1 - 90.0F)
-              * 0.0174532924F;
+          if (absxk > 0.0F) {
+            absxk = (absxk - 90.0F) * 0.0174532924F;
             n = 1;
           } else {
-            rtb_DataTypeConversion_idx_1 = (rtb_DataTypeConversion_idx_1 + 90.0F)
-              * 0.0174532924F;
+            absxk = (absxk + 90.0F) * 0.0174532924F;
             n = -1;
           }
-        } else if (rtb_DataTypeConversion_idx_1 > 0.0F) {
-          rtb_DataTypeConversion_idx_1 = (rtb_DataTypeConversion_idx_1 - 180.0F)
-            * 0.0174532924F;
+        } else if (absxk > 0.0F) {
+          absxk = (absxk - 180.0F) * 0.0174532924F;
           n = 2;
         } else {
-          rtb_DataTypeConversion_idx_1 = (rtb_DataTypeConversion_idx_1 + 180.0F)
-            * 0.0174532924F;
+          absxk = (absxk + 180.0F) * 0.0174532924F;
           n = -2;
         }
 
         switch (n) {
          case 0:
-          rtb_DataTypeConversion_idx_1 = sinf(rtb_DataTypeConversion_idx_1);
+          absxk = sinf(absxk);
           break;
 
          case 1:
-          rtb_DataTypeConversion_idx_1 = cosf(rtb_DataTypeConversion_idx_1);
+          absxk = cosf(absxk);
           break;
 
          case -1:
-          rtb_DataTypeConversion_idx_1 = -cosf(rtb_DataTypeConversion_idx_1);
+          absxk = -cosf(absxk);
           break;
 
          default:
-          rtb_DataTypeConversion_idx_1 = -sinf(rtb_DataTypeConversion_idx_1);
+          absxk = -sinf(absxk);
           break;
         }
       }
 
       if (((Controller_U.VehicheInfo.currPose[0] - Controller_DW.nextGoalPose[1])
-           * rtb_DataTypeConversion_idx_0 + (Controller_U.VehicheInfo.currPose[1]
-            - Controller_DW.nextGoalPose[3]) * rtb_DataTypeConversion_idx_1) *
+           * scale + (Controller_U.VehicheInfo.currPose[1] -
+                      Controller_DW.nextGoalPose[3]) * absxk) *
           Controller_U.VehicheInfo.direction > 0.0F) {
-        reachGoal = ((fabsf(Controller_U.VehicheInfo.currVelocity) < 0.05) ||
-                     (Controller_DW.speedConfig.EndSpeed != 0.0F));
+        rtb_RelationalOperator_l = ((fabsf(Controller_U.VehicheInfo.currVelocity)
+          < 0.05) || (Controller_DW.speedConfig.EndSpeed != 0.0F));
       } else {
-        reachGoal = (fabsf(Controller_U.VehicheInfo.currVelocity) < 0.05);
+        rtb_RelationalOperator_l = (fabsf(Controller_U.VehicheInfo.currVelocity)
+          < 0.05);
       }
     }
 
-    if (reachGoal) {
+    if (rtb_RelationalOperator_l) {
       if (Controller_DW.goalIndex <= Controller_U.Controller_In.valid_num) {
-        Controller_DW.nextGoalPose[0] = Controller_B.VectorConcatenate[(int32_T)
+        Controller_DW.nextGoalPose[0] = rtb_VectorConcatenate[(int32_T)
           Controller_DW.goalIndex - 1];
-        Controller_DW.nextGoalPose[1] = Controller_B.VectorConcatenate[(int32_T)
+        Controller_DW.nextGoalPose[1] = rtb_VectorConcatenate[(int32_T)
           (Controller_DW.goalIndex + 1.0) - 1];
-        Controller_DW.nextGoalPose[2] = Controller_B.VectorConcatenate[(int32_T)
+        Controller_DW.nextGoalPose[2] = rtb_VectorConcatenate[(int32_T)
           Controller_DW.goalIndex + 49];
-        Controller_DW.nextGoalPose[3] = Controller_B.VectorConcatenate[(int32_T)
+        Controller_DW.nextGoalPose[3] = rtb_VectorConcatenate[(int32_T)
           (Controller_DW.goalIndex + 1.0) + 49];
-        Controller_DW.nextGoalPose[4] = Controller_B.VectorConcatenate[(int32_T)
+        Controller_DW.nextGoalPose[4] = rtb_VectorConcatenate[(int32_T)
           Controller_DW.goalIndex + 99];
-        Controller_DW.nextGoalPose[5] = Controller_B.VectorConcatenate[(int32_T)
+        Controller_DW.nextGoalPose[5] = rtb_VectorConcatenate[(int32_T)
           (Controller_DW.goalIndex + 1.0) + 99];
         Controller_DW.speedConfig.StartSpeed =
           Controller_U.VehicheInfo.currVelocity;
         Controller_DW.speedConfig.EndSpeed = Controller_DW.endSpeed;
         Controller_DW.goalIndex++;
-        rtb_planNext = true;
+        rtb_FixPtRelationalOperator = true;
       } else {
         for (i = 0; i < 6; i++) {
           Controller_DW.nextGoalPose[i] = 0.0F;
@@ -5921,158 +5735,119 @@ void Controller_step(void)
     }
   }
 
-  /* Outputs for Enabled SubSystem: '<S2>/Subsystem' incorporates:
-   *  EnablePort: '<S120>/Enable'
+  /* MATLABSystem: '<S119>/MATLAB System' incorporates:
+   *  MATLAB Function: '<S119>/MATLAB Function'
+   *  MATLAB Function: '<S2>/Behavior Planner'
    */
-  /* Logic: '<S2>/Logical Operator' */
-  if (rtb_FixPtRelationalOperator || rtb_planNext) {
-    boolean_T exitg1;
-    boolean_T guard1 = false;
+  /*  Define total number of inputs */
+  /*  Define total number of outputs */
+  /* ------------------------------------------------------------------ */
+  /* stepImpl Implement the algorithm of interpolating a spline */
+  /*  Check if refDirections contains invalid values */
+  /*  If the input poses are not new, use the previous output */
+  rtb_RelationalOperator_l = false;
+  p = true;
+  i = 0;
+  exitg1 = false;
+  while ((!exitg1) && (i < 6)) {
+    if ((Controller_DW.nextGoalPose[i] == Controller_DW.obj_l.RefPosesInternal[i])
+        || (rtIsNaNF(Controller_DW.nextGoalPose[i]) && rtIsNaNF
+            (Controller_DW.obj_l.RefPosesInternal[i]))) {
+      i++;
+    } else {
+      p = false;
+      exitg1 = true;
+    }
+  }
 
-    /* MATLABSystem: '<S120>/MATLAB System' incorporates:
-     *  MATLAB Function: '<S120>/MATLAB Function'
-     *  MATLAB Function: '<S2>/Behavior Planner'
-     */
-    /*  Define total number of inputs */
-    /*  Define total number of outputs */
-    /* ------------------------------------------------------------------ */
-    /* stepImpl Implement the algorithm of interpolating a spline */
-    /*  Check if refDirections contains invalid values */
-    /*  If the input poses are not new, use the previous output */
-    rtb_FixPtRelationalOperator = false;
-    rtb_planNext = true;
+  if (p) {
+    rtb_RelationalOperator_l = true;
+  }
+
+  guard1 = false;
+  if (rtb_RelationalOperator_l) {
+    rtb_RelationalOperator_l = false;
+    p = true;
     i = 0;
     exitg1 = false;
-    while ((!exitg1) && (i < 6)) {
-      if ((Controller_DW.nextGoalPose[i] ==
-           Controller_DW.obj_m.RefPosesInternal[i]) || (rtIsNaNF
-           (Controller_DW.nextGoalPose[i]) && rtIsNaNF
-           (Controller_DW.obj_m.RefPosesInternal[i]))) {
+    while ((!exitg1) && (i < 2)) {
+      if (Controller_DW.obj_l.RefDirectionsInternal[i] == 1.0F) {
         i++;
       } else {
-        rtb_planNext = false;
+        p = false;
         exitg1 = true;
       }
     }
 
-    if (rtb_planNext) {
-      rtb_FixPtRelationalOperator = true;
+    if (p) {
+      rtb_RelationalOperator_l = true;
     }
 
-    guard1 = false;
-    if (rtb_FixPtRelationalOperator) {
-      rtb_FixPtRelationalOperator = false;
-      rtb_planNext = true;
-      i = 0;
-      exitg1 = false;
-      while ((!exitg1) && (i < 2)) {
-        if (Controller_DW.obj_m.RefDirectionsInternal[i] == 1.0F) {
-          i++;
-        } else {
-          rtb_planNext = false;
-          exitg1 = true;
-        }
-      }
-
-      if (rtb_planNext) {
-        rtb_FixPtRelationalOperator = true;
-      }
-
-      if (rtb_FixPtRelationalOperator) {
-        memcpy(&Controller_B.MATLABSystem_o1[0],
-               &Controller_DW.obj_m.LastPosesOutput[0], 150U * sizeof(real32_T));
-
-        /* MATLABSystem: '<S120>/MATLAB System' */
-        memcpy(&Controller_B.MATLABSystem_o2[0],
-               &Controller_DW.obj_m.LastDirectionsOutput[0], 50U * sizeof
-               (real32_T));
-        memcpy(&b_varargout_3[0], &Controller_DW.obj_m.LastCumLengthsOutput[0],
-               50U * sizeof(real32_T));
-
-        /* MATLABSystem: '<S120>/MATLAB System' */
-        memcpy(&Controller_B.MATLABSystem_o4[0],
-               &Controller_DW.obj_m.LastCurvaturesOutput[0], 50U * sizeof
-               (real32_T));
-      } else {
-        guard1 = true;
-      }
+    if (rtb_RelationalOperator_l) {
+      memcpy(&rtb_VectorConcatenate[0], &Controller_DW.obj_l.LastPosesOutput[0],
+             150U * sizeof(real32_T));
+      memcpy(&b_varargout_2[0], &Controller_DW.obj_l.LastDirectionsOutput[0],
+             50U * sizeof(real32_T));
+      memcpy(&b_varargout_3[0], &Controller_DW.obj_l.LastCumLengthsOutput[0],
+             50U * sizeof(real32_T));
+      memcpy(&b_varargout_4[0], &Controller_DW.obj_l.LastCurvaturesOutput[0],
+             50U * sizeof(real32_T));
     } else {
       guard1 = true;
     }
-
-    if (guard1) {
-      for (i = 0; i < 6; i++) {
-        Controller_DW.obj_m.RefPosesInternal[i] = Controller_DW.nextGoalPose[i];
-      }
-
-      /*  Smooth the path */
-      Controller_DW.obj_m.RefDirectionsInternal[0] = 1.0F;
-
-      /* MATLAB Function: '<S120>/MATLAB Function' incorporates:
-       *  MATLAB Function: '<S2>/Behavior Planner'
-       */
-      tmp[0] = 1.0F;
-      Controller_DW.obj_m.RefDirectionsInternal[1] = 1.0F;
-
-      /* MATLAB Function: '<S120>/MATLAB Function' */
-      tmp[1] = 1.0F;
-      Controller_smoothPathSpline(Controller_DW.nextGoalPose, tmp,
-        Controller_B.MATLABSystem_o1, Controller_B.MATLABSystem_o2,
-        b_varargout_3, Controller_B.MATLABSystem_o4);
-
-      /*  Optional outputs */
-      /*  Store the outputs */
-      memcpy(&Controller_DW.obj_m.LastPosesOutput[0],
-             &Controller_B.MATLABSystem_o1[0], 150U * sizeof(real32_T));
-      memcpy(&Controller_DW.obj_m.LastDirectionsOutput[0],
-             &Controller_B.MATLABSystem_o2[0], 50U * sizeof(real32_T));
-      memcpy(&Controller_DW.obj_m.LastCumLengthsOutput[0], &b_varargout_3[0],
-             50U * sizeof(real32_T));
-      memcpy(&Controller_DW.obj_m.LastCurvaturesOutput[0],
-             &Controller_B.MATLABSystem_o4[0], 50U * sizeof(real32_T));
-    }
-
-    /* MATLABSystem: '<S120>/MATLAB System1' incorporates:
-     *  MATLAB Function: '<S2>/Behavior Planner'
-     *  MATLABSystem: '<S120>/MATLAB System'
-     */
-    if (Controller_DW.obj_mc.MaxSpeed != 20.0) {
-      /* ------------------------------------------------------------------ */
-      Controller_DW.obj_mc.MaxSpeed = 20.0;
-    }
-
-    /* ------------------------------------------------------------------ */
-    Contr_VelocityProfiler_stepImpl(&Controller_DW.obj_mc,
-      Controller_B.MATLABSystem_o2, b_varargout_3, Controller_B.MATLABSystem_o4,
-      Controller_DW.speedConfig.StartSpeed, Controller_DW.speedConfig.EndSpeed,
-      Controller_B.y);
-
-    /* End of MATLABSystem: '<S120>/MATLAB System1' */
-
-    /* MATLAB Function: '<S120>/Verify Velocities ' */
-    rtb_FixPtRelationalOperator = true;
-    i = 0;
-    exitg1 = false;
-    while ((!exitg1) && (i < 50)) {
-      if (rtIsNaNF(Controller_B.y[i]) || Controller_DW.finalReached) {
-        rtb_FixPtRelationalOperator = false;
-        memset(&Controller_B.y[0], 0, 50U * sizeof(real32_T));
-        exitg1 = true;
-      } else {
-        i++;
-      }
-    }
-
-    /* Assertion: '<S120>/Assertion' */
-    utAssert(rtb_FixPtRelationalOperator);
+  } else {
+    guard1 = true;
   }
 
-  /* End of Logic: '<S2>/Logical Operator' */
-  /* End of Outputs for SubSystem: '<S2>/Subsystem' */
+  if (guard1) {
+    for (i = 0; i < 6; i++) {
+      Controller_DW.obj_l.RefPosesInternal[i] = Controller_DW.nextGoalPose[i];
+    }
+
+    /*  Smooth the path */
+    Controller_DW.obj_l.RefDirectionsInternal[0] = 1.0F;
+
+    /* MATLAB Function: '<S119>/MATLAB Function' incorporates:
+     *  MATLAB Function: '<S2>/Behavior Planner'
+     */
+    tmp[0] = 1.0F;
+    Controller_DW.obj_l.RefDirectionsInternal[1] = 1.0F;
+
+    /* MATLAB Function: '<S119>/MATLAB Function' */
+    tmp[1] = 1.0F;
+    Controller_smoothPathSpline(Controller_DW.nextGoalPose, tmp,
+      rtb_VectorConcatenate, b_varargout_2, b_varargout_3, b_varargout_4);
+
+    /*  Optional outputs */
+    /*  Store the outputs */
+    memcpy(&Controller_DW.obj_l.LastPosesOutput[0], &rtb_VectorConcatenate[0],
+           150U * sizeof(real32_T));
+    memcpy(&Controller_DW.obj_l.LastDirectionsOutput[0], &b_varargout_2[0], 50U *
+           sizeof(real32_T));
+    memcpy(&Controller_DW.obj_l.LastCumLengthsOutput[0], &b_varargout_3[0], 50U *
+           sizeof(real32_T));
+    memcpy(&Controller_DW.obj_l.LastCurvaturesOutput[0], &b_varargout_4[0], 50U *
+           sizeof(real32_T));
+  }
+
+  /* MATLABSystem: '<S119>/MATLAB System1' incorporates:
+   *  MATLAB Function: '<S2>/Behavior Planner'
+   *  MATLABSystem: '<S119>/MATLAB System'
+   */
+  if (Controller_DW.obj_n.MaxSpeed != 20.0) {
+    /* ------------------------------------------------------------------ */
+    Controller_DW.obj_n.MaxSpeed = 20.0;
+  }
+
+  /* ------------------------------------------------------------------ */
+  Contr_VelocityProfiler_stepImpl(&Controller_DW.obj_n, b_varargout_2,
+    b_varargout_3, b_varargout_4, Controller_DW.speedConfig.StartSpeed,
+    Controller_DW.speedConfig.EndSpeed, rtb_MATLABSystem1_0);
 
   /* MATLABSystem: '<S1>/MATLAB System' incorporates:
    *  Inport: '<Root>/VehicheInfo'
-   *  MATLABSystem: '<S120>/MATLAB System'
+   *  MATLABSystem: '<S119>/MATLAB System'
+   *  MATLABSystem: '<S119>/MATLAB System1'
    */
   if (Controller_DW.obj.TunablePropsChanged) {
     Controller_DW.obj.TunablePropsChanged = false;
@@ -6103,10 +5878,8 @@ void Controller_step(void)
   /*  outputs */
   Con_HelperPathAnalyzer_stepImpl(&Controller_DW.obj,
     Controller_U.VehicheInfo.currPose, Controller_U.VehicheInfo.currVelocity,
-    Controller_B.MATLABSystem_o1, Controller_B.MATLABSystem_o2,
-    Controller_B.MATLABSystem_o4, Controller_B.y, refPose,
-    &rtb_DataTypeConversion_idx_0, &rtb_DataTypeConversion_idx_1, &distToGoal,
-    &t);
+    rtb_VectorConcatenate, b_varargout_2, b_varargout_4, rtb_MATLABSystem1_0,
+    refPose, &scale, &absxk, &t);
 
   /* MATLAB Function: '<S4>/Kinematic' incorporates:
    *  Inport: '<Root>/VehicheInfo'
@@ -6118,42 +5891,41 @@ void Controller_step(void)
   Contro_angleUtilities_wrapTo2Pi(&refPose[2]);
   currPose[2] = 0.0174532924F * Controller_U.VehicheInfo.currPose[2];
   Contro_angleUtilities_wrapTo2Pi(&currPose[2]);
-  if (rtb_DataTypeConversion_idx_1 == 1.0F) {
+  if (absxk == 1.0F) {
     currPose[0] = 0.3F * cosf(currPose[2]) + Controller_U.VehicheInfo.currPose[0];
     currPose[1] = 0.3F * sinf(currPose[2]) + Controller_U.VehicheInfo.currPose[1];
-    distToGoal = currPose[0] - refPose[0];
-    d_idx_1 = currPose[1] - refPose[1];
+    t = currPose[0] - refPose[0];
+    distToGoal = currPose[1] - refPose[1];
   } else {
-    distToGoal = currPose[0] - refPose[0];
-    d_idx_1 = currPose[1] - refPose[1];
+    t = currPose[0] - refPose[0];
+    distToGoal = currPose[1] - refPose[1];
   }
 
   b = (currPose[2] - refPose[2]) + 3.14159274F;
   Contro_angleUtilities_wrapTo2Pi(&b);
-  if (rtb_DataTypeConversion_idx_1 == 1.0F) {
-    distToGoal = -(atanf(-(distToGoal * sinf(refPose[2]) - cosf(refPose[2]) *
-      d_idx_1) * 2.0F / (Controller_U.VehicheInfo.currVelocity + 1.0F)) + (b -
-      3.14159274F));
+  if (absxk == 1.0F) {
+    t = -(atanf(-(t * sinf(refPose[2]) - cosf(refPose[2]) * distToGoal) * 2.0F /
+                (Controller_U.VehicheInfo.currVelocity + 1.0F)) + (b -
+           3.14159274F));
   } else {
-    if (rtb_DataTypeConversion_idx_1 == 1.0F) {
+    if (absxk == 1.0F) {
       rtb_Sum_idx_0 = 2.0;
     } else {
       rtb_Sum_idx_0 = 2.5;
     }
 
-    distToGoal = atanf(-(distToGoal * sinf(refPose[2]) - cosf(refPose[2]) *
-                         d_idx_1) * (real32_T)rtb_Sum_idx_0 /
-                       (Controller_U.VehicheInfo.currVelocity - 1.0F)) + (b -
-      3.14159274F);
+    t = atanf(-(t * sinf(refPose[2]) - cosf(refPose[2]) * distToGoal) *
+              (real32_T)rtb_Sum_idx_0 / (Controller_U.VehicheInfo.currVelocity -
+               1.0F)) + (b - 3.14159274F);
   }
 
-  d_idx_1 = 57.2957802F * distToGoal;
-  if (rtIsNaNF(d_idx_1)) {
-    distToGoal = (rtNaNF);
-  } else if (d_idx_1 < 0.0F) {
-    distToGoal = -1.0F;
+  distToGoal = 57.2957802F * t;
+  if (rtIsNaNF(distToGoal)) {
+    t = (rtNaNF);
+  } else if (distToGoal < 0.0F) {
+    t = -1.0F;
   } else {
-    distToGoal = (real32_T)(d_idx_1 > 0.0F);
+    t = (real32_T)(distToGoal > 0.0F);
   }
 
   /* Saturate: '<S3>/Saturation2' incorporates:
@@ -6162,27 +5934,26 @@ void Controller_step(void)
    *  MATLAB Function: '<S4>/Kinematic'
    *  Sum: '<S3>/Add'
    */
-  rtb_Sum_idx_0 = floor(distToGoal * fminf(fabsf(d_idx_1), 30.0F) * 5.55555534F
-                        + 750.0);
+  rtb_Sum_idx_0 = floor(t * fminf(fabsf(distToGoal), 30.0F) * 5.55555534F +
+                        750.0);
 
   /* Sum: '<S5>/Minus' incorporates:
    *  Inport: '<Root>/VehicheInfo'
    *  MATLABSystem: '<S1>/MATLAB System'
    */
-  d_idx_1 = rtb_DataTypeConversion_idx_0 - Controller_U.VehicheInfo.currVelocity;
+  distToGoal = scale - Controller_U.VehicheInfo.currVelocity;
 
   /* SwitchCase: '<S11>/Switch Case' incorporates:
    *  MATLABSystem: '<S1>/MATLAB System'
    */
-  distToGoal = truncf(rtb_DataTypeConversion_idx_1);
-  if (rtIsNaNF(distToGoal) || rtIsInfF(distToGoal)) {
-    distToGoal = 0.0F;
+  t = truncf(absxk);
+  if (rtIsNaNF(t) || rtIsInfF(t)) {
+    t = 0.0F;
   } else {
-    distToGoal = fmodf(distToGoal, 4.2949673E+9F);
+    t = fmodf(t, 4.2949673E+9F);
   }
 
-  switch (distToGoal < 0.0F ? -(int32_T)(uint32_T)-distToGoal : (int32_T)
-          (uint32_T)distToGoal) {
+  switch (t < 0.0F ? -(int32_T)(uint32_T)-t : (int32_T)(uint32_T)t) {
    case 1:
     {
       int8_T rtb_Switch1_m;
@@ -6190,10 +5961,9 @@ void Controller_step(void)
       /* Outputs for IfAction SubSystem: '<S11>/Forward' incorporates:
        *  ActionPort: '<S13>/Action Port'
        */
-      /* DiscreteIntegrator: '<S49>/Integrator' incorporates:
-       *  DataTypeConversion: '<S11>/Data Type Conversion'
-       */
-      if ((t != 0.0F) || (Controller_DW.Integrator_PrevResetState_h != 0)) {
+      /* DiscreteIntegrator: '<S49>/Integrator' */
+      if (rtb_FixPtRelationalOperator ||
+          (Controller_DW.Integrator_PrevResetState_h != 0)) {
         Controller_DW.Integrator_DSTATE_i = 0.0F;
       }
 
@@ -6201,29 +5971,28 @@ void Controller_step(void)
        *  DiscreteIntegrator: '<S49>/Integrator'
        *  Gain: '<S54>/Proportional Gain'
        */
-      distToGoal = CONTROL_PARAM.KP * d_idx_1 +
-        Controller_DW.Integrator_DSTATE_i;
+      t = CONTROL_PARAM.KP * distToGoal + Controller_DW.Integrator_DSTATE_i;
 
       /* Saturate: '<S56>/Saturation' incorporates:
        *  DeadZone: '<S42>/DeadZone'
        */
-      if (distToGoal > 20.0F) {
+      if (t > 20.0F) {
         /* Merge: '<S11>/Merge' */
         Controller_B.Merge = 20.0F;
-        distToGoal -= 20.0F;
+        t -= 20.0F;
       } else {
-        if (distToGoal < -20.0F) {
+        if (t < -20.0F) {
           /* Merge: '<S11>/Merge' */
           Controller_B.Merge = -20.0F;
         } else {
           /* Merge: '<S11>/Merge' */
-          Controller_B.Merge = distToGoal;
+          Controller_B.Merge = t;
         }
 
-        if (distToGoal >= -20.0F) {
-          distToGoal = 0.0F;
+        if (t >= -20.0F) {
+          t = 0.0F;
         } else {
-          distToGoal -= -20.0F;
+          t -= -20.0F;
         }
       }
 
@@ -6232,7 +6001,7 @@ void Controller_step(void)
       /* RelationalOperator: '<S40>/Relational Operator' incorporates:
        *  Constant: '<S40>/Clamping_zero'
        */
-      rtb_FixPtRelationalOperator = (distToGoal != 0.0F);
+      rtb_RelationalOperator_l = (t != 0.0F);
 
       /* Switch: '<S40>/Switch1' incorporates:
        *  Constant: '<S40>/Clamping_zero'
@@ -6240,7 +6009,7 @@ void Controller_step(void)
        *  Constant: '<S40>/Constant2'
        *  RelationalOperator: '<S40>/fix for DT propagation issue'
        */
-      if (distToGoal > 0.0F) {
+      if (t > 0.0F) {
         rtb_Switch1_m = 1;
       } else {
         rtb_Switch1_m = -1;
@@ -6249,7 +6018,7 @@ void Controller_step(void)
       /* End of Switch: '<S40>/Switch1' */
 
       /* Gain: '<S46>/Integral Gain' */
-      distToGoal = CONTROL_PARAM.KI * d_idx_1;
+      t = CONTROL_PARAM.KI * distToGoal;
 
       /* Switch: '<S40>/Switch2' incorporates:
        *  Constant: '<S40>/Clamping_zero'
@@ -6257,7 +6026,7 @@ void Controller_step(void)
        *  Constant: '<S40>/Constant4'
        *  RelationalOperator: '<S40>/fix for DT propagation issue1'
        */
-      if (distToGoal > 0.0F) {
+      if (t > 0.0F) {
         n = 1;
       } else {
         n = -1;
@@ -6269,16 +6038,16 @@ void Controller_step(void)
        *  RelationalOperator: '<S40>/Equal1'
        *  Switch: '<S40>/Switch2'
        */
-      if (rtb_FixPtRelationalOperator && (rtb_Switch1_m == n)) {
-        distToGoal = 0.0F;
+      if (rtb_RelationalOperator_l && (rtb_Switch1_m == n)) {
+        t = 0.0F;
       }
 
       /* Update for DiscreteIntegrator: '<S49>/Integrator' incorporates:
-       *  DataTypeConversion: '<S11>/Data Type Conversion'
        *  Switch: '<S40>/Switch'
        */
-      Controller_DW.Integrator_DSTATE_i += 0.02F * distToGoal;
-      Controller_DW.Integrator_PrevResetState_h = (int8_T)(t != 0.0F);
+      Controller_DW.Integrator_DSTATE_i += 0.02F * t;
+      Controller_DW.Integrator_PrevResetState_h = (int8_T)
+        rtb_FixPtRelationalOperator;
 
       /* End of Outputs for SubSystem: '<S11>/Forward' */
     }
@@ -6291,10 +6060,9 @@ void Controller_step(void)
       /* Outputs for IfAction SubSystem: '<S11>/Reverse' incorporates:
        *  ActionPort: '<S14>/Action Port'
        */
-      /* DiscreteIntegrator: '<S100>/Integrator' incorporates:
-       *  DataTypeConversion: '<S11>/Data Type Conversion'
-       */
-      if ((t != 0.0F) || (Controller_DW.Integrator_PrevResetState != 0)) {
+      /* DiscreteIntegrator: '<S100>/Integrator' */
+      if (rtb_FixPtRelationalOperator ||
+          (Controller_DW.Integrator_PrevResetState != 0)) {
         Controller_DW.Integrator_DSTATE = 0.0F;
       }
 
@@ -6302,28 +6070,28 @@ void Controller_step(void)
        *  DiscreteIntegrator: '<S100>/Integrator'
        *  Gain: '<S105>/Proportional Gain'
        */
-      distToGoal = CONTROL_PARAM.KP * d_idx_1 + Controller_DW.Integrator_DSTATE;
+      t = CONTROL_PARAM.KP * distToGoal + Controller_DW.Integrator_DSTATE;
 
       /* Saturate: '<S107>/Saturation' incorporates:
        *  DeadZone: '<S93>/DeadZone'
        */
-      if (distToGoal > 20.0F) {
+      if (t > 20.0F) {
         /* Merge: '<S11>/Merge' */
         Controller_B.Merge = 20.0F;
-        distToGoal -= 20.0F;
+        t -= 20.0F;
       } else {
-        if (distToGoal < -20.0F) {
+        if (t < -20.0F) {
           /* Merge: '<S11>/Merge' */
           Controller_B.Merge = -20.0F;
         } else {
           /* Merge: '<S11>/Merge' */
-          Controller_B.Merge = distToGoal;
+          Controller_B.Merge = t;
         }
 
-        if (distToGoal >= -20.0F) {
-          distToGoal = 0.0F;
+        if (t >= -20.0F) {
+          t = 0.0F;
         } else {
-          distToGoal -= -20.0F;
+          t -= -20.0F;
         }
       }
 
@@ -6332,7 +6100,7 @@ void Controller_step(void)
       /* RelationalOperator: '<S91>/Relational Operator' incorporates:
        *  Constant: '<S91>/Clamping_zero'
        */
-      rtb_FixPtRelationalOperator = (distToGoal != 0.0F);
+      rtb_RelationalOperator_l = (t != 0.0F);
 
       /* Switch: '<S91>/Switch1' incorporates:
        *  Constant: '<S91>/Clamping_zero'
@@ -6340,7 +6108,7 @@ void Controller_step(void)
        *  Constant: '<S91>/Constant2'
        *  RelationalOperator: '<S91>/fix for DT propagation issue'
        */
-      if (distToGoal > 0.0F) {
+      if (t > 0.0F) {
         rtb_Switch1_m = 1;
       } else {
         rtb_Switch1_m = -1;
@@ -6349,7 +6117,7 @@ void Controller_step(void)
       /* End of Switch: '<S91>/Switch1' */
 
       /* Gain: '<S97>/Integral Gain' */
-      distToGoal = CONTROL_PARAM.KI * d_idx_1;
+      t = CONTROL_PARAM.KI * distToGoal;
 
       /* Switch: '<S91>/Switch2' incorporates:
        *  Constant: '<S91>/Clamping_zero'
@@ -6357,7 +6125,7 @@ void Controller_step(void)
        *  Constant: '<S91>/Constant4'
        *  RelationalOperator: '<S91>/fix for DT propagation issue1'
        */
-      if (distToGoal > 0.0F) {
+      if (t > 0.0F) {
         n = 1;
       } else {
         n = -1;
@@ -6369,16 +6137,16 @@ void Controller_step(void)
        *  RelationalOperator: '<S91>/Equal1'
        *  Switch: '<S91>/Switch2'
        */
-      if (rtb_FixPtRelationalOperator && (rtb_Switch1_m == n)) {
-        distToGoal = 0.0F;
+      if (rtb_RelationalOperator_l && (rtb_Switch1_m == n)) {
+        t = 0.0F;
       }
 
       /* Update for DiscreteIntegrator: '<S100>/Integrator' incorporates:
-       *  DataTypeConversion: '<S11>/Data Type Conversion'
        *  Switch: '<S91>/Switch'
        */
-      Controller_DW.Integrator_DSTATE += 0.02F * distToGoal;
-      Controller_DW.Integrator_PrevResetState = (int8_T)(t != 0.0F);
+      Controller_DW.Integrator_DSTATE += 0.02F * t;
+      Controller_DW.Integrator_PrevResetState = (int8_T)
+        rtb_FixPtRelationalOperator;
 
       /* End of Outputs for SubSystem: '<S11>/Reverse' */
     }
@@ -6390,7 +6158,7 @@ void Controller_step(void)
   /* Product: '<S10>/Multiply' incorporates:
    *  MATLABSystem: '<S1>/MATLAB System'
    */
-  t = rtb_DataTypeConversion_idx_1 * Controller_B.Merge;
+  t = absxk * Controller_B.Merge;
 
   /* Switch: '<S10>/Switch1' incorporates:
    *  Abs: '<S10>/Abs'
@@ -6428,7 +6196,7 @@ void Controller_step(void)
   }
 
   /* Outport: '<Root>/Controller_Out' incorporates:
-   *  DiscreteIntegrator: '<S134>/Discrete-Time Integrator'
+   *  DiscreteIntegrator: '<S133>/Discrete-Time Integrator'
    */
   Controller_Y.Controller_Out.timestamp =
     Controller_DW.DiscreteTimeIntegrator_DSTATE;
@@ -6456,23 +6224,23 @@ void Controller_step(void)
   /* Signum: '<S12>/Sign2' incorporates:
    *  MATLABSystem: '<S1>/MATLAB System'
    */
-  if (rtIsNaNF(rtb_DataTypeConversion_idx_0)) {
-    distToGoal = (rtNaNF);
-  } else if (rtb_DataTypeConversion_idx_0 < 0.0F) {
-    distToGoal = -1.0F;
+  if (rtIsNaNF(scale)) {
+    t = (rtNaNF);
+  } else if (scale < 0.0F) {
+    t = -1.0F;
   } else {
-    distToGoal = (real32_T)(rtb_DataTypeConversion_idx_0 > 0.0F);
+    t = (real32_T)(scale > 0.0F);
   }
 
   /* Signum: '<S12>/Sign1' incorporates:
    *  Inport: '<Root>/VehicheInfo'
    */
   if (rtIsNaNF(Controller_U.VehicheInfo.currVelocity)) {
-    t = (rtNaNF);
+    distToGoal = (rtNaNF);
   } else if (Controller_U.VehicheInfo.currVelocity < 0.0F) {
-    t = -1.0F;
+    distToGoal = -1.0F;
   } else {
-    t = (real32_T)(Controller_U.VehicheInfo.currVelocity > 0.0F);
+    distToGoal = (real32_T)(Controller_U.VehicheInfo.currVelocity > 0.0F);
   }
 
   /* Assertion: '<S12>/Assertion' incorporates:
@@ -6491,9 +6259,7 @@ void Controller_step(void)
    *  Signum: '<S12>/Sign1'
    *  Signum: '<S12>/Sign2'
    */
-  utAssert(((!(rtb_DataTypeConversion_idx_1 != distToGoal)) ||
-            (!(rtb_DataTypeConversion_idx_0 != 0.0F))) &&
-           ((!(rtb_DataTypeConversion_idx_1 != t)) ||
+  utAssert(((!(absxk != t)) || (!(scale != 0.0F))) && ((!(absxk != distToGoal)) ||
             (!(Controller_U.VehicheInfo.currVelocity != 0.0F))));
 
   /* Assertion: '<S12>/Assertion1' incorporates:
@@ -6505,20 +6271,19 @@ void Controller_step(void)
    *  RelationalOperator: '<S12>/Equal4'
    *  RelationalOperator: '<S12>/Equal5'
    */
-  utAssert((!(rtb_DataTypeConversion_idx_1 != -1.0F)) ||
-           (!(rtb_DataTypeConversion_idx_1 != 1.0F)));
+  utAssert((!(absxk != -1.0F)) || (!(absxk != 1.0F)));
 
-  /* Update for UnitDelay: '<S118>/Delay Input1' incorporates:
+  /* Update for UnitDelay: '<S120>/Delay Input1' incorporates:
    *  Inport: '<Root>/Controller_In'
    *
-   * Block description for '<S118>/Delay Input1':
+   * Block description for '<S120>/Delay Input1':
    *
    *  Store in Global RAM
    */
   Controller_DW.DelayInput1_DSTATE = Controller_U.Controller_In.timestamp;
 
-  /* Update for DiscreteIntegrator: '<S134>/Discrete-Time Integrator' incorporates:
-   *  Constant: '<S134>/Constant'
+  /* Update for DiscreteIntegrator: '<S133>/Discrete-Time Integrator' incorporates:
+   *  Constant: '<S133>/Constant'
    */
   Controller_DW.DiscreteTimeIntegrator_DSTATE += 20U;
 }
@@ -6534,14 +6299,13 @@ void Controller_initialize(void)
   {
     int32_T i;
 
-    /* SystemInitialize for Enabled SubSystem: '<S2>/Subsystem' */
-    /* Start for MATLABSystem: '<S120>/MATLAB System' */
+    /* Start for MATLABSystem: '<S119>/MATLAB System' */
     /* ------------------------------------------------------------------ */
     /*  Support name-value pair arguments when constructing object */
     /* ------------------------------------------------------------------ */
     /*  Only inherited and discrete sample time are supported for */
     /*  variable-size signal inputs */
-    Controller_DW.obj_m.isInitialized = 1;
+    Controller_DW.obj_l.isInitialized = 1;
 
     /*  Define total number of inputs */
     /* ------------------------------------------------------------------ */
@@ -6553,26 +6317,26 @@ void Controller_initialize(void)
     /* setupImpl Perform one-time calculations */
     /*  Initialize  */
     for (i = 0; i < 6; i++) {
-      Controller_DW.obj_m.RefPosesInternal[i] = (rtNaNF);
+      Controller_DW.obj_l.RefPosesInternal[i] = (rtNaNF);
     }
 
-    Controller_DW.obj_m.RefDirectionsInternal[0] = (rtNaNF);
-    Controller_DW.obj_m.RefDirectionsInternal[1] = (rtNaNF);
+    Controller_DW.obj_l.RefDirectionsInternal[0] = (rtNaNF);
+    Controller_DW.obj_l.RefDirectionsInternal[1] = (rtNaNF);
     for (i = 0; i < 150; i++) {
-      Controller_DW.obj_m.LastPosesOutput[i] = (rtNaNF);
+      Controller_DW.obj_l.LastPosesOutput[i] = (rtNaNF);
     }
 
-    /* Start for MATLABSystem: '<S120>/MATLAB System1' */
+    /* Start for MATLABSystem: '<S119>/MATLAB System1' */
     /* ------------------------------------------------------------------ */
     /*  Support name-value pair arguments when constructing object */
     /* ------------------------------------------------------------------ */
-    Controller_DW.obj_mc.MaxSpeed = 20.0;
+    Controller_DW.obj_n.MaxSpeed = 20.0;
 
     /* ------------------------------------------------------------------ */
     /*  Only inherited and discrete sample time are supported for */
     /*  variable-size signal inputs */
     /*  % Reuse catalog */
-    Controller_DW.obj_mc.isInitialized = 1;
+    Controller_DW.obj_n.isInitialized = 1;
 
     /* ------------------------------------------------------------------ */
     /*  Validate inputs to the step method at initialization */
@@ -6584,24 +6348,21 @@ void Controller_initialize(void)
     /* ------------------------------------------------------------------ */
     /* setupImpl Initialize internal properties */
     for (i = 0; i < 50; i++) {
-      /* Start for MATLABSystem: '<S120>/MATLAB System' */
-      Controller_DW.obj_m.LastDirectionsOutput[i] = (rtNaNF);
-      Controller_DW.obj_m.LastCumLengthsOutput[i] = (rtNaNF);
-      Controller_DW.obj_m.LastCurvaturesOutput[i] = (rtNaNF);
+      /* Start for MATLABSystem: '<S119>/MATLAB System' */
+      Controller_DW.obj_l.LastDirectionsOutput[i] = (rtNaNF);
+      Controller_DW.obj_l.LastCumLengthsOutput[i] = (rtNaNF);
+      Controller_DW.obj_l.LastCurvaturesOutput[i] = (rtNaNF);
 
-      /* Start for MATLABSystem: '<S120>/MATLAB System1' */
-      Controller_DW.obj_mc.LastVelocities[i] = 0.0F;
-      Controller_DW.obj_mc.LastCumLengths[i] = 0.0F;
-      Controller_DW.obj_mc.LastDirections[i] = 1.0F;
-      Controller_DW.obj_mc.LastCurvatures[i] = 0.0F;
+      /* Start for MATLABSystem: '<S119>/MATLAB System1' */
+      Controller_DW.obj_n.LastVelocities[i] = 0.0F;
+      Controller_DW.obj_n.LastCumLengths[i] = 0.0F;
+      Controller_DW.obj_n.LastDirections[i] = 1.0F;
+      Controller_DW.obj_n.LastCurvatures[i] = 0.0F;
     }
 
-    /* Start for MATLABSystem: '<S120>/MATLAB System1' */
-    Controller_DW.obj_mc.LastStartVelocity = 0.0F;
-    Controller_DW.obj_mc.LastEndVelocity = 0.0F;
-
-    /* End of SystemInitialize for SubSystem: '<S2>/Subsystem' */
-    emxInitStruct_HelperPathAnalyze(&Controller_DW.obj);
+    /* Start for MATLABSystem: '<S119>/MATLAB System1' */
+    Controller_DW.obj_n.LastStartVelocity = 0.0F;
+    Controller_DW.obj_n.LastEndVelocity = 0.0F;
 
     /* Start for MATLABSystem: '<S1>/MATLAB System' */
     Controller_DW.obj.LastRefPoseOutput[0] = 0.0F;
@@ -6627,7 +6388,7 @@ void Controller_initialize(void)
 /* Model terminate function */
 void Controller_terminate(void)
 {
-  emxFreeStruct_HelperPathAnalyze(&Controller_DW.obj);
+  /* (no terminate code required) */
 }
 
 /*
