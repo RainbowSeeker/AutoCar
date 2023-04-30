@@ -1,4 +1,4 @@
-CONTROL_CONST.dt = 0.002;
+CONTROL_CONST.dt = 0.02;
 CONTROL_CONST.NumOfPoints = single(50);
 
 %% Paramaters
