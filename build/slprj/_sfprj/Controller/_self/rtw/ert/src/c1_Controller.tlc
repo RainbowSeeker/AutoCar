@@ -18,35 +18,35 @@
       Description  "EmlPersistent"\
       SFName       ""\
       Path         ""\
-      SrcLocation  "Controller:98:402-411"\
+      SrcLocation  "Controller:98:403-412"\
     }\
     ChartData {\
       Name         "goalIndex_not_empty"\
       Description  "EmlPersistentSentinel"\
       SFName       ""\
       Path         ""\
-      SrcLocation  "Controller:98:402-411"\
+      SrcLocation  "Controller:98:403-412"\
     }\
     ChartData {\
       Name         "finalReached"\
       Description  "EmlPersistent"\
       SFName       ""\
       Path         ""\
-      SrcLocation  "Controller:98:412-424"\
+      SrcLocation  "Controller:98:413-425"\
     }\
     ChartData {\
       Name         "endSpeed"\
       Description  "EmlPersistent"\
       SFName       ""\
       Path         ""\
-      SrcLocation  "Controller:98:425-433"\
+      SrcLocation  "Controller:98:426-434"\
     }\
     ChartData {\
       Name         "nextGoalPose"\
       Description  "EmlPersistent"\
       SFName       ""\
       Path         ""\
-      SrcLocation  "Controller:98:445-457"\
+      SrcLocation  "Controller:98:446-458"\
       Dimensions   [2,3]\
     }\
     ChartData {\
@@ -54,7 +54,7 @@
       Description  "EmlPersistent"\
       SFName       ""\
       Path         ""\
-      SrcLocation  "Controller:98:458-469"\
+      SrcLocation  "Controller:98:459-470"\
     }\
   }
   %return ChartDataElements

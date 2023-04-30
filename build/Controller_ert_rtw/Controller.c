@@ -3,9 +3,9 @@
  *
  * Code generated for Simulink model 'Controller'.
  *
- * Model version                  : 4.11
+ * Model version                  : 4.69
  * Simulink Coder version         : 9.8 (R2022b) 13-May-2022
- * C/C++ source code generated on : Thu Apr 20 23:18:22 2023
+ * C/C++ source code generated on : Sat Apr 29 00:32:15 2023
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -25,48 +25,18 @@
 #include "rt_defines.h"
 
 /* Exported block parameters */
-struct_s3Kybo3q7i7BAN1v6EZjhH CONTROL_PARAM = {
-  1.4F,
-  0.2F,
-  0.2F,
-  0.6F,
-  0.1F,
-  0.0F,
-  -1.0F,
-  1.0F,
-  -1.0F,
-  1.0F,
-  -0.15F,
-  0.15F,
-  -0.1F,
-  0.1F,
-  5.0F,
-  5.0F,
-  0.52359879F,
-  0.1F,
-  0.1F,
-  0.15F,
-  0.1F,
-  0.1F,
-  0.2F,
-  0.003F,
-  0.003F,
-  0.001F,
-  -0.1F,
-  0.1F,
-  -0.1F,
-  0.1F,
-  1.57079637F,
-  3.14159274F,
+struct_FEfdQPjK3kgMiMOMDtkurF CONTROL_PARAM = {
   2.0F,
   0.5F,
-  0.02F
+  0.02F,
+  100.0F,
+  1.0F
 } ;                                    /* Variable: CONTROL_PARAM
                                         * Referenced by:
-                                        *   '<S46>/Integral Gain'
-                                        *   '<S54>/Proportional Gain'
-                                        *   '<S97>/Integral Gain'
-                                        *   '<S105>/Proportional Gain'
+                                        *   '<S62>/Integral Gain'
+                                        *   '<S70>/Proportional Gain'
+                                        *   '<S113>/Integral Gain'
+                                        *   '<S121>/Proportional Gain'
                                         */
 
 /* Block signals (default storage) */
@@ -190,7 +160,7 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
   const real32_T currPose[3], real32_T currVel, const real32_T varargin_1[150],
   const real32_T varargin_2[50], const real32_T varargin_3[50], const real32_T
   varargin_4[50], real32_T refPose[3], real32_T *refVel, real32_T *direction,
-  real32_T *curvature);
+  real32_T *curvature, real32_T *varargout_1);
 static void Contro_angleUtilities_wrapTo2Pi(real32_T *theta);
 static void Controller_SystemCore_setup(HelperPathAnalyzer_Controller_T *obj);
 real_T rt_modd_snf(real_T u0, real_T u1)
@@ -4775,7 +4745,7 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
   const real32_T currPose[3], real32_T currVel, const real32_T varargin_1[150],
   const real32_T varargin_2[50], const real32_T varargin_3[50], const real32_T
   varargin_4[50], real32_T refPose[3], real32_T *refVel, real32_T *direction,
-  real32_T *curvature)
+  real32_T *curvature, real32_T *varargout_1)
 {
   int32_T refPoses_size[2];
   int32_T segRefPoses_size[2];
@@ -4851,6 +4821,11 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
     *refVel = obj->LastRefVelocityOutput;
     *direction = obj->LastDirectionOutput;
     *curvature = obj->LastCurvatureOutput;
+
+    /* ------------------------------------------------------------------ */
+    /* isSimulinkBlock Check if the system object in used in Simulink */
+    /*  0 for MATLAB, 1 for Simulink */
+    *varargout_1 = 1.0F;
   } else {
     real_T segClosestPointIndex;
     int32_T last;
@@ -4914,8 +4889,8 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
     /* findClosestPathPoint Find the index of the closest point */
     if (obj->DirectionsInternal[(int32_T)obj->SegmentStartIndex - 1] == 1.0F) {
       /*  forward driving uses front wheel as reference */
-      vec2_idx_0 = 2.8F * cosf(pose_idx_2) + currPose[0];
-      vec2_idx_1 = 2.8F * sinf(pose_idx_2) + currPose[1];
+      vec2_idx_0 = 0.4F * cosf(pose_idx_2) + currPose[0];
+      vec2_idx_1 = 0.4F * sinf(pose_idx_2) + currPose[1];
       refPoses_size[0] = b_idx + 1;
       if (i - 1 >= 0) {
         memcpy(&refPoses_data[0], &segRefPoses_data[0], (uint32_T)i * sizeof
@@ -4935,7 +4910,7 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
 
       b_idx = segRefPoses_size[0];
       for (i = 0; i < b_idx; i++) {
-        refPoses_data[i] = 2.8F * dis2PointsSquare_data[i] + segRefPoses_data[i];
+        refPoses_data[i] = 0.4F * dis2PointsSquare_data[i] + segRefPoses_data[i];
       }
 
       b_idx = refPoses_size[0];
@@ -4951,7 +4926,7 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
       refPoses_size_idx_0 = refPoses_size[0];
       b_idx = refPoses_size[0];
       for (i = 0; i < b_idx; i++) {
-        refPoses_data_0[i] = 2.8F * dis2PointsSquare_data[i] + refPoses_data[i +
+        refPoses_data_0[i] = 0.4F * dis2PointsSquare_data[i] + refPoses_data[i +
           refPoses_size[0]];
       }
 
@@ -5050,10 +5025,10 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
       vec1_idx_1 = refPoses_data[((refPoses_size[0] << 1) + jj_data) - 1];
       vec1_idx_0 = cosf(vec1_idx_1);
       vec1_idx_1 = sinf(vec1_idx_1);
-      vec2_idx_0 = (2.8F * cosf(pose_idx_2) + vec2_idx_0) - (vec1_idx_0 * 2.8F +
+      vec2_idx_0 = (0.4F * cosf(pose_idx_2) + vec2_idx_0) - (vec1_idx_0 * 0.4F +
         refPoses_data[jj_data - 1]);
-      vec2_idx_1 = (2.8F * sinf(pose_idx_2) + vec2_idx_1) - (refPoses_data
-        [(jj_data + refPoses_size[0]) - 1] + vec1_idx_1 * 2.8F);
+      vec2_idx_1 = (0.4F * sinf(pose_idx_2) + vec2_idx_1) - (refPoses_data
+        [(jj_data + refPoses_size[0]) - 1] + vec1_idx_1 * 0.4F);
     } else {
       pose_idx_2 = refPoses_data[((refPoses_size[0] << 1) + jj_data) - 1];
       vec1_idx_0 = cosf(pose_idx_2);
@@ -5087,10 +5062,10 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
       vec1_idx_0 = segRefPoses_data[((segRefPoses_size[0] << 1) + (int32_T)
         segClosestPointIndex) - 1];
       refPose[2] = vec1_idx_0;
-      refPose[0] = cosf(vec1_idx_0) * 2.8F + segRefPoses_data[(int32_T)
+      refPose[0] = cosf(vec1_idx_0) * 0.4F + segRefPoses_data[(int32_T)
         segClosestPointIndex - 1];
       refPose[1] = segRefPoses_data[((int32_T)segClosestPointIndex +
-        segRefPoses_size[0]) - 1] + sinf(vec1_idx_0) * 2.8F;
+        segRefPoses_size[0]) - 1] + sinf(vec1_idx_0) * 0.4F;
     } else {
       refPose[0] = segRefPoses_data[(int32_T)segClosestPointIndex - 1];
       refPose[1] = segRefPoses_data[((int32_T)segClosestPointIndex +
@@ -5109,6 +5084,7 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
     /*  to zero as the vehicle needs to switch direction at the */
     /*  intermediate goal positions */
     vec2_idx_1 = obj->VelocityProfileInternal[(int32_T)obj->SegmentEndIndex - 1];
+    *varargout_1 = 0.0F;
 
     /*  The goal checker acts when the distance from the vehicle to the goal */
     /*  point is within a distance tolerance, disTol.  */
@@ -5211,8 +5187,12 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
     if (p) {
       obj->CurrentSegmentIndex++;
       *refVel = vec2_idx_1;
+      *varargout_1 = 1.0F;
     }
 
+    /* ------------------------------------------------------------------ */
+    /* isSimulinkBlock Check if the system object in used in Simulink */
+    /*  0 for MATLAB, 1 for Simulink */
     /*  Store the output */
     obj->LastRefPoseOutput[0] = refPose[0];
     obj->LastRefPoseOutput[1] = refPose[1];
@@ -5223,7 +5203,7 @@ static void Con_HelperPathAnalyzer_stepImpl(HelperPathAnalyzer_Controller_T *obj
   }
 }
 
-/* Function for MATLAB Function: '<S4>/Kinematic' */
+/* Function for MATLAB Function: '<S19>/Kinematic' */
 static void Contro_angleUtilities_wrapTo2Pi(real32_T *theta)
 {
   real32_T x;
@@ -5335,92 +5315,90 @@ void Controller_step(void)
   real_T rtb_Sum3;
   real_T rtb_Sum_idx_0;
   int32_T i;
-  real32_T rtb_VectorConcatenate[150];
-  real32_T b_varargout_2[50];
   real32_T b_varargout_3[50];
-  real32_T b_varargout_4[50];
-  real32_T rtb_MATLABSystem1_0[50];
-  real32_T currPose[3];
+  real32_T rtb_VectorConcatenate[9];
   real32_T refPose[3];
+  real32_T rtb_MatrixMultiply[3];
+  real32_T rtb_currPose[3];
   real32_T tmp[2];
   real32_T absxk;
   real32_T b;
+  real32_T d_idx_1;
   real32_T distToGoal;
-  real32_T scale;
+  real32_T rtb_DataTypeConversion_idx_0;
+  real32_T rtb_DataTypeConversion_idx_1;
   real32_T t;
   int8_T n;
-  boolean_T exitg1;
-  boolean_T guard1 = false;
-  boolean_T p;
   boolean_T rtb_FixPtRelationalOperator;
-  boolean_T rtb_RelationalOperator_l;
 
-  /* RelationalOperator: '<S120>/FixPt Relational Operator' incorporates:
-   *  Inport: '<Root>/Controller_In'
-   *  UnitDelay: '<S120>/Delay Input1'
+  /* RelationalOperator: '<S1>/FixPt Relational Operator' incorporates:
+   *  Inport: '<Root>/Mission_In'
+   *  UnitDelay: '<S1>/Delay Input1'
    *
-   * Block description for '<S120>/Delay Input1':
+   * Block description for '<S1>/Delay Input1':
    *
    *  Store in Global RAM
    */
-  rtb_FixPtRelationalOperator = (Controller_U.Controller_In.timestamp !=
+  rtb_FixPtRelationalOperator = (Controller_U.Mission_In.timestamp !=
     Controller_DW.DelayInput1_DSTATE);
 
-  /* Outputs for Enabled SubSystem: '<S118>/Enabled Subsystem' incorporates:
-   *  EnablePort: '<S121>/Enable'
+  /* Outputs for Enabled SubSystem: '<Root>/Mission Planner' incorporates:
+   *  EnablePort: '<S2>/Enable'
    */
   if (rtb_FixPtRelationalOperator) {
     real_T rtb_Multiply1_tmp;
     real_T rtb_Sum_c;
 
-    /* Gain: '<S121>/Gain2' incorporates:
-     *  Inport: '<Root>/Controller_In'
+    /* Outputs for Atomic SubSystem: '<S2>/Enabled Subsystem' */
+    /* Gain: '<S4>/Gain2' incorporates:
+     *  Inport: '<Root>/Mission_In'
      */
-    rtb_Sum3 = 1.0000000000287557E-7 * (real_T)Controller_U.Controller_In.lat_0;
+    rtb_Sum3 = 1.0000000000287557E-7 * (real_T)Controller_U.Mission_In.lat_0;
 
-    /* Sum: '<S122>/Sum' incorporates:
-     *  Gain: '<S121>/Gain'
-     *  Inport: '<Root>/VehicheInfo'
+    /* Sum: '<S5>/Sum' incorporates:
+     *  Gain: '<S4>/Gain'
+     *  Inport: '<Root>/INS_Out'
      */
-    rtb_Sum_idx_0 = 1.0000000000287557E-7 * (real_T)Controller_U.VehicheInfo.lat
-      - rtb_Sum3;
+    rtb_Sum_idx_0 = 1.0E-7 * Controller_U.INS_Out.lat - rtb_Sum3;
 
-    /* Abs: '<S127>/Abs' incorporates:
-     *  Abs: '<S130>/Abs1'
-     *  Switch: '<S127>/Switch1'
+    /* Abs: '<S10>/Abs' incorporates:
+     *  Abs: '<S13>/Abs1'
+     *  Switch: '<S10>/Switch1'
      */
     rtb_Sum2_e = fabs(rtb_Sum_idx_0);
 
-    /* Switch: '<S127>/Switch1' incorporates:
-     *  Abs: '<S127>/Abs'
-     *  Bias: '<S127>/Bias2'
-     *  Bias: '<S127>/Bias3'
-     *  Constant: '<S124>/Constant'
-     *  Constant: '<S124>/Constant1'
-     *  Constant: '<S129>/Constant'
-     *  Gain: '<S127>/Gain1'
-     *  Product: '<S127>/Multiply'
-     *  RelationalOperator: '<S129>/Compare'
-     *  Signum: '<S127>/Sign'
-     *  Switch: '<S124>/Switch'
+    /* Switch: '<S10>/Switch1' incorporates:
+     *  Abs: '<S10>/Abs'
+     *  Bias: '<S10>/Bias2'
+     *  Bias: '<S10>/Bias3'
+     *  Constant: '<S12>/Constant'
+     *  Constant: '<S7>/Constant'
+     *  Constant: '<S7>/Constant1'
+     *  Gain: '<S10>/Gain1'
+     *  Product: '<S10>/Multiply'
+     *  RelationalOperator: '<S12>/Compare'
+     *  Signum: '<S10>/Sign'
+     *  Switch: '<S7>/Switch'
      */
     if (rtb_Sum2_e > 90.0) {
-      /* Switch: '<S130>/Switch1' incorporates:
-       *  Bias: '<S130>/Bias2'
-       *  Bias: '<S130>/Bias3'
-       *  Constant: '<S130>/Constant'
-       *  Constant: '<S131>/Constant'
-       *  Math: '<S130>/Math Function'
-       *  RelationalOperator: '<S131>/Compare'
+      /* Switch: '<S13>/Switch1' incorporates:
+       *  Bias: '<S13>/Bias2'
+       *  Bias: '<S13>/Bias3'
+       *  Constant: '<S13>/Constant'
+       *  Constant: '<S14>/Constant'
+       *  Math: '<S13>/Math Function'
+       *  RelationalOperator: '<S14>/Compare'
        */
       if (rtb_Sum2_e > 180.0) {
         rtb_Sum_idx_0 = rt_modd_snf(rtb_Sum_idx_0 + 180.0, 360.0) - 180.0;
       }
 
-      /* End of Switch: '<S130>/Switch1' */
+      /* End of Switch: '<S13>/Switch1' */
 
-      /* Signum: '<S127>/Sign' */
-      if (rtb_Sum_idx_0 < 0.0) {
+      /* Signum: '<S10>/Sign' */
+      if (rtIsNaN(rtb_Sum_idx_0)) {
+        rtb_Sum_idx_0 = (rtNaN);
+      } else if (rtb_Sum_idx_0 < 0.0) {
         rtb_Sum_idx_0 = -1.0;
       } else {
         rtb_Sum_idx_0 = (rtb_Sum_idx_0 > 0.0);
@@ -5433,212 +5411,305 @@ void Controller_step(void)
       i = 0;
     }
 
-    /* Sum: '<S124>/Sum' incorporates:
-     *  Gain: '<S121>/Gain1'
-     *  Gain: '<S121>/Gain3'
-     *  Inport: '<Root>/Controller_In'
-     *  Inport: '<Root>/VehicheInfo'
-     *  Sum: '<S122>/Sum'
-     *  Switch: '<S124>/Switch'
+    /* Sum: '<S7>/Sum' incorporates:
+     *  Gain: '<S4>/Gain1'
+     *  Gain: '<S4>/Gain3'
+     *  Inport: '<Root>/INS_Out'
+     *  Inport: '<Root>/Mission_In'
+     *  Sum: '<S5>/Sum'
+     *  Switch: '<S7>/Switch'
      */
-    rtb_Sum_c = (1.0000000000287557E-7 * (real_T)Controller_U.VehicheInfo.lon -
-                 1.0000000000287557E-7 * (real_T)
-                 Controller_U.Controller_In.lon_0) + (real_T)i;
+    rtb_Sum_c = (1.0E-7 * Controller_U.INS_Out.lon - 1.0000000000287557E-7 *
+                 (real_T)Controller_U.Mission_In.lon_0) + (real_T)i;
 
-    /* Gain: '<S122>/deg2rad1' */
+    /* Gain: '<S5>/deg2rad1' */
     rtb_Sum_idx_0 = 0.017453292519943295 * rtb_Sum2_e;
 
-    /* Gain: '<S122>/deg2rad' */
+    /* Gain: '<S5>/deg2rad' */
     rtb_Sum3 *= 0.017453292519943295;
 
-    /* Trigonometry: '<S123>/Sin' */
+    /* Trigonometry: '<S6>/Sin' */
     rtb_Sum2_e = sin(rtb_Sum3);
 
-    /* Product: '<S123>/Multiply1' incorporates:
-     *  Math: '<S123>/Square1'
-     *  Product: '<S123>/Multiply'
+    /* Product: '<S6>/Multiply1' incorporates:
+     *  Math: '<S6>/Square1'
+     *  Product: '<S6>/Multiply'
      */
     rtb_Multiply1_tmp = rtb_Sum2_e * rtb_Sum2_e * Controller_ConstB.ff;
 
-    /* Product: '<S123>/Divide' incorporates:
-     *  Constant: '<S123>/Constant'
-     *  Constant: '<S123>/R'
-     *  Sqrt: '<S123>/Sqrt'
-     *  Sum: '<S123>/Sum1'
+    /* Product: '<S6>/Divide' incorporates:
+     *  Constant: '<S6>/Constant'
+     *  Constant: '<S6>/R'
+     *  Sqrt: '<S6>/Sqrt'
+     *  Sum: '<S6>/Sum1'
      */
     rtb_Sum2_e = 6.378137E+6 / sqrt(1.0 - rtb_Multiply1_tmp);
 
-    /* Product: '<S122>/Multiply' incorporates:
-     *  Constant: '<S123>/Constant1'
-     *  Product: '<S123>/Multiply1'
-     *  Product: '<S123>/Product3'
-     *  Sum: '<S123>/Sum2'
+    /* Product: '<S5>/Multiply' incorporates:
+     *  Constant: '<S6>/Constant1'
+     *  Product: '<S6>/Multiply1'
+     *  Product: '<S6>/Product3'
+     *  Sum: '<S6>/Sum2'
      */
     rtb_Sum_idx_0 *= 1.0 / (1.0 - rtb_Multiply1_tmp) * Controller_ConstB.Sum4 *
       rtb_Sum2_e;
 
-    /* Switch: '<S126>/Switch1' incorporates:
-     *  Abs: '<S126>/Abs1'
-     *  Bias: '<S126>/Bias2'
-     *  Bias: '<S126>/Bias3'
-     *  Constant: '<S126>/Constant'
-     *  Constant: '<S128>/Constant'
-     *  Math: '<S126>/Math Function'
-     *  RelationalOperator: '<S128>/Compare'
+    /* Switch: '<S9>/Switch1' incorporates:
+     *  Abs: '<S9>/Abs1'
+     *  Bias: '<S9>/Bias2'
+     *  Bias: '<S9>/Bias3'
+     *  Constant: '<S11>/Constant'
+     *  Constant: '<S9>/Constant'
+     *  Math: '<S9>/Math Function'
+     *  RelationalOperator: '<S11>/Compare'
      */
     if (fabs(rtb_Sum_c) > 180.0) {
       rtb_Sum_c = rt_modd_snf(rtb_Sum_c + 180.0, 360.0) - 180.0;
     }
 
-    /* Product: '<S122>/Multiply' incorporates:
-     *  Gain: '<S122>/deg2rad1'
-     *  Product: '<S123>/Multiply2'
-     *  Switch: '<S126>/Switch1'
-     *  Trigonometry: '<S123>/Cos'
+    /* Product: '<S5>/Multiply' incorporates:
+     *  Gain: '<S5>/deg2rad1'
+     *  Product: '<S6>/Multiply2'
+     *  Switch: '<S9>/Switch1'
+     *  Trigonometry: '<S6>/Cos'
      */
     rtb_Sum3 = 0.017453292519943295 * rtb_Sum_c * (rtb_Sum2_e * cos(rtb_Sum3));
 
-    /* DataTypeConversion: '<S121>/Data Type Conversion' incorporates:
-     *  Product: '<S125>/Multiply1'
-     *  Product: '<S125>/Multiply2'
-     *  Product: '<S125>/Multiply3'
-     *  Product: '<S125>/Multiply4'
-     *  Sum: '<S125>/Sum2'
-     *  Sum: '<S125>/Sum3'
+    /* DataTypeConversion: '<S4>/Data Type Conversion' incorporates:
+     *  Product: '<S8>/Multiply1'
+     *  Product: '<S8>/Multiply2'
+     *  Product: '<S8>/Multiply3'
+     *  Product: '<S8>/Multiply4'
+     *  Sum: '<S8>/Sum2'
+     *  Sum: '<S8>/Sum3'
      */
-    Controller_B.DataTypeConversion[0] = (real32_T)(rtb_Sum_idx_0 *
+    rtb_DataTypeConversion_idx_0 = (real32_T)(rtb_Sum_idx_0 *
       Controller_ConstB.SinCos_o2 + rtb_Sum3 * Controller_ConstB.SinCos_o1);
-    Controller_B.DataTypeConversion[1] = (real32_T)(rtb_Sum3 *
+    rtb_DataTypeConversion_idx_1 = (real32_T)(rtb_Sum3 *
       Controller_ConstB.SinCos_o2 - rtb_Sum_idx_0 * Controller_ConstB.SinCos_o1);
+
+    /* End of Outputs for SubSystem: '<S2>/Enabled Subsystem' */
+
+    /* Sum: '<S2>/Sum1' incorporates:
+     *  Inport: '<Root>/Mission_In'
+     */
+    t = Controller_U.Mission_In.bias[0];
+
+    /* Sum: '<S2>/Sum2' incorporates:
+     *  Inport: '<Root>/Mission_In'
+     */
+    absxk = Controller_U.Mission_In.bias[0];
+    for (i = 0; i < 50; i++) {
+      /* Gain: '<S2>/Gain' incorporates:
+       *  Concatenate: '<S2>/Vector Concatenate'
+       *  Inport: '<Root>/Mission_In'
+       *  Selector: '<S2>/Selector Col2'
+       *  Sum: '<S2>/Sum1'
+       */
+      Controller_B.ref_poses[i + 50] = -((Controller_U.Mission_In.poses[i + 50]
+        + rtb_DataTypeConversion_idx_1) + t);
+
+      /* Sum: '<S2>/Sum2' incorporates:
+       *  Concatenate: '<S2>/Vector Concatenate'
+       *  Inport: '<Root>/Mission_In'
+       *  Selector: '<S2>/Selector Col1'
+       */
+      Controller_B.ref_poses[i] = (rtb_DataTypeConversion_idx_0 +
+        Controller_U.Mission_In.poses[i]) + absxk;
+
+      /* Gain: '<S2>/Gain1' incorporates:
+       *  Concatenate: '<S2>/Vector Concatenate'
+       *  Inport: '<Root>/Mission_In'
+       *  Selector: '<S2>/Selector Col3'
+       */
+      Controller_B.ref_poses[i + 100] = -Controller_U.Mission_In.poses[i + 100];
+    }
+
+    /* Saturate: '<S2>/Saturation' incorporates:
+     *  Inport: '<Root>/Mission_In'
+     */
+    if (Controller_U.Mission_In.valid_num <= 50) {
+      /* Saturate: '<S2>/Saturation' */
+      Controller_B.valid_num = Controller_U.Mission_In.valid_num;
+    } else {
+      /* Saturate: '<S2>/Saturation' */
+      Controller_B.valid_num = 50U;
+    }
+
+    /* End of Saturate: '<S2>/Saturation' */
   }
 
-  /* End of Outputs for SubSystem: '<S118>/Enabled Subsystem' */
+  /* End of Outputs for SubSystem: '<Root>/Mission Planner' */
 
-  /* Sum: '<S118>/Sum' */
-  t = Controller_B.DataTypeConversion[0];
+  /* Reshape: '<S17>/Reshape' incorporates:
+   *  Gain: '<S17>/Gain'
+   *  Gain: '<S17>/Gain1'
+   *  Inport: '<Root>/INS_Out'
+   */
+  rtb_currPose[0] = Controller_U.INS_Out.x_R;
+  rtb_currPose[1] = -Controller_U.INS_Out.y_R;
+  rtb_currPose[2] = -Controller_U.INS_Out.psi;
 
-  /* Sum: '<S118>/Sum1' */
-  distToGoal = Controller_B.DataTypeConversion[1];
-  for (i = 0; i < 50; i++) {
-    /* Sum: '<S118>/Sum' incorporates:
-     *  Inport: '<Root>/Controller_In'
-     *  Selector: '<S118>/Selector Col1'
-     */
-    rtb_VectorConcatenate[i] = t + Controller_U.Controller_In.savePose[i];
+  /* Trigonometry: '<S136>/Trigonometric Function1' incorporates:
+   *  Gain: '<S135>/Gain'
+   *  Inport: '<Root>/INS_Out'
+   *  Trigonometry: '<S136>/Trigonometric Function3'
+   */
+  rtb_DataTypeConversion_idx_0 = cosf(-Controller_U.INS_Out.psi);
+  rtb_VectorConcatenate[0] = rtb_DataTypeConversion_idx_0;
 
-    /* Sum: '<S118>/Sum1' incorporates:
-     *  Inport: '<Root>/Controller_In'
-     *  Selector: '<S118>/Selector Col2'
-     */
-    rtb_VectorConcatenate[i + 50] = Controller_U.Controller_In.savePose[i + 50]
-      + distToGoal;
+  /* Trigonometry: '<S136>/Trigonometric Function' incorporates:
+   *  Gain: '<S135>/Gain'
+   *  Inport: '<Root>/INS_Out'
+   *  Trigonometry: '<S136>/Trigonometric Function2'
+   */
+  rtb_DataTypeConversion_idx_1 = sinf(-Controller_U.INS_Out.psi);
+  rtb_VectorConcatenate[1] = rtb_DataTypeConversion_idx_1;
 
-    /* Selector: '<S118>/Selector Col3' incorporates:
-     *  Inport: '<Root>/Controller_In'
-     */
-    rtb_VectorConcatenate[i + 100] = Controller_U.Controller_In.savePose[i + 100];
+  /* SignalConversion generated from: '<S136>/Vector Concatenate1' incorporates:
+   *  Constant: '<S136>/Constant3'
+   */
+  rtb_VectorConcatenate[2] = 0.0F;
+
+  /* Gain: '<S136>/Gain' */
+  rtb_VectorConcatenate[3] = -rtb_DataTypeConversion_idx_1;
+
+  /* Trigonometry: '<S136>/Trigonometric Function3' */
+  rtb_VectorConcatenate[4] = rtb_DataTypeConversion_idx_0;
+
+  /* SignalConversion generated from: '<S136>/Vector Concatenate2' incorporates:
+   *  Constant: '<S136>/Constant4'
+   */
+  rtb_VectorConcatenate[5] = 0.0F;
+
+  /* SignalConversion generated from: '<S136>/Vector Concatenate' incorporates:
+   *  Concatenate: '<S136>/Vector Concatenate3'
+   */
+  rtb_VectorConcatenate[6] = Controller_ConstB.VectorConcatenate3[0];
+  rtb_VectorConcatenate[7] = Controller_ConstB.VectorConcatenate3[1];
+  rtb_VectorConcatenate[8] = Controller_ConstB.VectorConcatenate3[2];
+
+  /* Product: '<S17>/Matrix Multiply' incorporates:
+   *  Concatenate: '<S136>/Vector Concatenate'
+   *  Inport: '<Root>/INS_Out'
+   *  SignalConversion generated from: '<S17>/Matrix Multiply'
+   */
+  for (i = 0; i < 3; i++) {
+    rtb_MatrixMultiply[i] = (rtb_VectorConcatenate[i + 3] *
+      Controller_U.INS_Out.ve + rtb_VectorConcatenate[i] *
+      Controller_U.INS_Out.vn) + rtb_VectorConcatenate[i + 6] * 0.0F;
   }
 
-  /* MATLAB Function: '<S2>/Behavior Planner' incorporates:
-   *  BusCreator generated from: '<S2>/Behavior Planner'
-   *  Concatenate: '<S118>/Vector Concatenate'
-   *  Inport: '<Root>/Controller_In'
-   *  Inport: '<Root>/VehicheInfo'
+  /* End of Product: '<S17>/Matrix Multiply' */
+
+  /* DiscreteIntegrator: '<S134>/Discrete-Time Integrator' */
+  rtb_DataTypeConversion_idx_0 = Controller_DW.DiscreteTimeIntegrator_DSTATE;
+
+  /* MATLAB Function: '<S18>/Behavior Planner' incorporates:
+   *  BusCreator generated from: '<S18>/Behavior Planner'
+   *  Concatenate: '<S2>/Vector Concatenate'
+   *  Gain: '<S17>/Gain'
+   *  Gain: '<S17>/Gain1'
+   *  Inport: '<Root>/INS_Out'
+   *  Reshape: '<S17>/Reshape'
+   *  UnitDelay: '<S3>/Unit Delay1'
    */
   if ((!Controller_DW.goalIndex_not_empty) || rtb_FixPtRelationalOperator) {
     Controller_DW.finalReached = false;
     Controller_DW.endSpeed = 1.0F;
     Controller_DW.goalIndex_not_empty = true;
-    Controller_DW.nextGoalPose[0] = Controller_U.VehicheInfo.currPose[0];
-    Controller_DW.nextGoalPose[1] = rtb_VectorConcatenate[0];
-    Controller_DW.nextGoalPose[2] = Controller_U.VehicheInfo.currPose[1];
-    Controller_DW.nextGoalPose[3] = rtb_VectorConcatenate[50];
-    Controller_DW.nextGoalPose[4] = Controller_U.VehicheInfo.currPose[2];
-    Controller_DW.nextGoalPose[5] = rtb_VectorConcatenate[100];
-    Controller_DW.speedConfig.StartSpeed = Controller_U.VehicheInfo.currVelocity;
+    Controller_DW.nextGoalPose[0] = Controller_U.INS_Out.x_R;
+    Controller_DW.nextGoalPose[1] = Controller_B.ref_poses[0];
+    Controller_DW.nextGoalPose[2] = -Controller_U.INS_Out.y_R;
+    Controller_DW.nextGoalPose[3] = Controller_B.ref_poses[50];
+    Controller_DW.nextGoalPose[4] = -Controller_U.INS_Out.psi;
+    Controller_DW.nextGoalPose[5] = Controller_B.ref_poses[100];
+    Controller_DW.speedConfig.StartSpeed = rtb_MatrixMultiply[0];
     Controller_DW.speedConfig.EndSpeed = 1.0F;
     Controller_DW.goalIndex = 2.0;
   }
 
-  rtb_FixPtRelationalOperator = false;
   if (!Controller_DW.finalReached) {
-    scale = 1.29246971E-26F;
-    absxk = fabsf(Controller_DW.nextGoalPose[1] -
-                  Controller_U.VehicheInfo.currPose[0]);
+    rtb_DataTypeConversion_idx_1 = 1.29246971E-26F;
+    absxk = fabsf(Controller_DW.nextGoalPose[1] - Controller_U.INS_Out.x_R);
     if (absxk > 1.29246971E-26F) {
       distToGoal = 1.0F;
-      scale = absxk;
+      rtb_DataTypeConversion_idx_1 = absxk;
     } else {
       t = absxk / 1.29246971E-26F;
       distToGoal = t * t;
     }
 
-    absxk = fabsf(Controller_DW.nextGoalPose[3] -
-                  Controller_U.VehicheInfo.currPose[1]);
-    if (absxk > scale) {
-      t = scale / absxk;
+    absxk = fabsf(Controller_DW.nextGoalPose[3] - (-Controller_U.INS_Out.y_R));
+    if (absxk > rtb_DataTypeConversion_idx_1) {
+      t = rtb_DataTypeConversion_idx_1 / absxk;
       distToGoal = distToGoal * t * t + 1.0F;
-      scale = absxk;
+      rtb_DataTypeConversion_idx_1 = absxk;
     } else {
-      t = absxk / scale;
+      t = absxk / rtb_DataTypeConversion_idx_1;
       distToGoal += t * t;
     }
 
-    distToGoal = scale * sqrtf(distToGoal);
+    distToGoal = rtb_DataTypeConversion_idx_1 * sqrtf(distToGoal);
     if (distToGoal > 1.0F) {
-      rtb_RelationalOperator_l = false;
+      rtb_FixPtRelationalOperator = false;
     } else {
       if (rtIsInfF(Controller_DW.nextGoalPose[5]) || rtIsNaNF
           (Controller_DW.nextGoalPose[5])) {
-        scale = (rtNaNF);
+        rtb_DataTypeConversion_idx_1 = (rtNaNF);
         absxk = (rtNaNF);
       } else {
-        scale = rt_remf_snf(Controller_DW.nextGoalPose[5], 360.0F);
-        absxk = fabsf(scale);
+        rtb_DataTypeConversion_idx_1 = rt_remf_snf(Controller_DW.nextGoalPose[5],
+          360.0F);
+        absxk = fabsf(rtb_DataTypeConversion_idx_1);
         if (absxk > 180.0F) {
-          if (scale > 0.0F) {
-            scale -= 360.0F;
+          if (rtb_DataTypeConversion_idx_1 > 0.0F) {
+            rtb_DataTypeConversion_idx_1 -= 360.0F;
           } else {
-            scale += 360.0F;
+            rtb_DataTypeConversion_idx_1 += 360.0F;
           }
 
-          absxk = fabsf(scale);
+          absxk = fabsf(rtb_DataTypeConversion_idx_1);
         }
 
         if (absxk <= 45.0F) {
-          scale *= 0.0174532924F;
+          rtb_DataTypeConversion_idx_1 *= 0.0174532924F;
           n = 0;
         } else if (absxk <= 135.0F) {
-          if (scale > 0.0F) {
-            scale = (scale - 90.0F) * 0.0174532924F;
+          if (rtb_DataTypeConversion_idx_1 > 0.0F) {
+            rtb_DataTypeConversion_idx_1 = (rtb_DataTypeConversion_idx_1 - 90.0F)
+              * 0.0174532924F;
             n = 1;
           } else {
-            scale = (scale + 90.0F) * 0.0174532924F;
+            rtb_DataTypeConversion_idx_1 = (rtb_DataTypeConversion_idx_1 + 90.0F)
+              * 0.0174532924F;
             n = -1;
           }
-        } else if (scale > 0.0F) {
-          scale = (scale - 180.0F) * 0.0174532924F;
+        } else if (rtb_DataTypeConversion_idx_1 > 0.0F) {
+          rtb_DataTypeConversion_idx_1 = (rtb_DataTypeConversion_idx_1 - 180.0F)
+            * 0.0174532924F;
           n = 2;
         } else {
-          scale = (scale + 180.0F) * 0.0174532924F;
+          rtb_DataTypeConversion_idx_1 = (rtb_DataTypeConversion_idx_1 + 180.0F)
+            * 0.0174532924F;
           n = -2;
         }
 
         switch (n) {
          case 0:
-          scale = cosf(scale);
+          rtb_DataTypeConversion_idx_1 = cosf(rtb_DataTypeConversion_idx_1);
           break;
 
          case 1:
-          scale = -sinf(scale);
+          rtb_DataTypeConversion_idx_1 = -sinf(rtb_DataTypeConversion_idx_1);
           break;
 
          case -1:
-          scale = sinf(scale);
+          rtb_DataTypeConversion_idx_1 = sinf(rtb_DataTypeConversion_idx_1);
           break;
 
          default:
-          scale = -cosf(scale);
+          rtb_DataTypeConversion_idx_1 = -cosf(rtb_DataTypeConversion_idx_1);
           break;
         }
 
@@ -5692,37 +5763,160 @@ void Controller_step(void)
         }
       }
 
-      if (((Controller_U.VehicheInfo.currPose[0] - Controller_DW.nextGoalPose[1])
-           * scale + (Controller_U.VehicheInfo.currPose[1] -
-                      Controller_DW.nextGoalPose[3]) * absxk) *
-          Controller_U.VehicheInfo.direction > 0.0F) {
-        rtb_RelationalOperator_l = ((fabsf(Controller_U.VehicheInfo.currVelocity)
-          < 0.05) || (Controller_DW.speedConfig.EndSpeed != 0.0F));
+      if (((Controller_U.INS_Out.x_R - Controller_DW.nextGoalPose[1]) *
+           rtb_DataTypeConversion_idx_1 + (-Controller_U.INS_Out.y_R -
+            Controller_DW.nextGoalPose[3]) * absxk) *
+          Controller_DW.UnitDelay1_DSTATE > 0.0F) {
+        rtb_FixPtRelationalOperator = ((fabsf(rtb_MatrixMultiply[0]) < 0.05) ||
+          (Controller_DW.speedConfig.EndSpeed != 0.0F));
       } else {
-        rtb_RelationalOperator_l = (fabsf(Controller_U.VehicheInfo.currVelocity)
-          < 0.05);
+        rtb_FixPtRelationalOperator = (fabsf(rtb_MatrixMultiply[0]) < 0.05);
       }
     }
 
-    if (rtb_RelationalOperator_l) {
-      if (Controller_DW.goalIndex <= Controller_U.Controller_In.valid_num) {
-        Controller_DW.nextGoalPose[0] = rtb_VectorConcatenate[(int32_T)
+    if (rtb_FixPtRelationalOperator) {
+      if (Controller_DW.goalIndex <= Controller_B.valid_num) {
+        boolean_T exitg1;
+        boolean_T guard1 = false;
+        boolean_T p;
+        Controller_DW.nextGoalPose[0] = Controller_B.ref_poses[(int32_T)
           Controller_DW.goalIndex - 1];
-        Controller_DW.nextGoalPose[1] = rtb_VectorConcatenate[(int32_T)
+        Controller_DW.nextGoalPose[1] = Controller_B.ref_poses[(int32_T)
           (Controller_DW.goalIndex + 1.0) - 1];
-        Controller_DW.nextGoalPose[2] = rtb_VectorConcatenate[(int32_T)
+        Controller_DW.nextGoalPose[2] = Controller_B.ref_poses[(int32_T)
           Controller_DW.goalIndex + 49];
-        Controller_DW.nextGoalPose[3] = rtb_VectorConcatenate[(int32_T)
+        Controller_DW.nextGoalPose[3] = Controller_B.ref_poses[(int32_T)
           (Controller_DW.goalIndex + 1.0) + 49];
-        Controller_DW.nextGoalPose[4] = rtb_VectorConcatenate[(int32_T)
+        Controller_DW.nextGoalPose[4] = Controller_B.ref_poses[(int32_T)
           Controller_DW.goalIndex + 99];
-        Controller_DW.nextGoalPose[5] = rtb_VectorConcatenate[(int32_T)
+        Controller_DW.nextGoalPose[5] = Controller_B.ref_poses[(int32_T)
           (Controller_DW.goalIndex + 1.0) + 99];
-        Controller_DW.speedConfig.StartSpeed =
-          Controller_U.VehicheInfo.currVelocity;
+        Controller_DW.speedConfig.StartSpeed = rtb_MatrixMultiply[0];
         Controller_DW.speedConfig.EndSpeed = Controller_DW.endSpeed;
         Controller_DW.goalIndex++;
-        rtb_FixPtRelationalOperator = true;
+
+        /* Outputs for Enabled SubSystem: '<S18>/Trajectory Generation' incorporates:
+         *  EnablePort: '<S138>/Enable'
+         */
+        /* MATLABSystem: '<S138>/MATLAB System' incorporates:
+         *  BusCreator generated from: '<S18>/Behavior Planner'
+         *  Concatenate: '<S2>/Vector Concatenate'
+         *  MATLAB Function: '<S138>/MATLAB Function'
+         */
+        /*  Define total number of inputs */
+        /*  Define total number of outputs */
+        /* ------------------------------------------------------------------ */
+        /* stepImpl Implement the algorithm of interpolating a spline */
+        /*  Check if refDirections contains invalid values */
+        /*  If the input poses are not new, use the previous output */
+        rtb_FixPtRelationalOperator = false;
+        p = true;
+        i = 0;
+        exitg1 = false;
+        while ((!exitg1) && (i < 6)) {
+          if ((Controller_DW.nextGoalPose[i] ==
+               Controller_DW.obj_l.RefPosesInternal[i]) || (rtIsNaNF
+               (Controller_DW.nextGoalPose[i]) && rtIsNaNF
+               (Controller_DW.obj_l.RefPosesInternal[i]))) {
+            i++;
+          } else {
+            p = false;
+            exitg1 = true;
+          }
+        }
+
+        if (p) {
+          rtb_FixPtRelationalOperator = true;
+        }
+
+        guard1 = false;
+        if (rtb_FixPtRelationalOperator) {
+          rtb_FixPtRelationalOperator = false;
+          p = true;
+          i = 0;
+          exitg1 = false;
+          while ((!exitg1) && (i < 2)) {
+            if (Controller_DW.obj_l.RefDirectionsInternal[i] == 1.0F) {
+              i++;
+            } else {
+              p = false;
+              exitg1 = true;
+            }
+          }
+
+          if (p) {
+            rtb_FixPtRelationalOperator = true;
+          }
+
+          if (rtb_FixPtRelationalOperator) {
+            memcpy(&Controller_B.poses[0], &Controller_DW.obj_l.LastPosesOutput
+                   [0], 150U * sizeof(real32_T));
+
+            /* MATLABSystem: '<S138>/MATLAB System' */
+            memcpy(&Controller_B.directions[0],
+                   &Controller_DW.obj_l.LastDirectionsOutput[0], 50U * sizeof
+                   (real32_T));
+            memcpy(&b_varargout_3[0], &Controller_DW.obj_l.LastCumLengthsOutput
+                   [0], 50U * sizeof(real32_T));
+
+            /* MATLABSystem: '<S138>/MATLAB System' */
+            memcpy(&Controller_B.curvatures[0],
+                   &Controller_DW.obj_l.LastCurvaturesOutput[0], 50U * sizeof
+                   (real32_T));
+          } else {
+            guard1 = true;
+          }
+        } else {
+          guard1 = true;
+        }
+
+        if (guard1) {
+          for (i = 0; i < 6; i++) {
+            Controller_DW.obj_l.RefPosesInternal[i] =
+              Controller_DW.nextGoalPose[i];
+          }
+
+          /*  Smooth the path */
+          Controller_DW.obj_l.RefDirectionsInternal[0] = 1.0F;
+
+          /* MATLAB Function: '<S138>/MATLAB Function' */
+          tmp[0] = 1.0F;
+          Controller_DW.obj_l.RefDirectionsInternal[1] = 1.0F;
+
+          /* MATLAB Function: '<S138>/MATLAB Function' */
+          tmp[1] = 1.0F;
+          Controller_smoothPathSpline(Controller_DW.nextGoalPose, tmp,
+            Controller_B.poses, Controller_B.directions, b_varargout_3,
+            Controller_B.curvatures);
+
+          /*  Optional outputs */
+          /*  Store the outputs */
+          memcpy(&Controller_DW.obj_l.LastPosesOutput[0], &Controller_B.poses[0],
+                 150U * sizeof(real32_T));
+          memcpy(&Controller_DW.obj_l.LastDirectionsOutput[0],
+                 &Controller_B.directions[0], 50U * sizeof(real32_T));
+          memcpy(&Controller_DW.obj_l.LastCumLengthsOutput[0], &b_varargout_3[0],
+                 50U * sizeof(real32_T));
+          memcpy(&Controller_DW.obj_l.LastCurvaturesOutput[0],
+                 &Controller_B.curvatures[0], 50U * sizeof(real32_T));
+        }
+
+        /* MATLABSystem: '<S138>/MATLAB System1' incorporates:
+         *  MATLABSystem: '<S138>/MATLAB System'
+         */
+        if (Controller_DW.obj_n.MaxSpeed != 20.0) {
+          /* ------------------------------------------------------------------ */
+          Controller_DW.obj_n.MaxSpeed = 20.0;
+        }
+
+        /* ------------------------------------------------------------------ */
+        Contr_VelocityProfiler_stepImpl(&Controller_DW.obj_n,
+          Controller_B.directions, b_varargout_3, Controller_B.curvatures,
+          Controller_DW.speedConfig.StartSpeed,
+          Controller_DW.speedConfig.EndSpeed, Controller_B.velocities);
+
+        /* End of MATLABSystem: '<S138>/MATLAB System1' */
+        /* End of Outputs for SubSystem: '<S18>/Trajectory Generation' */
       } else {
         for (i = 0; i < 6; i++) {
           Controller_DW.nextGoalPose[i] = 0.0F;
@@ -5735,119 +5929,13 @@ void Controller_step(void)
     }
   }
 
-  /* MATLABSystem: '<S119>/MATLAB System' incorporates:
-   *  MATLAB Function: '<S119>/MATLAB Function'
-   *  MATLAB Function: '<S2>/Behavior Planner'
-   */
-  /*  Define total number of inputs */
-  /*  Define total number of outputs */
-  /* ------------------------------------------------------------------ */
-  /* stepImpl Implement the algorithm of interpolating a spline */
-  /*  Check if refDirections contains invalid values */
-  /*  If the input poses are not new, use the previous output */
-  rtb_RelationalOperator_l = false;
-  p = true;
-  i = 0;
-  exitg1 = false;
-  while ((!exitg1) && (i < 6)) {
-    if ((Controller_DW.nextGoalPose[i] == Controller_DW.obj_l.RefPosesInternal[i])
-        || (rtIsNaNF(Controller_DW.nextGoalPose[i]) && rtIsNaNF
-            (Controller_DW.obj_l.RefPosesInternal[i]))) {
-      i++;
-    } else {
-      p = false;
-      exitg1 = true;
-    }
-  }
+  /* End of MATLAB Function: '<S18>/Behavior Planner' */
 
-  if (p) {
-    rtb_RelationalOperator_l = true;
-  }
-
-  guard1 = false;
-  if (rtb_RelationalOperator_l) {
-    rtb_RelationalOperator_l = false;
-    p = true;
-    i = 0;
-    exitg1 = false;
-    while ((!exitg1) && (i < 2)) {
-      if (Controller_DW.obj_l.RefDirectionsInternal[i] == 1.0F) {
-        i++;
-      } else {
-        p = false;
-        exitg1 = true;
-      }
-    }
-
-    if (p) {
-      rtb_RelationalOperator_l = true;
-    }
-
-    if (rtb_RelationalOperator_l) {
-      memcpy(&rtb_VectorConcatenate[0], &Controller_DW.obj_l.LastPosesOutput[0],
-             150U * sizeof(real32_T));
-      memcpy(&b_varargout_2[0], &Controller_DW.obj_l.LastDirectionsOutput[0],
-             50U * sizeof(real32_T));
-      memcpy(&b_varargout_3[0], &Controller_DW.obj_l.LastCumLengthsOutput[0],
-             50U * sizeof(real32_T));
-      memcpy(&b_varargout_4[0], &Controller_DW.obj_l.LastCurvaturesOutput[0],
-             50U * sizeof(real32_T));
-    } else {
-      guard1 = true;
-    }
-  } else {
-    guard1 = true;
-  }
-
-  if (guard1) {
-    for (i = 0; i < 6; i++) {
-      Controller_DW.obj_l.RefPosesInternal[i] = Controller_DW.nextGoalPose[i];
-    }
-
-    /*  Smooth the path */
-    Controller_DW.obj_l.RefDirectionsInternal[0] = 1.0F;
-
-    /* MATLAB Function: '<S119>/MATLAB Function' incorporates:
-     *  MATLAB Function: '<S2>/Behavior Planner'
-     */
-    tmp[0] = 1.0F;
-    Controller_DW.obj_l.RefDirectionsInternal[1] = 1.0F;
-
-    /* MATLAB Function: '<S119>/MATLAB Function' */
-    tmp[1] = 1.0F;
-    Controller_smoothPathSpline(Controller_DW.nextGoalPose, tmp,
-      rtb_VectorConcatenate, b_varargout_2, b_varargout_3, b_varargout_4);
-
-    /*  Optional outputs */
-    /*  Store the outputs */
-    memcpy(&Controller_DW.obj_l.LastPosesOutput[0], &rtb_VectorConcatenate[0],
-           150U * sizeof(real32_T));
-    memcpy(&Controller_DW.obj_l.LastDirectionsOutput[0], &b_varargout_2[0], 50U *
-           sizeof(real32_T));
-    memcpy(&Controller_DW.obj_l.LastCumLengthsOutput[0], &b_varargout_3[0], 50U *
-           sizeof(real32_T));
-    memcpy(&Controller_DW.obj_l.LastCurvaturesOutput[0], &b_varargout_4[0], 50U *
-           sizeof(real32_T));
-  }
-
-  /* MATLABSystem: '<S119>/MATLAB System1' incorporates:
-   *  MATLAB Function: '<S2>/Behavior Planner'
-   *  MATLABSystem: '<S119>/MATLAB System'
-   */
-  if (Controller_DW.obj_n.MaxSpeed != 20.0) {
-    /* ------------------------------------------------------------------ */
-    Controller_DW.obj_n.MaxSpeed = 20.0;
-  }
-
-  /* ------------------------------------------------------------------ */
-  Contr_VelocityProfiler_stepImpl(&Controller_DW.obj_n, b_varargout_2,
-    b_varargout_3, b_varargout_4, Controller_DW.speedConfig.StartSpeed,
-    Controller_DW.speedConfig.EndSpeed, rtb_MATLABSystem1_0);
-
-  /* MATLABSystem: '<S1>/MATLAB System' incorporates:
-   *  Inport: '<Root>/VehicheInfo'
-   *  MATLABSystem: '<S119>/MATLAB System'
-   *  MATLABSystem: '<S119>/MATLAB System1'
+  /* MATLABSystem: '<S15>/MATLAB System' incorporates:
+   *  MATLABSystem: '<S138>/MATLAB System'
+   *  MATLABSystem: '<S138>/MATLAB System1'
+   *  Reshape: '<S17>/Reshape'
+   *  UnitDelay: '<S3>/Unit Delay1'
    */
   if (Controller_DW.obj.TunablePropsChanged) {
     Controller_DW.obj.TunablePropsChanged = false;
@@ -5876,50 +5964,61 @@ void Controller_step(void)
   /* ------------------------------------------------------------------ */
   /*  Define total number of outputs for system with optional */
   /*  outputs */
-  Con_HelperPathAnalyzer_stepImpl(&Controller_DW.obj,
-    Controller_U.VehicheInfo.currPose, Controller_U.VehicheInfo.currVelocity,
-    rtb_VectorConcatenate, b_varargout_2, b_varargout_4, rtb_MATLABSystem1_0,
-    refPose, &scale, &absxk, &t);
+  Con_HelperPathAnalyzer_stepImpl(&Controller_DW.obj, rtb_currPose,
+    rtb_MatrixMultiply[0], Controller_B.poses, Controller_B.directions,
+    Controller_B.curvatures, Controller_B.velocities, refPose,
+    &rtb_DataTypeConversion_idx_1, &Controller_DW.UnitDelay1_DSTATE, &t, &absxk);
 
-  /* MATLAB Function: '<S4>/Kinematic' incorporates:
-   *  Inport: '<Root>/VehicheInfo'
-   *  MATLABSystem: '<S1>/MATLAB System'
+  /* MATLAB Function: '<S19>/Kinematic' incorporates:
+   *  Gain: '<S17>/Gain'
+   *  Gain: '<S17>/Gain1'
+   *  Inport: '<Root>/INS_Out'
+   *  MATLABSystem: '<S15>/MATLAB System'
+   *  Reshape: '<S17>/Reshape'
+   *  UnitDelay: '<S3>/Unit Delay1'
    */
-  currPose[0] = Controller_U.VehicheInfo.currPose[0];
-  currPose[1] = Controller_U.VehicheInfo.currPose[1];
+  rtb_currPose[0] = Controller_U.INS_Out.x_R;
+  rtb_currPose[1] = -Controller_U.INS_Out.y_R;
   refPose[2] *= 0.0174532924F;
   Contro_angleUtilities_wrapTo2Pi(&refPose[2]);
-  currPose[2] = 0.0174532924F * Controller_U.VehicheInfo.currPose[2];
-  Contro_angleUtilities_wrapTo2Pi(&currPose[2]);
-  if (absxk == 1.0F) {
-    currPose[0] = 0.3F * cosf(currPose[2]) + Controller_U.VehicheInfo.currPose[0];
-    currPose[1] = 0.3F * sinf(currPose[2]) + Controller_U.VehicheInfo.currPose[1];
-    t = currPose[0] - refPose[0];
-    distToGoal = currPose[1] - refPose[1];
+  rtb_currPose[2] = 0.0174532924F * -Controller_U.INS_Out.psi;
+  Contro_angleUtilities_wrapTo2Pi(&rtb_currPose[2]);
+  if (Controller_DW.UnitDelay1_DSTATE == 1.0F) {
+    rtb_currPose[0] = 0.3F * cosf(rtb_currPose[2]) + Controller_U.INS_Out.x_R;
+    rtb_currPose[1] = 0.3F * sinf(rtb_currPose[2]) - Controller_U.INS_Out.y_R;
+    distToGoal = rtb_currPose[0] - refPose[0];
+    d_idx_1 = rtb_currPose[1] - refPose[1];
   } else {
-    t = currPose[0] - refPose[0];
-    distToGoal = currPose[1] - refPose[1];
+    distToGoal = rtb_currPose[0] - refPose[0];
+    d_idx_1 = rtb_currPose[1] - refPose[1];
   }
 
-  b = (currPose[2] - refPose[2]) + 3.14159274F;
+  b = (rtb_currPose[2] - refPose[2]) + 3.14159274F;
   Contro_angleUtilities_wrapTo2Pi(&b);
-  if (absxk == 1.0F) {
-    t = -(atanf(-(t * sinf(refPose[2]) - cosf(refPose[2]) * distToGoal) * 2.0F /
-                (Controller_U.VehicheInfo.currVelocity + 1.0F)) + (b -
-           3.14159274F));
+  if (Controller_DW.UnitDelay1_DSTATE == 1.0F) {
+    distToGoal = -(atanf(-(distToGoal * sinf(refPose[2]) - cosf(refPose[2]) *
+      d_idx_1) * 2.0F / (rtb_MatrixMultiply[0] + 1.0F)) + (b - 3.14159274F));
   } else {
-    if (absxk == 1.0F) {
+    if (Controller_DW.UnitDelay1_DSTATE == 1.0F) {
       rtb_Sum_idx_0 = 2.0;
     } else {
       rtb_Sum_idx_0 = 2.5;
     }
 
-    t = atanf(-(t * sinf(refPose[2]) - cosf(refPose[2]) * distToGoal) *
-              (real32_T)rtb_Sum_idx_0 / (Controller_U.VehicheInfo.currVelocity -
-               1.0F)) + (b - 3.14159274F);
+    distToGoal = atanf(-(distToGoal * sinf(refPose[2]) - cosf(refPose[2]) *
+                         d_idx_1) * (real32_T)rtb_Sum_idx_0 /
+                       (rtb_MatrixMultiply[0] - 1.0F)) + (b - 3.14159274F);
   }
 
-  distToGoal = 57.2957802F * t;
+  distToGoal *= 57.2957802F;
+
+  /* Gain: '<S25>/Gain' incorporates:
+   *  MATLABSystem: '<S15>/MATLAB System'
+   *  Product: '<S24>/Product'
+   */
+  d_idx_1 = rtb_MatrixMultiply[0] * t * 57.2957802F;
+
+  /* MATLAB Function: '<S19>/Kinematic' */
   if (rtIsNaNF(distToGoal)) {
     t = (rtNaNF);
   } else if (distToGoal < 0.0F) {
@@ -5928,25 +6027,48 @@ void Controller_step(void)
     t = (real32_T)(distToGoal > 0.0F);
   }
 
-  /* Saturate: '<S3>/Saturation2' incorporates:
-   *  Constant: '<S3>/Constant1'
-   *  Gain: '<S3>/Gain'
-   *  MATLAB Function: '<S4>/Kinematic'
-   *  Sum: '<S3>/Add'
+  /* Sum: '<S24>/Add' incorporates:
+   *  DiscreteIntegrator: '<S134>/Discrete-Time Integrator'
+   *  Gain: '<S24>/Gain'
+   *  Gain: '<S24>/Gain1'
+   *  Gain: '<S24>/Gain2'
+   *  Inport: '<Root>/INS_Out'
+   *  MATLAB Function: '<S19>/Kinematic'
+   *  Product: '<S24>/Multiply'
+   *  Sum: '<S24>/Minus'
+   *  Sum: '<S24>/Minus1'
+   *  UnitDelay: '<S24>/Unit Delay'
    */
-  rtb_Sum_idx_0 = floor(t * fminf(fabsf(distToGoal), 30.0F) * 5.55555534F +
-                        750.0);
+  distToGoal = ((rtb_MatrixMultiply[0] * d_idx_1 * 1.31578945E-5F + t * fminf
+                 (fabsf(distToGoal), 30.0F)) + (d_idx_1 - Controller_U.INS_Out.r)
+                * 0.25F) + (Controller_DW.UnitDelay_DSTATE -
+    Controller_DW.DiscreteTimeIntegrator_DSTATE) * 0.2F;
 
-  /* Sum: '<S5>/Minus' incorporates:
-   *  Inport: '<Root>/VehicheInfo'
-   *  MATLABSystem: '<S1>/MATLAB System'
-   */
-  distToGoal = scale - Controller_U.VehicheInfo.currVelocity;
+  /* Saturate: '<S24>/Saturation' */
+  if (distToGoal > 30.0F) {
+    distToGoal = 30.0F;
+  } else if (distToGoal < -30.0F) {
+    distToGoal = -30.0F;
+  }
 
-  /* SwitchCase: '<S11>/Switch Case' incorporates:
-   *  MATLABSystem: '<S1>/MATLAB System'
+  /* End of Saturate: '<S24>/Saturation' */
+
+  /* Saturate: '<S16>/Saturation2' incorporates:
+   *  Constant: '<S16>/Constant1'
+   *  Gain: '<S16>/Gain'
+   *  Sum: '<S16>/Add'
    */
-  t = truncf(absxk);
+  rtb_Sum_idx_0 = floor(5.55555534F * distToGoal + 750.0);
+
+  /* Sum: '<S20>/Minus' incorporates:
+   *  MATLABSystem: '<S15>/MATLAB System'
+   */
+  d_idx_1 = rtb_DataTypeConversion_idx_1 - rtb_MatrixMultiply[0];
+
+  /* SwitchCase: '<S27>/Switch Case' incorporates:
+   *  UnitDelay: '<S3>/Unit Delay1'
+   */
+  t = truncf(Controller_DW.UnitDelay1_DSTATE);
   if (rtIsNaNF(t) || rtIsInfF(t)) {
     t = 0.0F;
   } else {
@@ -5958,34 +6080,36 @@ void Controller_step(void)
     {
       int8_T rtb_Switch1_m;
 
-      /* Outputs for IfAction SubSystem: '<S11>/Forward' incorporates:
-       *  ActionPort: '<S13>/Action Port'
+      /* Outputs for IfAction SubSystem: '<S27>/Forward' incorporates:
+       *  ActionPort: '<S29>/Action Port'
        */
-      /* DiscreteIntegrator: '<S49>/Integrator' */
-      if (rtb_FixPtRelationalOperator ||
-          (Controller_DW.Integrator_PrevResetState_h != 0)) {
+      /* DiscreteIntegrator: '<S65>/Integrator' incorporates:
+       *  DataTypeConversion: '<S27>/Data Type Conversion'
+       *  MATLABSystem: '<S15>/MATLAB System'
+       */
+      if ((absxk != 0.0F) || (Controller_DW.Integrator_PrevResetState_h != 0)) {
         Controller_DW.Integrator_DSTATE_i = 0.0F;
       }
 
-      /* Sum: '<S58>/Sum' incorporates:
-       *  DiscreteIntegrator: '<S49>/Integrator'
-       *  Gain: '<S54>/Proportional Gain'
+      /* Sum: '<S74>/Sum' incorporates:
+       *  DiscreteIntegrator: '<S65>/Integrator'
+       *  Gain: '<S70>/Proportional Gain'
        */
-      t = CONTROL_PARAM.KP * distToGoal + Controller_DW.Integrator_DSTATE_i;
+      t = CONTROL_PARAM.KP * d_idx_1 + Controller_DW.Integrator_DSTATE_i;
 
-      /* Saturate: '<S56>/Saturation' incorporates:
-       *  DeadZone: '<S42>/DeadZone'
+      /* Saturate: '<S72>/Saturation' incorporates:
+       *  DeadZone: '<S58>/DeadZone'
        */
       if (t > 20.0F) {
-        /* Merge: '<S11>/Merge' */
+        /* Merge: '<S27>/Merge' */
         Controller_B.Merge = 20.0F;
         t -= 20.0F;
       } else {
         if (t < -20.0F) {
-          /* Merge: '<S11>/Merge' */
+          /* Merge: '<S27>/Merge' */
           Controller_B.Merge = -20.0F;
         } else {
-          /* Merge: '<S11>/Merge' */
+          /* Merge: '<S27>/Merge' */
           Controller_B.Merge = t;
         }
 
@@ -5996,18 +6120,18 @@ void Controller_step(void)
         }
       }
 
-      /* End of Saturate: '<S56>/Saturation' */
+      /* End of Saturate: '<S72>/Saturation' */
 
-      /* RelationalOperator: '<S40>/Relational Operator' incorporates:
-       *  Constant: '<S40>/Clamping_zero'
+      /* RelationalOperator: '<S56>/Relational Operator' incorporates:
+       *  Constant: '<S56>/Clamping_zero'
        */
-      rtb_RelationalOperator_l = (t != 0.0F);
+      rtb_FixPtRelationalOperator = (t != 0.0F);
 
-      /* Switch: '<S40>/Switch1' incorporates:
-       *  Constant: '<S40>/Clamping_zero'
-       *  Constant: '<S40>/Constant'
-       *  Constant: '<S40>/Constant2'
-       *  RelationalOperator: '<S40>/fix for DT propagation issue'
+      /* Switch: '<S56>/Switch1' incorporates:
+       *  Constant: '<S56>/Clamping_zero'
+       *  Constant: '<S56>/Constant'
+       *  Constant: '<S56>/Constant2'
+       *  RelationalOperator: '<S56>/fix for DT propagation issue'
        */
       if (t > 0.0F) {
         rtb_Switch1_m = 1;
@@ -6015,16 +6139,16 @@ void Controller_step(void)
         rtb_Switch1_m = -1;
       }
 
-      /* End of Switch: '<S40>/Switch1' */
+      /* End of Switch: '<S56>/Switch1' */
 
-      /* Gain: '<S46>/Integral Gain' */
-      t = CONTROL_PARAM.KI * distToGoal;
+      /* Gain: '<S62>/Integral Gain' */
+      t = CONTROL_PARAM.KI * d_idx_1;
 
-      /* Switch: '<S40>/Switch2' incorporates:
-       *  Constant: '<S40>/Clamping_zero'
-       *  Constant: '<S40>/Constant3'
-       *  Constant: '<S40>/Constant4'
-       *  RelationalOperator: '<S40>/fix for DT propagation issue1'
+      /* Switch: '<S56>/Switch2' incorporates:
+       *  Constant: '<S56>/Clamping_zero'
+       *  Constant: '<S56>/Constant3'
+       *  Constant: '<S56>/Constant4'
+       *  RelationalOperator: '<S56>/fix for DT propagation issue1'
        */
       if (t > 0.0F) {
         n = 1;
@@ -6032,24 +6156,25 @@ void Controller_step(void)
         n = -1;
       }
 
-      /* Switch: '<S40>/Switch' incorporates:
-       *  Constant: '<S40>/Constant1'
-       *  Logic: '<S40>/AND3'
-       *  RelationalOperator: '<S40>/Equal1'
-       *  Switch: '<S40>/Switch2'
+      /* Switch: '<S56>/Switch' incorporates:
+       *  Constant: '<S56>/Constant1'
+       *  Logic: '<S56>/AND3'
+       *  RelationalOperator: '<S56>/Equal1'
+       *  Switch: '<S56>/Switch2'
        */
-      if (rtb_RelationalOperator_l && (rtb_Switch1_m == n)) {
+      if (rtb_FixPtRelationalOperator && (rtb_Switch1_m == n)) {
         t = 0.0F;
       }
 
-      /* Update for DiscreteIntegrator: '<S49>/Integrator' incorporates:
-       *  Switch: '<S40>/Switch'
+      /* Update for DiscreteIntegrator: '<S65>/Integrator' incorporates:
+       *  DataTypeConversion: '<S27>/Data Type Conversion'
+       *  MATLABSystem: '<S15>/MATLAB System'
+       *  Switch: '<S56>/Switch'
        */
       Controller_DW.Integrator_DSTATE_i += 0.02F * t;
-      Controller_DW.Integrator_PrevResetState_h = (int8_T)
-        rtb_FixPtRelationalOperator;
+      Controller_DW.Integrator_PrevResetState_h = (int8_T)(absxk != 0.0F);
 
-      /* End of Outputs for SubSystem: '<S11>/Forward' */
+      /* End of Outputs for SubSystem: '<S27>/Forward' */
     }
     break;
 
@@ -6057,34 +6182,36 @@ void Controller_step(void)
     {
       int8_T rtb_Switch1_m;
 
-      /* Outputs for IfAction SubSystem: '<S11>/Reverse' incorporates:
-       *  ActionPort: '<S14>/Action Port'
+      /* Outputs for IfAction SubSystem: '<S27>/Reverse' incorporates:
+       *  ActionPort: '<S30>/Action Port'
        */
-      /* DiscreteIntegrator: '<S100>/Integrator' */
-      if (rtb_FixPtRelationalOperator ||
-          (Controller_DW.Integrator_PrevResetState != 0)) {
+      /* DiscreteIntegrator: '<S116>/Integrator' incorporates:
+       *  DataTypeConversion: '<S27>/Data Type Conversion'
+       *  MATLABSystem: '<S15>/MATLAB System'
+       */
+      if ((absxk != 0.0F) || (Controller_DW.Integrator_PrevResetState != 0)) {
         Controller_DW.Integrator_DSTATE = 0.0F;
       }
 
-      /* Sum: '<S109>/Sum' incorporates:
-       *  DiscreteIntegrator: '<S100>/Integrator'
-       *  Gain: '<S105>/Proportional Gain'
+      /* Sum: '<S125>/Sum' incorporates:
+       *  DiscreteIntegrator: '<S116>/Integrator'
+       *  Gain: '<S121>/Proportional Gain'
        */
-      t = CONTROL_PARAM.KP * distToGoal + Controller_DW.Integrator_DSTATE;
+      t = CONTROL_PARAM.KP * d_idx_1 + Controller_DW.Integrator_DSTATE;
 
-      /* Saturate: '<S107>/Saturation' incorporates:
-       *  DeadZone: '<S93>/DeadZone'
+      /* Saturate: '<S123>/Saturation' incorporates:
+       *  DeadZone: '<S109>/DeadZone'
        */
       if (t > 20.0F) {
-        /* Merge: '<S11>/Merge' */
+        /* Merge: '<S27>/Merge' */
         Controller_B.Merge = 20.0F;
         t -= 20.0F;
       } else {
         if (t < -20.0F) {
-          /* Merge: '<S11>/Merge' */
+          /* Merge: '<S27>/Merge' */
           Controller_B.Merge = -20.0F;
         } else {
-          /* Merge: '<S11>/Merge' */
+          /* Merge: '<S27>/Merge' */
           Controller_B.Merge = t;
         }
 
@@ -6095,18 +6222,18 @@ void Controller_step(void)
         }
       }
 
-      /* End of Saturate: '<S107>/Saturation' */
+      /* End of Saturate: '<S123>/Saturation' */
 
-      /* RelationalOperator: '<S91>/Relational Operator' incorporates:
-       *  Constant: '<S91>/Clamping_zero'
+      /* RelationalOperator: '<S107>/Relational Operator' incorporates:
+       *  Constant: '<S107>/Clamping_zero'
        */
-      rtb_RelationalOperator_l = (t != 0.0F);
+      rtb_FixPtRelationalOperator = (t != 0.0F);
 
-      /* Switch: '<S91>/Switch1' incorporates:
-       *  Constant: '<S91>/Clamping_zero'
-       *  Constant: '<S91>/Constant'
-       *  Constant: '<S91>/Constant2'
-       *  RelationalOperator: '<S91>/fix for DT propagation issue'
+      /* Switch: '<S107>/Switch1' incorporates:
+       *  Constant: '<S107>/Clamping_zero'
+       *  Constant: '<S107>/Constant'
+       *  Constant: '<S107>/Constant2'
+       *  RelationalOperator: '<S107>/fix for DT propagation issue'
        */
       if (t > 0.0F) {
         rtb_Switch1_m = 1;
@@ -6114,16 +6241,16 @@ void Controller_step(void)
         rtb_Switch1_m = -1;
       }
 
-      /* End of Switch: '<S91>/Switch1' */
+      /* End of Switch: '<S107>/Switch1' */
 
-      /* Gain: '<S97>/Integral Gain' */
-      t = CONTROL_PARAM.KI * distToGoal;
+      /* Gain: '<S113>/Integral Gain' */
+      t = CONTROL_PARAM.KI * d_idx_1;
 
-      /* Switch: '<S91>/Switch2' incorporates:
-       *  Constant: '<S91>/Clamping_zero'
-       *  Constant: '<S91>/Constant3'
-       *  Constant: '<S91>/Constant4'
-       *  RelationalOperator: '<S91>/fix for DT propagation issue1'
+      /* Switch: '<S107>/Switch2' incorporates:
+       *  Constant: '<S107>/Clamping_zero'
+       *  Constant: '<S107>/Constant3'
+       *  Constant: '<S107>/Constant4'
+       *  RelationalOperator: '<S107>/fix for DT propagation issue1'
        */
       if (t > 0.0F) {
         n = 1;
@@ -6131,57 +6258,58 @@ void Controller_step(void)
         n = -1;
       }
 
-      /* Switch: '<S91>/Switch' incorporates:
-       *  Constant: '<S91>/Constant1'
-       *  Logic: '<S91>/AND3'
-       *  RelationalOperator: '<S91>/Equal1'
-       *  Switch: '<S91>/Switch2'
+      /* Switch: '<S107>/Switch' incorporates:
+       *  Constant: '<S107>/Constant1'
+       *  Logic: '<S107>/AND3'
+       *  RelationalOperator: '<S107>/Equal1'
+       *  Switch: '<S107>/Switch2'
        */
-      if (rtb_RelationalOperator_l && (rtb_Switch1_m == n)) {
+      if (rtb_FixPtRelationalOperator && (rtb_Switch1_m == n)) {
         t = 0.0F;
       }
 
-      /* Update for DiscreteIntegrator: '<S100>/Integrator' incorporates:
-       *  Switch: '<S91>/Switch'
+      /* Update for DiscreteIntegrator: '<S116>/Integrator' incorporates:
+       *  DataTypeConversion: '<S27>/Data Type Conversion'
+       *  MATLABSystem: '<S15>/MATLAB System'
+       *  Switch: '<S107>/Switch'
        */
       Controller_DW.Integrator_DSTATE += 0.02F * t;
-      Controller_DW.Integrator_PrevResetState = (int8_T)
-        rtb_FixPtRelationalOperator;
+      Controller_DW.Integrator_PrevResetState = (int8_T)(absxk != 0.0F);
 
-      /* End of Outputs for SubSystem: '<S11>/Reverse' */
+      /* End of Outputs for SubSystem: '<S27>/Reverse' */
     }
     break;
   }
 
-  /* End of SwitchCase: '<S11>/Switch Case' */
+  /* End of SwitchCase: '<S27>/Switch Case' */
 
-  /* Product: '<S10>/Multiply' incorporates:
-   *  MATLABSystem: '<S1>/MATLAB System'
+  /* Product: '<S26>/Multiply' incorporates:
+   *  UnitDelay: '<S3>/Unit Delay1'
    */
-  t = absxk * Controller_B.Merge;
+  absxk = Controller_DW.UnitDelay1_DSTATE * Controller_B.Merge;
 
-  /* Switch: '<S10>/Switch1' incorporates:
-   *  Abs: '<S10>/Abs'
-   *  Constant: '<S10>/Constant'
-   *  Switch: '<S10>/Switch'
+  /* Switch: '<S26>/Switch1' incorporates:
+   *  Abs: '<S26>/Abs'
+   *  Constant: '<S26>/Constant'
+   *  Switch: '<S26>/Switch'
    */
-  if (t > 0.0F) {
+  if (absxk > 0.0F) {
     rtb_Sum3 = 0.0;
-    rtb_Sum2_e = t;
+    rtb_Sum2_e = absxk;
   } else {
-    rtb_Sum3 = fabsf(t);
+    rtb_Sum3 = fabsf(absxk);
     rtb_Sum2_e = 0.0;
   }
 
-  /* End of Switch: '<S10>/Switch1' */
+  /* End of Switch: '<S26>/Switch1' */
 
-  /* Gain: '<S3>/Gain1' incorporates:
-   *  Sum: '<S1>/Add'
-   *  Switch: '<S10>/Switch'
+  /* Gain: '<S16>/Gain1' incorporates:
+   *  Sum: '<S15>/Add'
+   *  Switch: '<S26>/Switch'
    */
   rtb_Sum3 = (rtb_Sum2_e - rtb_Sum3) * 10000.0;
 
-  /* Saturate: '<S3>/Saturation1' */
+  /* Saturate: '<S16>/Saturation1' */
   if (rtb_Sum3 > 10000.0) {
     rtb_Sum3 = 10000.0;
   } else if (rtb_Sum3 < -10000.0) {
@@ -6199,9 +6327,9 @@ void Controller_step(void)
    *  DiscreteIntegrator: '<S133>/Discrete-Time Integrator'
    */
   Controller_Y.Controller_Out.timestamp =
-    Controller_DW.DiscreteTimeIntegrator_DSTATE;
+    Controller_DW.DiscreteTimeIntegrator_DSTATE_a;
 
-  /* Saturate: '<S3>/Saturation2' */
+  /* Saturate: '<S16>/Saturation2' */
   if (rtIsNaN(rtb_Sum_idx_0)) {
     /* Outport: '<Root>/Controller_Out' */
     Controller_Y.Controller_Out.actuator_cmd[0] = 0;
@@ -6212,80 +6340,95 @@ void Controller_step(void)
   }
 
   /* Outport: '<Root>/Controller_Out' incorporates:
-   *  BusAssignment: '<S3>/Bus Assignment'
-   *  Constant: '<S3>/Constant2'
-   *  Saturate: '<S3>/Saturation1'
+   *  BusAssignment: '<S16>/Bus Assignment'
+   *  Constant: '<S16>/Constant2'
+   *  Saturate: '<S16>/Saturation1'
    */
   Controller_Y.Controller_Out.actuator_cmd[1] = (int16_T)(i < 0 ? (int32_T)
     (int16_T)-(int16_T)(uint16_T)-(real_T)i : i);
   Controller_Y.Controller_Out.actuator_cmd[2] = 0;
   Controller_Y.Controller_Out.actuator_cmd[3] = 0;
 
-  /* Signum: '<S12>/Sign2' incorporates:
-   *  MATLABSystem: '<S1>/MATLAB System'
+  /* Signum: '<S28>/Sign2' incorporates:
+   *  MATLABSystem: '<S15>/MATLAB System'
    */
-  if (rtIsNaNF(scale)) {
+  if (rtIsNaNF(rtb_DataTypeConversion_idx_1)) {
     t = (rtNaNF);
-  } else if (scale < 0.0F) {
+  } else if (rtb_DataTypeConversion_idx_1 < 0.0F) {
     t = -1.0F;
   } else {
-    t = (real32_T)(scale > 0.0F);
+    t = (real32_T)(rtb_DataTypeConversion_idx_1 > 0.0F);
   }
 
-  /* Signum: '<S12>/Sign1' incorporates:
-   *  Inport: '<Root>/VehicheInfo'
-   */
-  if (rtIsNaNF(Controller_U.VehicheInfo.currVelocity)) {
-    distToGoal = (rtNaNF);
-  } else if (Controller_U.VehicheInfo.currVelocity < 0.0F) {
-    distToGoal = -1.0F;
+  /* Signum: '<S28>/Sign1' */
+  if (rtIsNaNF(rtb_MatrixMultiply[0])) {
+    absxk = (rtNaNF);
+  } else if (rtb_MatrixMultiply[0] < 0.0F) {
+    absxk = -1.0F;
   } else {
-    distToGoal = (real32_T)(Controller_U.VehicheInfo.currVelocity > 0.0F);
+    absxk = (real32_T)(rtb_MatrixMultiply[0] > 0.0F);
   }
 
-  /* Assertion: '<S12>/Assertion' incorporates:
-   *  Constant: '<S12>/Constant1'
-   *  Constant: '<S12>/Constant4'
-   *  Inport: '<Root>/VehicheInfo'
-   *  Logic: '<S12>/AND1'
-   *  Logic: '<S12>/AND3'
-   *  Logic: '<S12>/NOT1'
-   *  Logic: '<S12>/OR'
-   *  MATLABSystem: '<S1>/MATLAB System'
-   *  RelationalOperator: '<S12>/Equal1'
-   *  RelationalOperator: '<S12>/Equal2'
-   *  RelationalOperator: '<S12>/Equal3'
-   *  RelationalOperator: '<S12>/Equal6'
-   *  Signum: '<S12>/Sign1'
-   *  Signum: '<S12>/Sign2'
+  /* Assertion: '<S28>/Assertion' incorporates:
+   *  Constant: '<S28>/Constant1'
+   *  Constant: '<S28>/Constant4'
+   *  Logic: '<S28>/AND1'
+   *  Logic: '<S28>/AND3'
+   *  Logic: '<S28>/NOT1'
+   *  Logic: '<S28>/OR'
+   *  MATLABSystem: '<S15>/MATLAB System'
+   *  RelationalOperator: '<S28>/Equal1'
+   *  RelationalOperator: '<S28>/Equal2'
+   *  RelationalOperator: '<S28>/Equal3'
+   *  RelationalOperator: '<S28>/Equal6'
+   *  Signum: '<S28>/Sign1'
+   *  Signum: '<S28>/Sign2'
+   *  UnitDelay: '<S3>/Unit Delay1'
    */
-  utAssert(((!(absxk != t)) || (!(scale != 0.0F))) && ((!(absxk != distToGoal)) ||
-            (!(Controller_U.VehicheInfo.currVelocity != 0.0F))));
+  utAssert(((!(Controller_DW.UnitDelay1_DSTATE != t)) ||
+            (!(rtb_DataTypeConversion_idx_1 != 0.0F))) &&
+           ((!(Controller_DW.UnitDelay1_DSTATE != absxk)) ||
+            (!(rtb_MatrixMultiply[0] != 0.0F))));
 
-  /* Assertion: '<S12>/Assertion1' incorporates:
-   *  Constant: '<S12>/Constant2'
-   *  Constant: '<S12>/Constant3'
-   *  Logic: '<S12>/AND2'
-   *  Logic: '<S12>/NOT'
-   *  MATLABSystem: '<S1>/MATLAB System'
-   *  RelationalOperator: '<S12>/Equal4'
-   *  RelationalOperator: '<S12>/Equal5'
+  /* Assertion: '<S28>/Assertion1' incorporates:
+   *  Constant: '<S28>/Constant2'
+   *  Constant: '<S28>/Constant3'
+   *  Logic: '<S28>/AND2'
+   *  Logic: '<S28>/NOT'
+   *  RelationalOperator: '<S28>/Equal4'
+   *  RelationalOperator: '<S28>/Equal5'
+   *  UnitDelay: '<S3>/Unit Delay1'
    */
-  utAssert((!(absxk != -1.0F)) || (!(absxk != 1.0F)));
+  utAssert((!(Controller_DW.UnitDelay1_DSTATE != -1.0F)) ||
+           (!(Controller_DW.UnitDelay1_DSTATE != 1.0F)));
 
-  /* Update for UnitDelay: '<S120>/Delay Input1' incorporates:
-   *  Inport: '<Root>/Controller_In'
+  /* Update for UnitDelay: '<S1>/Delay Input1' incorporates:
+   *  Inport: '<Root>/Mission_In'
    *
-   * Block description for '<S120>/Delay Input1':
+   * Block description for '<S1>/Delay Input1':
    *
    *  Store in Global RAM
    */
-  Controller_DW.DelayInput1_DSTATE = Controller_U.Controller_In.timestamp;
+  Controller_DW.DelayInput1_DSTATE = Controller_U.Mission_In.timestamp;
+
+  /* Update for DiscreteIntegrator: '<S134>/Discrete-Time Integrator' incorporates:
+   *  Sum: '<S134>/Add'
+   *  UnitDelay: '<S3>/Unit Delay'
+   */
+  Controller_DW.DiscreteTimeIntegrator_DSTATE +=
+    (Controller_DW.UnitDelay_DSTATE_m -
+     Controller_DW.DiscreteTimeIntegrator_DSTATE) * 0.2F;
 
   /* Update for DiscreteIntegrator: '<S133>/Discrete-Time Integrator' incorporates:
    *  Constant: '<S133>/Constant'
    */
-  Controller_DW.DiscreteTimeIntegrator_DSTATE += 20U;
+  Controller_DW.DiscreteTimeIntegrator_DSTATE_a += 20U;
+
+  /* Update for UnitDelay: '<S24>/Unit Delay' */
+  Controller_DW.UnitDelay_DSTATE = rtb_DataTypeConversion_idx_0;
+
+  /* Update for UnitDelay: '<S3>/Unit Delay' */
+  Controller_DW.UnitDelay_DSTATE_m = distToGoal;
 }
 
 /* Model initialize function */
@@ -6299,7 +6442,8 @@ void Controller_initialize(void)
   {
     int32_T i;
 
-    /* Start for MATLABSystem: '<S119>/MATLAB System' */
+    /* SystemInitialize for Enabled SubSystem: '<S18>/Trajectory Generation' */
+    /* Start for MATLABSystem: '<S138>/MATLAB System' */
     /* ------------------------------------------------------------------ */
     /*  Support name-value pair arguments when constructing object */
     /* ------------------------------------------------------------------ */
@@ -6326,7 +6470,7 @@ void Controller_initialize(void)
       Controller_DW.obj_l.LastPosesOutput[i] = (rtNaNF);
     }
 
-    /* Start for MATLABSystem: '<S119>/MATLAB System1' */
+    /* Start for MATLABSystem: '<S138>/MATLAB System1' */
     /* ------------------------------------------------------------------ */
     /*  Support name-value pair arguments when constructing object */
     /* ------------------------------------------------------------------ */
@@ -6348,23 +6492,25 @@ void Controller_initialize(void)
     /* ------------------------------------------------------------------ */
     /* setupImpl Initialize internal properties */
     for (i = 0; i < 50; i++) {
-      /* Start for MATLABSystem: '<S119>/MATLAB System' */
+      /* Start for MATLABSystem: '<S138>/MATLAB System' */
       Controller_DW.obj_l.LastDirectionsOutput[i] = (rtNaNF);
       Controller_DW.obj_l.LastCumLengthsOutput[i] = (rtNaNF);
       Controller_DW.obj_l.LastCurvaturesOutput[i] = (rtNaNF);
 
-      /* Start for MATLABSystem: '<S119>/MATLAB System1' */
+      /* Start for MATLABSystem: '<S138>/MATLAB System1' */
       Controller_DW.obj_n.LastVelocities[i] = 0.0F;
       Controller_DW.obj_n.LastCumLengths[i] = 0.0F;
       Controller_DW.obj_n.LastDirections[i] = 1.0F;
       Controller_DW.obj_n.LastCurvatures[i] = 0.0F;
     }
 
-    /* Start for MATLABSystem: '<S119>/MATLAB System1' */
+    /* Start for MATLABSystem: '<S138>/MATLAB System1' */
     Controller_DW.obj_n.LastStartVelocity = 0.0F;
     Controller_DW.obj_n.LastEndVelocity = 0.0F;
 
-    /* Start for MATLABSystem: '<S1>/MATLAB System' */
+    /* End of SystemInitialize for SubSystem: '<S18>/Trajectory Generation' */
+
+    /* Start for MATLABSystem: '<S15>/MATLAB System' */
     Controller_DW.obj.LastRefPoseOutput[0] = 0.0F;
     Controller_DW.obj.LastRefPoseOutput[1] = 0.0F;
     Controller_DW.obj.LastRefPoseOutput[2] = 0.0F;

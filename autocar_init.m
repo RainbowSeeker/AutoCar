@@ -1,3 +1,7 @@
+
+start_time = 0;
+end_time = 1000;
+
 %% init path
 filepath = which(mfilename);
 filefolder = fileparts(filepath);
@@ -16,3 +20,14 @@ set_param(0, 'CacheFolder', buildpath);
 
 %% add path
 addpath(genpath('build'));
+
+%% register code replacement library
+run('register_crl.m');
+
+%% load bus
+load_bus(rootpath);
+
+%% init models
+run('plant_init.m');
+run('ins_init.m');
+run('control_init.m');
