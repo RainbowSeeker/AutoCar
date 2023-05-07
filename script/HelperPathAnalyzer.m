@@ -260,39 +260,33 @@ classdef HelperPathAnalyzer < matlab.System
             %   intermediate goals within a reference path, i.e., reaching
             %   the direction-switching positions. 
             
-            if obj.HasReferenceInports 
-                % Check if the reference path is new
-                if ~isequal(obj.RefPosesInternal, varargin{1})
-                    obj.RefPosesInternal     = varargin{1};
-                    obj.DirectionsInternal   = varargin{2};
-                    obj.CurvaturesInternal   = varargin{3};
-                    obj.VelocityProfileInternal = varargin{4};
-                    
-                    obj.CurrentSegmentIndex = single(1);
-                    obj.ClosestPointIndex   = single(1);
-                end
-            else % In MATLAB, values are from properties
-                obj.RefPosesInternal      = obj.RefPoses;
-                obj.DirectionsInternal    = obj.Directions;
-                obj.VelocityProfileInternal  = obj.VelocityProfile;
-                obj.CurvaturesInternal    = obj.Curvatures;
+
+            % Check if the reference path is new
+            if ~isequal(obj.RefPosesInternal, varargin{1})
+                obj.RefPosesInternal     = varargin{1};
+                obj.DirectionsInternal   = varargin{2};
+                obj.CurvaturesInternal   = varargin{3};
+                obj.VelocityProfileInternal = varargin{4};
+                
+                obj.CurrentSegmentIndex = single(1);
+                obj.ClosestPointIndex   = single(1);
             end
-            
+
             % Divide the path to segments based on driving direction
             findSegmentBoundaryPointIndex(obj);
-            
+
             % Check if reaching the final goal. If yes, use the previous
             % outputs
-            if obj.CurrentSegmentIndex > obj.NumPathSegments
-                refPose   = obj.LastRefPoseOutput;
-                refVel    = obj.LastRefVelocityOutput;
-                direction = obj.LastDirectionOutput;
-                curvature = obj.LastCurvatureOutput;
-                if obj.HasResetOutput && isSimulinkBlock(obj)
-                    varargout{1} = single(1);
-                end
-                return
-            end
+%             if obj.CurrentSegmentIndex > obj.NumPathSegments
+%                 refPose   = obj.LastRefPoseOutput;
+%                 refVel    = obj.LastRefVelocityOutput;
+%                 direction = obj.LastDirectionOutput;
+%                 curvature = obj.LastCurvatureOutput;
+%                 if obj.HasResetOutput && isSimulinkBlock(obj)
+%                     varargout{1} = single(1);
+%                 end
+%                 return
+%             end
             
             % Get the desired pose, desired velocity and driving direction
             [refPose, refVel, direction, curvature] = findDesiredPoseAndVelocity(obj, currPose);
@@ -673,7 +667,7 @@ classdef HelperPathAnalyzer < matlab.System
 %             obj.NumPathSegments   = single(numel(obj.SegmentStartIndex));
             obj.SegmentStartIndex = single(1);
             obj.SegmentEndIndex   = single(length(directions));
-            obj.NumPathSegments   = single(numel(obj.SegmentStartIndex));
+            obj.NumPathSegments   = single(1);
         end
     end
 end
