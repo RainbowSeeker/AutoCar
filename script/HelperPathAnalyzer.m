@@ -277,16 +277,16 @@ classdef HelperPathAnalyzer < matlab.System
 
             % Check if reaching the final goal. If yes, use the previous
             % outputs
-%             if obj.CurrentSegmentIndex > obj.NumPathSegments
-%                 refPose   = obj.LastRefPoseOutput;
-%                 refVel    = obj.LastRefVelocityOutput;
-%                 direction = obj.LastDirectionOutput;
-%                 curvature = obj.LastCurvatureOutput;
-%                 if obj.HasResetOutput && isSimulinkBlock(obj)
-%                     varargout{1} = single(1);
-%                 end
-%                 return
-%             end
+            if obj.CurrentSegmentIndex > obj.NumPathSegments
+                refPose   = obj.LastRefPoseOutput;
+                refVel    = obj.LastRefVelocityOutput;
+                direction = obj.LastDirectionOutput;
+                curvature = obj.LastCurvatureOutput;
+                if obj.HasResetOutput && isSimulinkBlock(obj)
+                    varargout{1} = single(1);
+                end
+                return
+            end
             
             % Get the desired pose, desired velocity and driving direction
             [refPose, refVel, direction, curvature] = findDesiredPoseAndVelocity(obj, currPose);
@@ -346,12 +346,13 @@ classdef HelperPathAnalyzer < matlab.System
             
             % Get the desired velocity. Set a lower threshold to avoid zero 
             % reference velocity at the very beginning.
-            lowSpeed = 0.1;
-            if segClosestPointIndex == single(1)
-                refVel= max(abs(obj.VelocityProfileInternal(obj.ClosestPointIndex)), lowSpeed)*direction;
-            else
-                refVel= obj.VelocityProfileInternal(obj.ClosestPointIndex);
-            end
+            lowSpeed = 0.5;
+%             if segClosestPointIndex == single(1)
+%                 refVel= max(abs(obj.VelocityProfileInternal(obj.ClosestPointIndex)), lowSpeed)*direction;
+%             else
+%                 refVel= obj.VelocityProfileInternal(obj.ClosestPointIndex);
+%             end
+            refVel= max(abs(obj.VelocityProfileInternal(obj.ClosestPointIndex)), lowSpeed)*direction;
             
             % Get the desired pose. In forward motion, the refPose is
             % specified for the front wheel.
@@ -658,15 +659,15 @@ classdef HelperPathAnalyzer < matlab.System
         function findSegmentBoundaryPointIndex(obj)
             %findSegmentBoundaryPointIndex Divide the path to segments 
             %based on driving direction
-            directions = obj.DirectionsInternal;
-            % Find the switching points
+%             directions = obj.DirectionsInternal;
+%             % Find the switching points
 %             switchIndex = find(directions(1:end-1)+directions(2:end)==0);
-            % Divide the path into segments
+%             % Divide the path into segments
 %             obj.SegmentStartIndex = single([1; switchIndex+1]);
 %             obj.SegmentEndIndex   = single([switchIndex; length(directions)]);
 %             obj.NumPathSegments   = single(numel(obj.SegmentStartIndex));
             obj.SegmentStartIndex = single(1);
-            obj.SegmentEndIndex   = single(length(directions));
+            obj.SegmentEndIndex   = single(2);
             obj.NumPathSegments   = single(1);
         end
     end

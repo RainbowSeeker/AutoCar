@@ -2,7 +2,7 @@ function reachGoal = helperGoalChecker(nextGoal, currPose, currVel, endRefVel, d
 % The goal checker acts when the distance from the vehicle to the goal
 % point is within a distance tolerance, disTol. 
 
-disTol = single(1);
+disTol = single(0.5);
 
 distToGoal = norm(nextGoal(1:2) - currPose(1:2));
 if  distToGoal > disTol
