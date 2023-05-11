@@ -347,12 +347,11 @@ classdef HelperPathAnalyzer < matlab.System
             % Get the desired velocity. Set a lower threshold to avoid zero 
             % reference velocity at the very beginning.
             lowSpeed = 0.5;
-%             if segClosestPointIndex == single(1)
-%                 refVel= max(abs(obj.VelocityProfileInternal(obj.ClosestPointIndex)), lowSpeed)*direction;
-%             else
-%                 refVel= obj.VelocityProfileInternal(obj.ClosestPointIndex);
-%             end
-            refVel= max(abs(obj.VelocityProfileInternal(obj.ClosestPointIndex)), lowSpeed)*direction;
+            if segClosestPointIndex == single(1)
+                refVel= max(abs(obj.VelocityProfileInternal(obj.ClosestPointIndex)), lowSpeed)*direction;
+            else
+                refVel= obj.VelocityProfileInternal(obj.ClosestPointIndex);
+            end
             
             % Get the desired pose. In forward motion, the refPose is
             % specified for the front wheel.
